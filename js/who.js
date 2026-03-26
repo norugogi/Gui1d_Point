@@ -1,13 +1,29 @@
-﻿let whoData = [];
+let whoData = [];
 
+/***************************************
+ * 🔥 추론 시스템 (핵심 추가)
+ ***************************************/
+let totalSearchCount = 0;      // 총 검색 횟수
+let serverCountMap = {};       // 서버별 등장 횟수
+
+function resetTracking(){
+  totalSearchCount = 0;
+  serverCountMap = {};
+
+  renderTable(whoData.slice(0, 100)); // 화면도 초기화
+}
+
+/***************************************
+ * 클래스 / 서버 맵
+ ***************************************/
 const classMap = {
-  AbyssRevenant: "심연추방자",
-  Enforcer: "집행관",
-  SolarSentinel: "태양감시자",
-  RuneScribe: "주문각인사",
-  MirageBlade: "환영검사",
-  WildWarrior: "야만전사",
-  IncenseArcher: "향사수"
+  AbyssRevenant:"심연추방자",
+  Enforcer:"집행관",
+  SolarSentinel:"태양감시자",
+  RuneScribe:"주문각인사",
+  MirageBlade:"환영검사",
+  WildWarrior:"야만투사",
+  IncenseArcher:"향사수"
 };
 
 const worldMap = {
@@ -23,117 +39,198 @@ const worldMap = {
   "27-1":"메르비스1","27-2":"메르비스2","27-3":"메르비스3","27-4":"메르비스4","27-5":"메르비스5"
 };
 
-async function fetchJsonWithFallback(paths) {
-  for (const path of paths) {
-    try {
-      const res = await fetch(path, { cache: "no-store" });
-      if (!res.ok) continue;
-      return await res.json();
-    } catch (_err) {
-      // Try next path.
-    }
-  }
-  throw new Error(`JSON load failed: ${paths.join(", ")}`);
-}
+/***************************************
+ * 초기 로딩
+ ***************************************/
+window.onload = function(){
 
-window.onload = async function onLoad() {
-  try {
-    const data = await fetchJsonWithFallback([
-      "data/Who_are_you.json",
-      "Who_are_you.json"
-    ]);
+  fetch("data/Who_are_you.json")
+  .then(res => res.json())
+  .then(data => {
 
-    if (!Array.isArray(data)) {
-      console.error("Who_are_you.json 구조 오류", data);
+    if(!Array.isArray(data)){
+      console.error("JSON 구조 오류", data);
       return;
     }
 
     whoData = data;
+
     renderTable(whoData.slice(0, 100));
-  } catch (err) {
+    updateTrackingUI();
+  })
+  .catch(err => {
     console.error("데이터 로드 실패:", err);
-  }
+  });
 };
 
-function searchPlayer() {
-  const fRank = document.getElementById("f_rank")?.value?.trim();
-  const fLevel = document.getElementById("f_level")?.value?.trim();
-  const fGrade = document.getElementById("f_grade")?.value?.trim();
-  const fClass = document.getElementById("f_class")?.value?.trim();
-  const fName = document.getElementById("f_name")?.value?.toLowerCase()?.trim();
+/***************************************
+ * 검색
+ ***************************************/
+function searchPlayer(){
 
-  let filtered = whoData.filter((p) => {
-    if (fRank && String(p.ranking) !== fRank) return false;
-    if (fLevel && String(p.level) !== fLevel) return false;
-    if (fGrade && String(p.grade) !== fGrade) return false;
-    if (fClass && p.class !== fClass) return false;
-    if (fName && !String(p.name || "").toLowerCase().includes(fName)) return false;
+  const f_rank  = document.getElementById("f_rank").value;
+  const f_level = document.getElementById("f_level").value;
+  const f_grade = document.getElementById("f_grade").value;
+  const f_class = document.getElementById("f_class").value;
+  const f_name  = document.getElementById("f_name").value.toLowerCase();
+
+  let filtered = whoData.filter(p => {
+
+    if(f_rank && p.ranking != f_rank) return false;
+    if(f_level && p.level != f_level) return false;
+    if(f_grade && p.grade != f_grade) return false;
+    if(f_class && p.class != f_class) return false;
+    if(f_name && !p.name.toLowerCase().includes(f_name)) return false;
+
     return true;
   });
 
-  filtered = filtered.sort((a, b) => Number(a.ranking || 0) - Number(b.ranking || 0)).slice(0, 100);
+  filtered.sort((a,b) => a.ranking - b.ranking);
+
+  if(filtered.length > 100){
+    filtered = filtered.slice(0, 100);
+  }
+
+  /***************************************
+   * 🔥 핵심: 서버 중복 제거 후 카운팅
+   ***************************************/
+  const uniqueServers = new Set(filtered.map(p => p.world));
+
+  uniqueServers.forEach(world => {
+    if(!serverCountMap[world]){
+      serverCountMap[world] = 0;
+    }
+    serverCountMap[world] += 1;
+  });
+
+  totalSearchCount++;
+
+  updateTrackingUI();
   renderTable(filtered);
 }
-window.searchPlayer = searchPlayer;
 
-function renderTable(list) {
+/***************************************
+ * 🔥 추적 UI 출력
+ ***************************************/
+function updateTrackingUI(){
+
+  const box = document.getElementById("trackingBox");
+  if(!box) return;
+
+  let html = `<div>총 검색: ${totalSearchCount}회</div>`;
+
+  const sorted = Object.entries(serverCountMap)
+    .sort((a,b) => b[1] - a[1]);
+
+  sorted.forEach(([world, count]) => {
+
+    const percent = totalSearchCount > 0
+      ? Math.round((count / totalSearchCount) * 100)
+      : 0;
+
+    html += `
+      <div>
+        ${worldMap[world] || world}
+        → ${count} / ${totalSearchCount} (${percent}%)
+      </div>
+    `;
+  });
+
+  box.innerHTML = html;
+}
+
+/***************************************
+ * 테이블 출력
+ ***************************************/
+function renderTable(list){
+
   const tbody = document.getElementById("whoBody");
-  if (!tbody) return;
 
-  if (!Array.isArray(list) || !list.length) {
-    tbody.innerHTML = "<tr><td colspan='7'>검색 결과 없음</td></tr>";
+  if(!Array.isArray(list)){
+    console.error("배열 아님", list);
     return;
   }
 
-  tbody.innerHTML = list.map((p) => `
+  if(list.length === 0){
+    tbody.innerHTML = `<tr><td colspan="7">검색 결과 없음</td></tr>`;
+    return;
+  }
+
+  let html = "";
+
+  list.forEach(p => {
+
+    const count = serverCountMap[p.world] || 0;
+    const percent = totalSearchCount > 0
+      ? Math.round((count / totalSearchCount) * 100)
+      : 0;
+
+    html += `
     <tr>
-      <td onclick="openServerModal('${String(p.world || "").replace(/'/g, "\\'")}')">${worldMap[p.world] || p.world || "-"}</td>
-      <td>${p.ranking ?? "-"}</td>
+      <td onclick="openServerModal('${p.world}')">
+        ${worldMap[p.world] || p.world}
+      </td>
+      <td>${p.ranking}</td>
       <td>${p.guild || "-"}</td>
-      <td>${p.name || "-"}</td>
-      <td>${p.grade ?? "-"}</td>
-      <td>${classMap[p.class] || p.class || "-"}</td>
-      <td>-</td>
+      <td title="${p.name}">${p.name}</td>
+      <td>${p.grade}</td>
+      <td>${classMap[p.class] || p.class}</td>
+      <td>${count > 0 ? `${count} / ${totalSearchCount} (${percent}%)` : "-"}</td>
     </tr>
-  `).join("");
+    `;
+  });
+
+  tbody.innerHTML = html;
 }
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") searchPlayer();
+/***************************************
+ * 엔터 검색
+ ***************************************/
+document.addEventListener("keydown", e => {
+  if(e.key === "Enter"){
+    searchPlayer();
+  }
 });
 
-function openServerModal(worldKey) {
+/***************************************
+ * 서버 모달
+ ***************************************/
+function openServerModal(worldKey){
+
   const serverName = worldMap[worldKey] || worldKey;
-  const serverData = whoData.filter((p) => p.world === worldKey);
+
+  const serverData = whoData.filter(p => p.world === worldKey);
+
   renderServerModal(serverName, serverData);
 }
-window.openServerModal = openServerModal;
 
-function renderServerModal(serverName, list) {
-  const title = document.getElementById("modalTitle");
-  const body = document.getElementById("modalBody");
-  const modal = document.getElementById("serverModal");
-  if (!title || !body || !modal) return;
+function renderServerModal(serverName, list){
 
-  title.innerText = `${serverName} 서버`;
+  document.getElementById("modalTitle").innerText = serverName + " 랭킹";
 
-  body.innerHTML = [...list]
-    .sort((a, b) => Number(a.ranking || 0) - Number(b.ranking || 0))
-    .map((p) => `
+  const tbody = document.getElementById("modalBody");
+
+  let html = "";
+
+  list
+    .sort((a,b) => a.ranking - b.ranking)
+    .forEach(p => {
+
+      html += `
       <tr>
-        <td>${p.ranking ?? "-"}</td>
-        <td>${p.name || "-"}</td>
-        <td>${p.level ?? "-"}</td>
-        <td>${classMap[p.class] || p.class || "-"}</td>
+        <td>${p.ranking}</td>
+        <td>${p.name}</td>
+        <td>${p.level}</td>
+        <td>${classMap[p.class] || p.class}</td>
       </tr>
-    `)
-    .join("");
+      `;
+    });
 
-  modal.style.display = "block";
+  tbody.innerHTML = html;
+
+  document.getElementById("serverModal").style.display = "block";
 }
 
-function closeModal() {
-  const modal = document.getElementById("serverModal");
-  if (modal) modal.style.display = "none";
+function closeModal(){
+  document.getElementById("serverModal").style.display = "none";
 }
-window.closeModal = closeModal;

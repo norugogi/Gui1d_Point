@@ -1,7 +1,8 @@
 body {
   margin: 0;
   background: #1e1e1e;
-  font-family: 'Pretendard', sans-serif;
+  font-family: 'SUIT', sans-serif;
+  font-weight: 400;
   color: #ddd;
 }
 
@@ -59,6 +60,7 @@ body {
 .who-table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 .who-table th {
@@ -115,4 +117,28 @@ body {
 
 .who-table td:first-child:hover {
   text-decoration: underline;
+}
+
+/*트래킹*/
+.tracking-wrap {
+  margin: 15px 0;
+  padding: 10px;
+  background: rgba(0,0,0,0.5);
+  border-radius: 8px;
+}
+
+.tracking-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/*닉네임칸*/
+.who-table th:nth-child(4),
+.who-table td:nth-child(4) {
+  width: 140px;              /* ← 여기 숫자 조절 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
