@@ -7,13 +7,6 @@
     "guild_name": "DOG"
   },
   {
-    "gc_name": "김쓰",
-    "gc_level": 89,
-    "class": "AbyssRevenant",
-    "grade": "24",
-    "guild_name": "DOG"
-  },
-  {
     "gc_name": "샬롯",
     "gc_level": 87,
     "class": "AbyssRevenant",
@@ -80,7 +73,7 @@
     "gc_name": "학연",
     "gc_level": 89,
     "class": "SolarSentinel",
-    "grade": "24",
+    "grade": "25",
     "guild_name": "DOG"
   },
   {
@@ -273,6 +266,13 @@
     "guild_name": "DOG"
   },
   {
+    "gc_name": "Aewol",
+    "gc_level": 91,
+    "class": "RuneScribe",
+    "grade": "25",
+    "guild_name": "DOG"
+  },
+  {
     "gc_name": "다야꼬",
     "gc_level": 90,
     "class": "RuneScribe",
@@ -283,7 +283,7 @@
     "gc_name": "마루꼬",
     "gc_level": 90,
     "class": "RuneScribe",
-    "grade": "24",
+    "grade": "25",
     "guild_name": "DOG"
   },
   {
@@ -483,13 +483,6 @@
     "guild_name": "CATT"
   },
   {
-    "gc_name": "화수아",
-    "gc_level": 81,
-    "class": "RuneScribe",
-    "grade": "19",
-    "guild_name": "CATT"
-  },
-  {
     "gc_name": "바라문",
     "gc_level": 80,
     "class": "RuneScribe",
@@ -497,10 +490,17 @@
     "guild_name": "CATT"
   },
   {
-    "gc_name": "프로도",
+    "gc_name": "김쓰",
     "gc_level": 89,
     "class": "WildWarrior",
     "grade": "24",
+    "guild_name": "DOG"
+  },
+  {
+    "gc_name": "프로도",
+    "gc_level": 89,
+    "class": "WildWarrior",
+    "grade": "25",
     "guild_name": "CATT"
   },
   {
@@ -547,13 +547,6 @@
   },
   {
     "gc_name": "도랏",
-    "gc_level": 91,
-    "class": "Enforcer",
-    "grade": "24",
-    "guild_name": "DOG"
-  },
-  {
-    "gc_name": "Aewol",
     "gc_level": 91,
     "class": "Enforcer",
     "grade": "25",
@@ -666,7 +659,7 @@
   },
   {
     "gc_name": "시바주야",
-    "gc_level": 83,
+    "gc_level": 84,
     "class": "Enforcer",
     "grade": "19",
     "guild_name": "CATT"
