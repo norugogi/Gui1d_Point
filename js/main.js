@@ -14,6 +14,36 @@ const classMap = {
 };
 
 /* =====================
+   🔥 그래프 숫자 플러그인
+===================== */
+Chart.register({
+  id: 'valueLabel',
+  afterDatasetsDraw(chart) {
+
+    const { ctx } = chart;
+
+    chart.data.datasets.forEach((dataset, i) => {
+      const meta = chart.getDatasetMeta(i);
+
+      meta.data.forEach((bar, index) => {
+
+        const value = dataset.data[index];
+
+        ctx.fillStyle = "#d4af37"; // 골드
+        ctx.font = "12px Pretendard";
+        ctx.textAlign = "left";
+        ctx.textBaseline = "middle";
+
+        const x = bar.x + 8;
+        const y = bar.y;
+
+        ctx.fillText(value + "명", x, y);
+      });
+    });
+  }
+});
+
+/* =====================
    페이지 전환
 ===================== */
 function showPage(id, el){
@@ -29,7 +59,6 @@ function showPage(id, el){
 
   if(el) el.classList.add("active");
 
-  // 🔥 핵심: 페이지 진입 후 다시 실행
   if(id==="guildListPage"){
     applyListFilter();
   }
@@ -213,7 +242,7 @@ function add(map,key){
 }
 
 /* =====================
-   그래프
+   🔥 개선된 그래프
 ===================== */
 function renderChart(id,data){
 
@@ -235,13 +264,28 @@ function renderChart(id,data){
       labels,
       datasets:[{
         data:values,
-        backgroundColor:["#4da6ff","#ffaa00","#33cc99","#9966ff","#ff6699","#ff9933","#66ccff"],
-        borderRadius:8
+        backgroundColor: values.map(()=> "rgba(212,175,55,0.8)"),
+        borderColor:"#d4af37",
+        borderWidth:1,
+        borderRadius:10
       }]
     },
     options:{
       indexAxis:'y',
       plugins:{legend:{display:false}},
+
+      scales:{
+        x:{
+          beginAtZero:true,
+          grace:'15%',
+          grid:{color:"rgba(255,255,255,0.05)"},
+          ticks:{color:"#aaa"}
+        },
+        y:{
+          grid:{display:false},
+          ticks:{color:"#ddd"}
+        }
+      },
 
       onClick: (e, elements) => {
 
@@ -345,7 +389,9 @@ function renderRuby(){
   table.innerHTML = html;
 }
 
-/*오픈모달*/
+/* =====================
+   모달
+===================== */
 function openModal(title, list){
 
   const modal = document.getElementById("modal");
@@ -362,7 +408,6 @@ function openModal(title, list){
     return;
   }
 
-  // 🔥 정렬 + 깔끔 출력
   const sorted = [...list].sort((a,b)=>b.gc_level - a.gc_level);
 
   let html = "";
@@ -391,63 +436,19 @@ function openModal(title, list){
   modal.style.display = "flex";
 }
 
-// ESC 키로 닫기
 document.addEventListener("keydown", function(e){
   if(e.key === "Escape"){
     closeModal();
   }
 });
 
-// 배경 클릭 시 닫기
 document.getElementById("modal")?.addEventListener("click", function(e){
   if(e.target === this){
     this.style.display = "none";
   }
 });
 
-// 닫기 버튼
 function closeModal(){
   const modal = document.getElementById("modal");
   if(modal) modal.style.display = "none";
 }
-
-/*== 상단메뉴연결 ==*/
-// 🔥 새창 (결사시트)
-function openNewTab(){
-  window.open(
-    "https://docs.google.com/spreadsheets/d/13W8sK_u_MIgDGGutfKIXViYHfK3E4DTjQBL4YPt4SSI/edit?usp=sharing",
-    "_blank"
-  );
-}
-
-
-// 🔥 팝업 (공통)
-function openSheet(url){
-  const modal = document.getElementById("sheetModal");
-  const frame = document.getElementById("sheetFrame");
-
-  frame.src = ""; // 초기화 (깜빡임 방지)
-  modal.style.display = "block";
-
-  setTimeout(()=>{
-    frame.src = url;
-  }, 100);
-}
-
-
-// 🔥 닫기
-function closeSheet(){
-  const modal = document.getElementById("sheetModal");
-  const frame = document.getElementById("sheetFrame");
-
-  modal.style.display = "none";
-  frame.src = "";
-}
-
-
-// 🔥 ESC 닫기
-window.addEventListener("keydown", e=>{
-  if(e.key === "Escape"){
-    closeSheet();
-  }
-});
