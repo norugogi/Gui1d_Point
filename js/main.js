@@ -20,7 +20,7 @@ Chart.register({
   id: 'valueLabel',
   afterDatasetsDraw(chart) {
 
-    const { ctx } = chart;
+    const { ctx, chartArea } = chart;
 
     chart.data.datasets.forEach((dataset, i) => {
       const meta = chart.getDatasetMeta(i);
@@ -29,12 +29,13 @@ Chart.register({
 
         const value = dataset.data[index];
 
-        ctx.fillStyle = "#d4af37"; // 골드
+        ctx.fillStyle = "#e5d3a3";
         ctx.font = "12px Pretendard";
-        ctx.textAlign = "left";
+        ctx.textAlign = "right"; // 🔥 오른쪽 정렬
         ctx.textBaseline = "middle";
 
-        const x = bar.x + 8;
+        // 🔥 항상 동일한 위치
+        const x = chartArea.right - 5;
         const y = bar.y;
 
         ctx.fillText(value + "명", x, y);
@@ -42,6 +43,19 @@ Chart.register({
     });
   }
 });
+
+datasets: [
+  {
+    data: values,
+    backgroundColor: colors.slice(0, values.length),
+    borderRadius: 10,
+  },
+  {
+    data: values.map(v => Math.max(...values)), // 최대값으로 채움
+    backgroundColor: "rgba(255,255,255,0.05)", // 🔥 배경 바
+    borderRadius: 10
+  }
+]
 
 /* =====================
    페이지 전환
