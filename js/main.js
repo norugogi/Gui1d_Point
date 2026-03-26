@@ -230,45 +230,55 @@ function renderChart(id,data){
   box.innerHTML = `<canvas id="${id}Chart"></canvas>`;
 
   new Chart(document.getElementById(id+"Chart"),{
-    type:'bar',
-    data:{
-      labels,
-      datasets:[{
-        data:values,
-        backgroundColor:["#4da6ff","#ffaa00","#33cc99","#9966ff","#ff6699","#ff9933","#66ccff"],
-        borderRadius:8
-      }]
-    },
-    options:{
-      indexAxis:'y',
-      plugins:{legend:{display:false}},
+  type:'bar',
+  data:{
+    labels,
+    datasets:[{
+      data:values,
+      backgroundColor:["#4da6ff","#ffaa00","#33cc99","#9966ff","#ff6699","#ff9933","#66ccff"],
+      borderRadius:8
+    }]
+  },
+  options:{
+    indexAxis:'y',
+    plugins:{
+      legend:{display:false},
 
-      onClick: (e, elements) => {
-
-        if(elements.length === 0) return;
-
-        const index = elements[0].index;
-        const label = labels[index];
-
-        let list = [];
-
-        if(id === "classStats"){
-          list = rawData.filter(p => (classMap[p.class] || p.class) == label);
-        }
-
-        if(id === "gradeStats"){
-          list = rawData.filter(p => String(p.grade) == String(label));
-        }
-
-        if(id === "levelStats"){
-          list = rawData.filter(p => String(p.gc_level) == String(label));
-        }
-
-        openModal(label, list);
+      datalabels:{
+        anchor:'end',
+        align:'right',
+        color:'#fff',
+        formatter:(value)=> value + "명"
       }
+    },
+
+    onClick: (e, elements) => {
+
+      if(elements.length === 0) return;
+
+      const index = elements[0].index;
+      const label = labels[index];
+
+      let list = [];
+
+      if(id === "classStats"){
+        list = rawData.filter(p => (classMap[p.class] || p.class) == label);
+      }
+
+      if(id === "gradeStats"){
+        list = rawData.filter(p => String(p.grade) == String(label));
+      }
+
+      if(id === "levelStats"){
+        list = rawData.filter(p => String(p.gc_level) == String(label));
+      }
+
+      openModal(label, list);
     }
-  });
-}
+  },
+
+  plugins:[window.ChartDataLabels]
+});
 
 /* =====================
    결사 통계
@@ -471,18 +481,3 @@ window.addEventListener("keydown", e=>{
     closeSheet();
   }
 });
-
-// 내용추가부분 (그래프 플러그인)
-plugins: {
-  legend: { display: false },
-
-  datalabels: {
-    anchor: 'end',
-    align: 'right',
-    color: '#fff',
-    formatter: (value) => value + "명"
-  }
-}
-
-plugins: [window.ChartDataLabels]
-
