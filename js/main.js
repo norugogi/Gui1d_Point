@@ -1,10 +1,6 @@
 ﻿let players = [];
 let rawData = [];
 let currentFilter = "ALL";
-const ADMIN_PASSWORD = "dog2026";
-const ADMIN_KEY = "guild_admin_logged_in";
-const SCHEDULE_KEY = "guild_schedule_json";
-const SCHEDULE_ROWS = 5;
 let scheduleData = [];
 
 const classNameMap = {
@@ -84,6 +80,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error(err);
   }
 
+  try {
+    const scheduleJson = await fetchJsonWithFallback([
+      "data/schedule.json",
+      "schedule.json"
+    ]);
+    scheduleData = Array.isArray(scheduleJson) ? scheduleJson : (scheduleJson.items || []);
+  } catch (_err) {
+    scheduleData = [];
+  }
+  renderSchedule();
+
   document.querySelectorAll("input[name='guildFilter']").forEach((r) => {
     r.addEventListener("change", function onRadioChange() {
       currentFilter = this.value;
@@ -93,8 +100,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   document.getElementById("guildFilterSelect")?.addEventListener("change", applyListFilter);
   document.getElementById("classFilterSelect")?.addEventListener("change", applyListFilter);
-  initAdminState();
-  loadSchedule();
 });
 
 function updateSummary(data) {
@@ -290,6 +295,34 @@ function makeStatCard(title, map) {
   `;
 }
 
+function renderSchedule() {
+  const body = document.getElementById("scheduleBody");
+  if (!body) return;
+
+  if (!Array.isArray(scheduleData) || !scheduleData.length) {
+    body.innerHTML = `
+      <tr><td>-</td><td>일정 데이터 없음</td></tr>
+      <tr><td>-</td><td>-</td></tr>
+      <tr><td>-</td><td>-</td></tr>
+      <tr><td>-</td><td>-</td></tr>
+      <tr><td>-</td><td>-</td></tr>
+    `;
+    return;
+  }
+
+  const rows = scheduleData.slice(0, 5);
+  while (rows.length < 5) {
+    rows.push({ day: "", content: "" });
+  }
+
+  body.innerHTML = rows.map((row) => `
+    <tr>
+      <td>${row.day || "-"}</td>
+      <td>${row.content || "-"}</td>
+    </tr>
+  `).join("");
+}
+
 function openModal(title, list) {
   const modal = document.getElementById("modal");
   const modalTitle = document.getElementById("modalTitle");
@@ -338,7 +371,6 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     closeModal();
     closeSheet();
-    closeScheduleEditor();
   }
 });
 
@@ -377,131 +409,3 @@ function closeSheet() {
   frame.src = "";
 }
 window.closeSheet = closeSheet;
-
-
-
-
-function getDefaultSchedule() {
-  return Array.from({ length: SCHEDULE_ROWS }, () => ({ day: "", content: "" }));
-}
-
-function loadSchedule() {
-  try {
-    const raw = localStorage.getItem(SCHEDULE_KEY);
-    const parsed = raw ? JSON.parse(raw) : getDefaultSchedule();
-    scheduleData = Array.isArray(parsed) ? parsed.slice(0, SCHEDULE_ROWS) : getDefaultSchedule();
-  } catch (_err) {
-    scheduleData = getDefaultSchedule();
-  }
-
-  while (scheduleData.length < SCHEDULE_ROWS) {
-    scheduleData.push({ day: "", content: "" });
-  }
-
-  renderSchedule();
-}
-
-function saveScheduleStorage() {
-  localStorage.setItem(SCHEDULE_KEY, JSON.stringify(scheduleData));
-}
-
-function renderSchedule() {
-  const body = document.getElementById("scheduleBody");
-  if (!body) return;
-
-  body.innerHTML = scheduleData.map((row) => `
-    <tr>
-      <td>${row.day || "-"}</td>
-      <td>${row.content || "-"}</td>
-    </tr>
-  `).join("");
-}
-
-function openScheduleEditor(mode) {
-  if (!isAdminMode()) return;
-
-  const modal = document.getElementById("scheduleModal");
-  const rows = document.getElementById("scheduleEditorRows");
-  const title = document.getElementById("scheduleModalTitle");
-  if (!modal || !rows || !title) return;
-
-  title.innerText = mode === "edit" ? "일정표 수정" : "일정표 작성";
-  rows.innerHTML = scheduleData.map((row, idx) => `
-    <div class="schedule-editor-row">
-      <input id="scheduleDay${idx}" type="text" placeholder="예) 03/26 (목)" value="${(row.day || "").replace(/"/g, "&quot;")}">
-      <input id="scheduleContent${idx}" type="text" placeholder="콘텐츠 입력" value="${(row.content || "").replace(/"/g, "&quot;")}">
-    </div>
-  `).join("");
-
-  modal.style.display = "flex";
-}
-window.openScheduleEditor = openScheduleEditor;
-
-function closeScheduleEditor() {
-  const modal = document.getElementById("scheduleModal");
-  if (modal) modal.style.display = "none";
-}
-window.closeScheduleEditor = closeScheduleEditor;
-
-function saveSchedule() {
-  if (!isAdminMode()) return;
-
-  const next = [];
-  for (let i = 0; i < SCHEDULE_ROWS; i += 1) {
-    const day = document.getElementById(`scheduleDay${i}`)?.value?.trim() || "";
-    const content = document.getElementById(`scheduleContent${i}`)?.value?.trim() || "";
-    next.push({ day, content });
-  }
-
-  scheduleData = next;
-  saveScheduleStorage();
-  renderSchedule();
-  closeScheduleEditor();
-}
-window.saveSchedule = saveSchedule;
-
-function isAdminMode() {
-  return localStorage.getItem(ADMIN_KEY) === "true";
-}
-
-function applyAdminUI() {
-  const status = document.getElementById("adminStatus");
-
-  if (isAdminMode()) {
-    document.body.classList.add("admin-mode");
-    if (status) status.innerText = "현재 상태: 로그인됨";
-  } else {
-    document.body.classList.remove("admin-mode");
-    if (status) status.innerText = "현재 상태: 비로그인";
-  }
-}
-
-function initAdminState() {
-  applyAdminUI();
-}
-
-function adminLogin() {
-  const input = document.getElementById("adminPassword");
-  if (!input) return;
-
-  if (input.value === ADMIN_PASSWORD) {
-    localStorage.setItem(ADMIN_KEY, "true");
-    input.value = "";
-    applyAdminUI();
-    return;
-  }
-
-  alert("비밀번호가 올바르지 않습니다.");
-}
-window.adminLogin = adminLogin;
-
-function adminLogout() {
-  localStorage.setItem(ADMIN_KEY, "false");
-  applyAdminUI();
-}
-window.adminLogout = adminLogout;
-
-
-
-
-
