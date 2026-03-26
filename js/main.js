@@ -93,6 +93,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   document.getElementById("guildFilterSelect")?.addEventListener("change", applyListFilter);
   document.getElementById("classFilterSelect")?.addEventListener("change", applyListFilter);
+  initAdminState();
+  loadSchedule();
 });
 
 function updateSummary(data) {
@@ -166,7 +168,7 @@ function initClassFilter() {
 
   const classes = [...new Set(rawData.map((p) => classNameMap[p.class] || p.class).filter(Boolean))].sort();
 
-  select.innerHTML = "<option value="ALL">직업 전체</option>";
+  select.innerHTML = '<option value="ALL">직업 전체</option>';
   classes.forEach((c) => {
     const opt = document.createElement("option");
     opt.value = c;
