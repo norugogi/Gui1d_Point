@@ -215,6 +215,8 @@ function add(map,key){
 /* =====================
    그래프
 ===================== */
+Chart.plugins.register(ChartDataLabels);
+
 function renderChart(id,data){
 
   const box = document.getElementById(id);
@@ -228,8 +230,6 @@ function renderChart(id,data){
   let values = entries.map(e=>e[1]);
 
   box.innerHTML = `<canvas id="${id}Chart"></canvas>`;
-  
-  Chart.plugins.register(ChartDataLabels);
   
   new Chart(document.getElementById(id+"Chart"),{
     type:'bar',
