@@ -36,6 +36,24 @@ body {
   color: var(--muted);
 }
 
+.profile-search {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.profile-search input {
+  width: 280px;
+  max-width: 100%;
+  padding: 8px 10px;
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 8px;
+  background: #171a22;
+  color: #f3f3f3;
+  font-family: inherit;
+}
+
 .profile-grid-wrap {
   overflow-x: auto;
 }
@@ -95,7 +113,7 @@ body {
   padding: 4px 10px 8px;
   color: #f2f2f2;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.75);
-  transform: translateY(-24px);
+  transform: translateY(-30px);
 }
 
 .front-stats {
@@ -174,4 +192,9 @@ body {
   background: var(--panel-2);
   border: 1px solid rgba(255,255,255,0.12);
   border-radius: 10px;
+}
+
+.profile-card.search-hit .profile-face {
+  border: 2px solid #f4d03f;
+  box-shadow: 0 0 0 2px rgba(244,208,63,0.22), 0 0 20px rgba(244,208,63,0.32);
 }

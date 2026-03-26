@@ -45,6 +45,15 @@ function normalizeProfile(raw) {
   };
 }
 
+function normalizeName(value) {
+  return String(value ?? "")
+    .replace(/^\uFEFF/, "")
+    .replace(/[\u200B-\u200D\u2060]/g, "")
+    .replace(/\s+/g, "")
+    .toLowerCase()
+    .trim();
+}
+
 function formatLevel(value) {
   const v = String(value ?? "").trim();
   if (!v || v === "-") return "Lv.-";
@@ -60,6 +69,27 @@ function formatGrade(value) {
 function getClassImage(cls, tone) {
   const key = classImageMap[cls] || "RuneScribe";
   return `assets/classes/${key}_${tone}.png`;
+}
+
+function clearSearchHighlight() {
+  document.querySelectorAll(".profile-card.search-hit").forEach((el) => {
+    el.classList.remove("search-hit");
+  });
+}
+
+function highlightCardByIndex(index) {
+  clearSearchHighlight();
+  const card = document.querySelector(`.profile-card[data-index="${index}"]`);
+  if (!card) return false;
+
+  card.classList.add("search-hit");
+  card.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+
+  setTimeout(() => {
+    card.classList.remove("search-hit");
+  }, 3000);
+
+  return true;
 }
 
 function renderProfiles() {
@@ -137,11 +167,55 @@ function renderProfiles() {
   loadMore.style.display = renderCount < cardProfiles.length ? "inline-block" : "none";
 }
 
+function searchCardByName() {
+  const input = document.getElementById("cardSearchInput");
+  if (!input) return;
+
+  const q = normalizeName(input.value);
+  if (!q) {
+    alert("닉네임을 입력해주세요.");
+    return;
+  }
+
+  const idx = cardProfiles.findIndex((raw) => {
+    const p = normalizeProfile(raw);
+    return normalizeName(p.gc_name) === q;
+  });
+
+  if (idx < 0) {
+    alert("해당 닉네임 카드를 찾지 못했습니다.");
+    return;
+  }
+
+  if (idx >= renderCount) {
+    renderCount = Math.ceil((idx + 1) / 20) * 20;
+    renderProfiles();
+  }
+
+  const ok = highlightCardByIndex(idx);
+  if (!ok) {
+    setTimeout(() => {
+      highlightCardByIndex(idx);
+    }, 80);
+  }
+}
+
 async function init() {
   const loadMore = document.getElementById("loadMoreBtn");
+  const searchBtn = document.getElementById("cardSearchBtn");
+  const searchInput = document.getElementById("cardSearchInput");
+
   loadMore?.addEventListener("click", () => {
     renderCount += 20;
     renderProfiles();
+  });
+
+  searchBtn?.addEventListener("click", searchCardByName);
+  searchInput?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      searchCardByName();
+    }
   });
 
   try {
