@@ -275,6 +275,7 @@ function renderChart(id,data){
 
       openModal(label, list);
     }
+  }
 });
 
 /* =====================
