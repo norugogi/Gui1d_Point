@@ -71,6 +71,18 @@
       color: #111;
       cursor: pointer;
     }
+    .site-gate-toggle {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #d0d7e3;
+      user-select: none;
+    }
+    .site-gate-toggle input {
+      cursor: pointer;
+    }
     .site-gate-error {
       min-height: 20px;
       margin-top: 8px;
@@ -90,6 +102,10 @@
         <h1 class="site-gate-title">내부 전용 페이지</h1>
         <p class="site-gate-text">접속 비밀번호를 입력해주세요.</p>
         <input id="siteGateInput" class="site-gate-input" type="password" placeholder="비밀번호">
+        <label class="site-gate-toggle">
+          <input id="siteGateShow" type="checkbox">
+          <span>비밀번호 보기</span>
+        </label>
         <button id="siteGateBtn" class="site-gate-btn" type="button">입장</button>
         <div id="siteGateError" class="site-gate-error"></div>
       </div>
@@ -98,6 +114,7 @@
     document.body.appendChild(overlay);
 
     const input = document.getElementById("siteGateInput");
+    const show = document.getElementById("siteGateShow");
     const button = document.getElementById("siteGateBtn");
     const error = document.getElementById("siteGateError");
 
@@ -121,6 +138,10 @@
 
     input?.addEventListener("keydown", (e) => {
       if (e.key === "Enter") submit();
+    });
+    show?.addEventListener("change", () => {
+      if (!input) return;
+      input.type = show.checked ? "text" : "password";
     });
     button?.addEventListener("click", submit);
     input?.focus();
