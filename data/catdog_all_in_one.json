@@ -7,25 +7,11 @@
     "guild_name": "DOG"
   },
   {
-    "gc_name": "강새이",
-    "gc_level": 89,
-    "class": "AbyssRevenant",
-    "grade": "24",
-    "guild_name": "CATT"
-  },
-  {
     "gc_name": "김쓰",
     "gc_level": 89,
     "class": "AbyssRevenant",
     "grade": "24",
     "guild_name": "DOG"
-  },
-  {
-    "gc_name": "준태",
-    "gc_level": 87,
-    "class": "AbyssRevenant",
-    "grade": "23",
-    "guild_name": "CATT"
   },
   {
     "gc_name": "샬롯",
@@ -99,7 +85,7 @@
   },
   {
     "gc_name": "가오",
-    "gc_level": 87,
+    "gc_level": 88,
     "class": "SolarSentinel",
     "grade": "24",
     "guild_name": "DOG"
@@ -112,18 +98,18 @@
     "guild_name": "CATT"
   },
   {
+    "gc_name": "키키키",
+    "gc_level": 91,
+    "class": "MirageBlade",
+    "grade": "25",
+    "guild_name": "DOG"
+  },
+  {
     "gc_name": "더춘식",
     "gc_level": 89,
     "class": "MirageBlade",
     "grade": "24",
     "guild_name": "DOG"
-  },
-  {
-    "gc_name": "프로도",
-    "gc_level": 89,
-    "class": "MirageBlade",
-    "grade": "24",
-    "guild_name": "CATT"
   },
   {
     "gc_name": "덥뿡",
@@ -178,7 +164,7 @@
     "gc_name": "로빈후드",
     "gc_level": 90,
     "class": "IncenseArcher",
-    "grade": "24",
+    "grade": "25",
     "guild_name": "DOG"
   },
   {
@@ -187,6 +173,13 @@
     "class": "IncenseArcher",
     "grade": "24",
     "guild_name": "DOG"
+  },
+  {
+    "gc_name": "강새이",
+    "gc_level": 89,
+    "class": "IncenseArcher",
+    "grade": "25",
+    "guild_name": "CATT"
   },
   {
     "gc_name": "마위",
@@ -221,13 +214,6 @@
     "gc_level": 88,
     "class": "IncenseArcher",
     "grade": "24",
-    "guild_name": "CATT"
-  },
-  {
-    "gc_name": "야추",
-    "gc_level": 88,
-    "class": "IncenseArcher",
-    "grade": "23",
     "guild_name": "CATT"
   },
   {
@@ -309,9 +295,9 @@
   },
   {
     "gc_name": "소운",
-    "gc_level": 89,
+    "gc_level": 90,
     "class": "RuneScribe",
-    "grade": "24",
+    "grade": "25",
     "guild_name": "DOG"
   },
   {
@@ -372,6 +358,13 @@
   },
   {
     "gc_name": "시바키지",
+    "gc_level": 88,
+    "class": "RuneScribe",
+    "grade": "23",
+    "guild_name": "CATT"
+  },
+  {
+    "gc_name": "야추",
     "gc_level": 88,
     "class": "RuneScribe",
     "grade": "23",
@@ -592,13 +585,6 @@
     "gc_level": 88,
     "class": "Enforcer",
     "grade": "23",
-    "guild_name": "CATT"
-  },
-  {
-    "gc_name": "로저",
-    "gc_level": 88,
-    "class": "Enforcer",
-    "grade": "24",
     "guild_name": "CATT"
   },
   {
