@@ -230,45 +230,64 @@ function renderChart(id,data){
   box.innerHTML = `<canvas id="${id}Chart"></canvas>`;
 
   new Chart(document.getElementById(id+"Chart"),{
-    type:'bar',
-    data:{
-      labels,
-      datasets:[{
-        data:values,
-        backgroundColor:["#4da6ff","#ffaa00","#33cc99","#9966ff","#ff6699","#ff9933","#66ccff"],
-        borderRadius:8
-      }]
-    },
-    options:{
-      indexAxis:'y',
-      plugins:{legend:{display:false}},
+  type:'bar',
+  data:{
+    labels,
+    datasets:[{
+      data:values,
+      backgroundColor:["#4da6ff","#ffaa00","#33cc99","#9966ff","#ff6699","#ff9933","#66ccff"],
+      borderRadius:8
+    }]
+  },
+  options:{
+    indexAxis:'y',
+    plugins:{legend:{display:false}},
 
-      onClick: (e, elements) => {
+    onClick: (e, elements) => {
+      if(elements.length === 0) return;
 
-        if(elements.length === 0) return;
+      const index = elements[0].index;
+      const label = labels[index];
 
-        const index = elements[0].index;
-        const label = labels[index];
+      let list = [];
 
-        let list = [];
-
-        if(id === "classStats"){
-          list = rawData.filter(p => (classMap[p.class] || p.class) == label);
-        }
-
-        if(id === "gradeStats"){
-          list = rawData.filter(p => String(p.grade) == String(label));
-        }
-
-        if(id === "levelStats"){
-          list = rawData.filter(p => String(p.gc_level) == String(label));
-        }
-
-        openModal(label, list);
+      if(id === "classStats"){
+        list = rawData.filter(p => (classMap[p.class] || p.class) == label);
       }
+
+      if(id === "gradeStats"){
+        list = rawData.filter(p => String(p.grade) == String(label));
+      }
+
+      if(id === "levelStats"){
+        list = rawData.filter(p => String(p.gc_level) == String(label));
+      }
+
+      openModal(label, list);
     }
-  });
-}
+  }
+});
+
+// 🔥 여기부터 추가 (Chart 밖!)
+let labelHTML = "";
+
+values.forEach((v,i)=>{
+  labelHTML += `
+    <div style="
+      position:absolute;
+      right:12px;
+      top:${(i * 38) + 22}px;
+      color:#e5e7eb;
+      font-size:12px;
+      pointer-events:none;
+    ">
+      ${v}명
+    </div>
+  `;
+});
+
+box.style.position = "relative";
+box.innerHTML += labelHTML;
 
 /* =====================
    결사 통계
