@@ -223,9 +223,19 @@ function buildStats(data) {
     addCount(gradeMap, p.grade);
   });
 
-  renderChart("levelStats", levelMap, (a, b) => Number(b) - Number(a));
+  const levelRangeMap = {};
+  for (let lv = 93; lv >= 87; lv -= 1) {
+    levelRangeMap[`Lv.${lv}`] = levelMap[lv] || 0;
+  }
+
+  const gradeRangeMap = {};
+  for (let grade = 25; grade >= 20; grade -= 1) {
+    gradeRangeMap[`${grade}`] = gradeMap[grade] || 0;
+  }
+
+  renderChart("levelStats", levelRangeMap, (a, b) => Number(String(b).replace("Lv.", "")) - Number(String(a).replace("Lv.", "")));
   renderChart("classStats", classMap, (a, b) => String(a).localeCompare(String(b), "ko"));
-  renderChart("gradeStats", gradeMap, (a, b) => Number(b) - Number(a));
+  renderChart("gradeStats", gradeRangeMap, (a, b) => Number(b) - Number(a));
 }
 
 function renderChart(id, dataMap, sorter) {
