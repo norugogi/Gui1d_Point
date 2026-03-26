@@ -241,9 +241,18 @@ function renderChart(id,data){
     },
     options:{
       indexAxis:'y',
+      
       plugins:{
         legend:{display:false},
-        datalabels:{display:true}
+        datalabels:{
+          display:true,
+          anchor:'end',
+          align:'right',
+          color:'#fff',
+          formatter:function(value){
+            return value + "명";
+          }
+        }
       },
 
       onClick: (e, elements) => {
