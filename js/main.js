@@ -19,6 +19,31 @@ const chartRefs = {
   gradeStats: null
 };
 
+const barValueLabelPlugin = {
+  id: "barValueLabelPlugin",
+  afterDatasetsDraw(chart) {
+    const { ctx, chartArea } = chart;
+    const meta = chart.getDatasetMeta(0);
+    const values = chart.data.datasets[0]?.data || [];
+    if (!meta?.data?.length) return;
+
+    ctx.save();
+    ctx.fillStyle = "#f3f3f3";
+    ctx.font = "bold 12px Arial";
+    ctx.textBaseline = "middle";
+
+    meta.data.forEach((bar, i) => {
+      const value = values[i];
+      const label = String(value);
+      const textWidth = ctx.measureText(label).width;
+      const x = Math.min(bar.x + 8, chartArea.right - textWidth - 4);
+      ctx.fillText(label, x, bar.y);
+    });
+
+    ctx.restore();
+  }
+};
+
 async function fetchJsonWithFallback(paths) {
   for (const path of paths) {
     try {
@@ -219,6 +244,7 @@ function renderChart(id, dataMap, sorter) {
   if (chartRefs[id]) chartRefs[id].destroy();
 
   chartRefs[id] = new Chart(document.getElementById(`${id}Chart`), {
+    plugins: [barValueLabelPlugin],
     type: "bar",
     data: {
       labels,
