@@ -471,3 +471,18 @@ window.addEventListener("keydown", e=>{
     closeSheet();
   }
 });
+
+// 내용추가부분 (그래프 플러그인)
+plugins: {
+  legend: { display: false },
+
+  datalabels: {
+    anchor: 'end',
+    align: 'right',
+    color: '#fff',
+    formatter: (value) => value + "명"
+  }
+}
+
+plugins: [ChartDataLabels]
+
