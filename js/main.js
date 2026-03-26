@@ -4,12 +4,12 @@ let currentFilter = "ALL";
 let scheduleData = [];
 
 const classNameMap = {
-  AbyssRevenant: "심연추적자",
+  AbyssRevenant: "심연추방자",
   Enforcer: "집행관",
   SolarSentinel: "태양감시자",
-  RuneScribe: "룬각인사",
+  RuneScribe: "주문각인사",
   MirageBlade: "환영검사",
-  WildWarrior: "야성전사",
+  WildWarrior: "야만투사",
   IncenseArcher: "향사수"
 };
 
