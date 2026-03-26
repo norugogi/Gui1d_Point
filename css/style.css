@@ -573,6 +573,29 @@ tbody tr:nth-child(3) {
   margin: 20px auto;
 }
 
+/* 사이드바 없는 단독 페이지(iframe 내부) 정렬 보정 */
+body.no-sidebar .main {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1400px;
+  padding: 20px;
+}
+
+body.no-sidebar .main.ruby-page {
+  margin-left: 0;
+  padding-left: 20px;
+  width: 100%;
+  max-width: 1400px;
+}
+
+body.no-sidebar .main.ruby-page .ruby-container {
+  margin-left: 0;
+}
+
+body.no-sidebar .main.ruby-page > * {
+  max-width: none;
+}
+
 /* 메인 일정표 */
 .schedule-wrap {
   margin-top: 28px;
@@ -618,4 +641,12 @@ tbody tr:nth-child(3) {
 .admin-status {
   margin-top: 10px;
   color: #bbb;
+}
+
+.guild-stat-row {
+  cursor: pointer;
+}
+
+.guild-stat-row:hover {
+  background: #353841;
 }

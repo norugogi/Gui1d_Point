@@ -253,35 +253,66 @@ function buildGuildStat(data) {
   if (!box) return;
 
   const levelMap = {};
+  const classMap = {};
   const gradeMap = {};
 
   data.forEach((p) => {
     addCount(levelMap, Number(p.gc_level));
+    addCount(classMap, classNameMap[p.class] || p.class);
     addCount(gradeMap, Number(p.grade));
   });
 
-  const levelRangeMap = {};
+  const levelRows = [];
   for (let lv = 93; lv >= 80; lv -= 1) {
-    levelRangeMap[`Lv.${lv}`] = levelMap[lv] || 0;
+    levelRows.push({
+      key: String(lv),
+      label: `Lv.${lv}`,
+      count: levelMap[lv] || 0
+    });
   }
 
-  const gradeRangeMap = {};
+  const classRows = Object.entries(classMap)
+    .sort((a, b) => b[1] - a[1])
+    .map(([k, v]) => ({
+      key: k,
+      label: k,
+      count: v
+    }));
+
+  const gradeRows = [];
   for (let grade = 25; grade >= 20; grade -= 1) {
-    gradeRangeMap[`${grade} 토벌`] = gradeMap[grade] || 0;
+    gradeRows.push({
+      key: String(grade),
+      label: `${grade} 토벌`,
+      count: gradeMap[grade] || 0
+    });
   }
 
   box.innerHTML = `
     <div class="stat-wrap">
-      ${makeStatCard("레벨 통계 (93 ~ 80)", levelRangeMap)}
-      ${makeStatCard("토벌 통계 (25 ~ 20)", gradeRangeMap)}
+      ${makeStatCard("레벨 통계 (93 ~ 80)", levelRows, "level")}
+      ${makeStatCard("직업 통계", classRows, "class")}
+      ${makeStatCard("토벌 통계 (25 ~ 20)", gradeRows, "grade")}
     </div>
   `;
+
+  box.querySelectorAll(".guild-stat-row").forEach((row) => {
+    row.addEventListener("click", () => {
+      const type = row.getAttribute("data-type");
+      const key = decodeURIComponent(row.getAttribute("data-key") || "");
+      openGuildStatDetail(type, key);
+    });
+  });
 }
 
-function makeStatCard(title, map) {
-  const rows = Object.entries(map)
-    .sort((a, b) => b[1] - a[1])
-    .map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`)
+function makeStatCard(title, rows, statType) {
+  const bodyRows = rows
+    .map((row) => `
+      <tr class="guild-stat-row" data-type="${statType}" data-key="${encodeURIComponent(row.key)}">
+        <td>${row.label}</td>
+        <td>${row.count}</td>
+      </tr>
+    `)
     .join("");
 
   return `
@@ -289,10 +320,32 @@ function makeStatCard(title, map) {
       <h3>${title}</h3>
       <table>
         <tr><th>구분</th><th>인원</th></tr>
-        ${rows}
+        ${bodyRows}
       </table>
     </div>
   `;
+}
+
+function openGuildStatDetail(type, key) {
+  let list = [];
+  let title = "";
+
+  if (type === "level") {
+    list = rawData.filter((p) => String(p.gc_level) === String(key));
+    title = `레벨 ${key}`;
+  }
+
+  if (type === "class") {
+    list = rawData.filter((p) => (classNameMap[p.class] || p.class) === key);
+    title = `직업 ${key}`;
+  }
+
+  if (type === "grade") {
+    list = rawData.filter((p) => String(p.grade) === String(key));
+    title = `토벌 ${key}`;
+  }
+
+  openModal(title, list);
 }
 
 function renderSchedule() {
@@ -343,11 +396,11 @@ function openModal(title, list) {
   modalList.innerHTML = sorted.map((p) => `
     <div style="
       display:grid;
-      grid-template-columns: 1fr 80px 120px;
+      grid-template-columns: 1fr 80px 120px 80px;
       gap:12px;
       align-items:center;
       width:100%;
-      max-width:420px;
+      max-width:520px;
       margin:0 auto;
       padding:6px 12px;
       border-bottom:1px solid rgba(255,255,255,0.08);
@@ -355,6 +408,7 @@ function openModal(title, list) {
       <span style="text-align:left;">${p.gc_name || "-"}</span>
       <span style="text-align:right; color:#ffd700;">Lv.${p.gc_level || "-"}</span>
       <span style="text-align:right; opacity:0.7;">${classNameMap[p.class] || p.class || "-"}</span>
+      <span style="text-align:right; opacity:0.9;">${p.grade || "-"}토벌</span>
     </div>
   `).join("");
 
