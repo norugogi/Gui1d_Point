@@ -499,3 +499,37 @@ window.addEventListener("keydown", e=>{
     closeSheet();
   }
 });
+
+
+// 차트 디자인 변경
+Chart.register({
+  id: 'valueLabel',
+  afterDatasetsDraw(chart) {
+
+    const { ctx, chartArea } = chart;
+
+    chart.data.datasets.forEach((dataset, i) => {
+
+      // 👉 실제 데이터 바만 표시 (배경바 제외)
+      if(i !== 0) return;
+
+      const meta = chart.getDatasetMeta(i);
+
+      meta.data.forEach((bar, index) => {
+
+        const value = dataset.data[index];
+
+        ctx.fillStyle = "#e5d3a3";
+        ctx.font = "12px Pretendard";
+        ctx.textAlign = "right";
+        ctx.textBaseline = "middle";
+
+        const x = chartArea.right - 8;
+        const y = bar.y;
+
+        ctx.fillText(value + "명", x, y);
+      });
+    });
+  }
+});
+
