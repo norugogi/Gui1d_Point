@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>너 누구야</title>
+<title>???꾧뎄??/title>
 <link rel="stylesheet" href="css/who.css">
+<script src="js/access-gate.js"></script>
 <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
 </head>
 
@@ -11,42 +12,42 @@
 
 <div class="main">
 
-  <h1 class="title">너 누구야</h1>
+  <h1 class="title">???꾧뎄??/h1>
 
-  <!-- 필터 -->
+  <!-- ?꾪꽣 -->
   <div class="filters">
-    <input id="f_rank" placeholder="필터1: 순위">
-    <input id="f_level" placeholder="필터2: 레벨">
-    <input id="f_grade" placeholder="필터3: 토벌">
+    <input id="f_rank" placeholder="?꾪꽣1: ?쒖쐞">
+    <input id="f_level" placeholder="?꾪꽣2: ?덈꺼">
+    <input id="f_grade" placeholder="?꾪꽣3: ?좊쾶">
 
     <select id="f_class">
-      <option value="">필터4: 직업</option>
-      <option value="AbyssRevenant">심연추방자</option>
-      <option value="Enforcer">집행관</option>
-      <option value="SolarSentinel">태양감시자</option>
-      <option value="RuneScribe">주문각인사</option>
-      <option value="MirageBlade">환영검사</option>
-      <option value="IncenseArcher">향사수</option>
-      <option value="WildWarrior">야만투사</option>
+      <option value="">?꾪꽣4: 吏곸뾽</option>
+      <option value="AbyssRevenant">?ъ뿰異붾갑??/option>
+      <option value="Enforcer">吏묓뻾愿</option>
+      <option value="SolarSentinel">?쒖뼇媛먯떆??/option>
+      <option value="RuneScribe">二쇰Ц媛곸씤??/option>
+      <option value="MirageBlade">?섏쁺寃??/option>
+      <option value="IncenseArcher">?μ궗??/option>
+      <option value="WildWarrior">?쇰쭔?ъ궗</option>
     </select>
 
-    <input id="f_name" placeholder="필터5: 닉네임">
+    <input id="f_name" placeholder="?꾪꽣5: ?됰꽕??>
 
-    <button onclick="searchPlayer()">찾기</button>
-    <button onclick="resetTracking()">초기화</button>
+    <button onclick="searchPlayer()">李얘린</button>
+    <button onclick="resetTracking()">珥덇린??/button>
   </div>
   
-  <!-- 테이블 -->
+  <!-- ?뚯씠釉?-->
   <table class="who-table">
     <thead>
       <tr>
-        <th>서버</th>
-        <th>순위</th>
-        <th>결사</th>
-        <th>닉네임</th>
-        <th>토벌</th>
-        <th>직업</th>
-        <th>카운팅</th>
+        <th>?쒕쾭</th>
+        <th>?쒖쐞</th>
+        <th>寃곗궗</th>
+        <th>?됰꽕??/th>
+        <th>?좊쾶</th>
+        <th>吏곸뾽</th>
+        <th>移댁슫??/th>
       </tr>
     </thead>
     <tbody id="whoBody"></tbody>
@@ -54,23 +55,23 @@
 
 </div>
 
-<!-- 🔥 JS는 반드시 아래 -->
+<!-- ?뵦 JS??諛섎뱶???꾨옒 -->
 <script src="js/who.js"></script>
 
 
-<!-- 🔥 서버 팝업 -->
+<!-- ?뵦 ?쒕쾭 ?앹뾽 -->
 <div id="serverModal" class="modal">
   <div class="modal-content">
-    <span class="close" onclick="closeModal()">×</span>
+    <span class="close" onclick="closeModal()">횞</span>
     <h2 id="modalTitle"></h2>
 
     <table class="who-table">
       <thead>
         <tr>
-          <th>순위</th>
-          <th>닉네임</th>
-          <th>레벨</th>
-          <th>직업</th>
+          <th>?쒖쐞</th>
+          <th>?됰꽕??/th>
+          <th>?덈꺼</th>
+          <th>吏곸뾽</th>
         </tr>
       </thead>
       <tbody id="modalBody"></tbody>
@@ -80,3 +81,4 @@
   
 </body>
 </html>
+
