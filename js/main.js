@@ -241,7 +241,10 @@ function renderChart(id,data){
     },
     options:{
       indexAxis:'y',
-      plugins:{legend:{display:false}},
+      plugins:{
+        legend:{display:false},
+        datalabels:{display:true}
+      },
 
       onClick: (e, elements) => {
 
