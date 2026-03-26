@@ -227,21 +227,69 @@ function renderChart(id,data){
   let labels = entries.map(e=>e[0]);
   let values = entries.map(e=>e[1]);
 
+  const max = Math.max(...values);
+
   box.innerHTML = `<canvas id="${id}Chart"></canvas>`;
+
+  // 🔥 모던 컬러 세트
+  const colors = [
+    "#60a5fa",
+    "#34d399",
+    "#fbbf24",
+    "#a78bfa",
+    "#f472b6",
+    "#38bdf8",
+    "#fb923c"
+  ];
 
   new Chart(document.getElementById(id+"Chart"),{
     type:'bar',
     data:{
       labels,
-      datasets:[{
-        data:values,
-        backgroundColor:["#4da6ff","#ffaa00","#33cc99","#9966ff","#ff6699","#ff9933","#66ccff"],
-        borderRadius:8
-      }]
+      datasets:[
+        {
+          // 🔥 실제 데이터
+          data:values,
+          backgroundColor: colors.slice(0, values.length),
+          borderRadius:10,
+          barPercentage:0.6,
+          categoryPercentage:0.7
+        },
+        {
+          // 🔥 배경 바 (대시보드 느낌 핵심)
+          data:values.map(()=>max),
+          backgroundColor:"rgba(255,255,255,0.05)",
+          borderRadius:10,
+          barPercentage:0.6,
+          categoryPercentage:0.7
+        }
+      ]
     },
     options:{
       indexAxis:'y',
-      plugins:{legend:{display:false}},
+      responsive:true,
+
+      plugins:{
+        legend:{display:false}
+      },
+
+      animation:{
+        duration:800,
+        easing:'easeOutQuart'
+      },
+
+      scales:{
+        x:{
+          beginAtZero:true,
+          grace:'15%',
+          grid:{color:"rgba(255,255,255,0.05)"},
+          ticks:{color:"#888"}
+        },
+        y:{
+          grid:{display:false},
+          ticks:{color:"#ddd"}
+        }
+      },
 
       onClick: (e, elements) => {
 
