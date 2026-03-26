@@ -287,7 +287,7 @@ values.forEach((v,i)=>{
 });
 
 box.style.position = "relative";
-box.innerHTML += labelHTML;
+box.insertAdjacentHTML("beforeend", labelHTML);
 
 /* =====================
    결사 통계
