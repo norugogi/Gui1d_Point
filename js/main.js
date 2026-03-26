@@ -230,54 +230,46 @@ function renderChart(id,data){
   box.innerHTML = `<canvas id="${id}Chart"></canvas>`;
 
   new Chart(document.getElementById(id+"Chart"),{
-  type:'bar',
-  data:{
-    labels,
-    datasets:[{
-      data:values,
-      backgroundColor:["#4da6ff","#ffaa00","#33cc99","#9966ff","#ff6699","#ff9933","#66ccff"],
-      borderRadius:8
-    }]
-  },
-  options:{
-    indexAxis:'y',
-    plugins:{
-      legend:{display:false},
-
-      datalabels:{
-        anchor:'end',
-        align:'right',
-        color:'#fff',
-        formatter:(value)=> value + "명"
-      }
+    type:'bar',
+    data:{
+      labels,
+      datasets:[{
+        data:values,
+        backgroundColor:["#4da6ff","#ffaa00","#33cc99","#9966ff","#ff6699","#ff9933","#66ccff"],
+        borderRadius:8
+      }]
     },
+    options:{
+      indexAxis:'y',
+      plugins:{legend:{display:false}},
 
-    onClick: (e, elements) => {
+      onClick: (e, elements) => {
 
-      if(elements.length === 0) return;
+        if(elements.length === 0) return;
 
-      const index = elements[0].index;
-      const label = labels[index];
+        const index = elements[0].index;
+        const label = labels[index];
 
-      let list = [];
+        let list = [];
 
-      if(id === "classStats"){
-        list = rawData.filter(p => (classMap[p.class] || p.class) == label);
+        if(id === "classStats"){
+          list = rawData.filter(p => (classMap[p.class] || p.class) == label);
+        }
+
+        if(id === "gradeStats"){
+          list = rawData.filter(p => String(p.grade) == String(label));
+        }
+
+        if(id === "levelStats"){
+          list = rawData.filter(p => String(p.gc_level) == String(label));
+        }
+
+        openModal(label, list);
       }
-
-      if(id === "gradeStats"){
-        list = rawData.filter(p => String(p.grade) == String(label));
-      }
-
-      if(id === "levelStats"){
-        list = rawData.filter(p => String(p.gc_level) == String(label));
-      }
-
-      openModal(label, list);
     }
-  }
-});
+  });
 }
+
 /* =====================
    결사 통계
 ===================== */
@@ -307,28 +299,6 @@ function buildGuildStat(data){
 
 function makeStatCard(title, map){
 
-  let entries = Object.entries(map);
-
-  // 🔥 레벨 통계
-  if(title.includes("레벨")){
-    entries = entries
-      .filter(([k]) => Number(k) >= 80 && Number(k) <= 93) // 범위 제한
-      .sort((a,b) => Number(b[0]) - Number(a[0])); // 내림차순
-  }
-
-  // 🔥 토벌 통계
-  if(title.includes("토벌")){
-    entries = entries
-      .filter(([k]) => Number(k) >= 20 && Number(k) <= 25)
-      .sort((a,b) => Number(b[0]) - Number(a[0]));
-  }
-
-  // 🔥 직업 통계 (야만투사 포함 + 정렬)
-  if(title.includes("직업")){
-    entries = entries
-      .sort((a,b) => b[1] - a[1]); // 인원 기준 정렬
-  }
-
   let html = `
     <div class="stat-card">
       <h3>${title}</h3>
@@ -336,9 +306,11 @@ function makeStatCard(title, map){
         <tr><th>구분</th><th>인원</th></tr>
   `;
 
-  entries.forEach(([k,v])=>{
-    html += `<tr><td>${k}</td><td>${v}</td></tr>`;
-  });
+  Object.entries(map)
+    .sort((a,b)=>b[1]-a[1])
+    .forEach(([k,v])=>{
+      html += `<tr><td>${k}</td><td>${v}</td></tr>`;
+    });
 
   html += `
       </table>
@@ -479,4 +451,3 @@ window.addEventListener("keydown", e=>{
     closeSheet();
   }
 });
-}
