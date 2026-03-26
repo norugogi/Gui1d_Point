@@ -299,6 +299,28 @@ function buildGuildStat(data){
 
 function makeStatCard(title, map){
 
+  let entries = Object.entries(map);
+
+  // 🔥 레벨 통계
+  if(title.includes("레벨")){
+    entries = entries
+      .filter(([k]) => Number(k) >= 80 && Number(k) <= 93) // 범위 제한
+      .sort((a,b) => Number(b[0]) - Number(a[0])); // 내림차순
+  }
+
+  // 🔥 토벌 통계
+  if(title.includes("토벌")){
+    entries = entries
+      .filter(([k]) => Number(k) >= 20 && Number(k) <= 25)
+      .sort((a,b) => Number(b[0]) - Number(a[0]));
+  }
+
+  // 🔥 직업 통계 (야만투사 포함 + 정렬)
+  if(title.includes("직업")){
+    entries = entries
+      .sort((a,b) => b[1] - a[1]); // 인원 기준 정렬
+  }
+
   let html = `
     <div class="stat-card">
       <h3>${title}</h3>
@@ -306,11 +328,9 @@ function makeStatCard(title, map){
         <tr><th>구분</th><th>인원</th></tr>
   `;
 
-  Object.entries(map)
-    .sort((a,b)=>b[1]-a[1])
-    .forEach(([k,v])=>{
-      html += `<tr><td>${k}</td><td>${v}</td></tr>`;
-    });
+  entries.forEach(([k,v])=>{
+    html += `<tr><td>${k}</td><td>${v}</td></tr>`;
+  });
 
   html += `
       </table>
