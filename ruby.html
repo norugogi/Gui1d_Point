@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="css/style.css">
+<title>루비 공헌도</title>
+
+<style>
+/* 🔥 추가된 부분 (UI 개선 핵심) */
+
+.ruby-container {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+/* 테이블 고정 */
+#rubyTableWrap {
+  width: 100%;
+  table-layout: fixed;
+}
+
+/* 헤더 고정 */
+#rubyTableWrap thead th {
+  position: sticky;
+  top: 0;
+  background: #1e1e1e;
+  z-index: 2;
+}
+
+/* 가로 터짐 방지 */
+#rubyTableWrap td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="main ruby-page">
+
+  <div class="title">루비 공헌 순위</div>
+
+  <div class="center">
+    <select id="groupFilter">
+      <option value="all">전체</option>
+      <option value="DOG">DOG</option>
+      <option value="CAT">CAT</option>
+    </select>
+
+    <select id="seasonFilter"></select>
+    <select id="weekFilter"></select>
+  </div>
+
+  <div class="bar-wrap">
+    <div id="rubyBar" class="bar"></div>
+  </div>
+
+  <div class="center" id="rubyText"></div>
+  <div class="center" id="rubyPercent"></div>
+
+  <!-- 🔥 여기만 추가됨 -->
+  <div class="ruby-container">
+    <table id="rubyTableWrap">
+      <thead>
+        <tr>
+          <th>순위</th>
+          <th>시즌</th>
+          <th>주차</th>
+          <th>결사</th>
+          <th>닉네임</th>
+          <th>총누적</th>
+          <th>주차공헌</th>
+        </tr>
+      </thead>
+      <tbody id="rubyTable"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<script src="js/script.js"></script>
+<script src="js/ruby.js"></script>
+
+</body>
+</html>
