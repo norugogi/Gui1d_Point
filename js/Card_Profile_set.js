@@ -5,7 +5,9 @@ let csvRows = [];
 async function fetchJson(path) {
   const res = await fetch(path, { cache: "no-store" });
   if (!res.ok) throw new Error(`Load failed: ${path}`);
-  return await res.json();
+  const buf = await res.arrayBuffer();
+  const text = decodeBestTextFromBuffer(buf);
+  return JSON.parse(text);
 }
 
 function mapFromBaseRow(row) {
@@ -19,6 +21,49 @@ function mapFromBaseRow(row) {
     guild_rank: row.guild_rank || "",
     feature: row.feature || ""
   };
+}
+
+function normalizeName(value) {
+  return String(value || "")
+    .replace(/^\uFEFF/, "")
+    .replace(/[\u200B-\u200D\u2060]/g, "")
+    .replace(/\s+/g, "")
+    .normalize("NFKC")
+    .trim()
+    .toLowerCase();
+}
+
+function decodeBuffer(buffer, encoding) {
+  try {
+    return new TextDecoder(encoding).decode(buffer);
+  } catch (_err) {
+    return "";
+  }
+}
+
+function scoreTextQuality(text) {
+  const sample = String(text || "").slice(0, 6000);
+  const hangul = (sample.match(/[가-힣]/g) || []).length;
+  const replacement = (sample.match(/�/g) || []).length;
+  const strangeQ = (sample.match(/\?[^\s,\]\}"':]/g) || []).length;
+  return (hangul * 3) - (replacement * 5) - (strangeQ * 2);
+}
+
+function decodeBestTextFromBuffer(buffer) {
+  const candidates = ["utf-8", "euc-kr", "cp949"];
+  let bestText = "";
+  let bestScore = -Infinity;
+
+  candidates.forEach((enc) => {
+    const text = decodeBuffer(buffer, enc);
+    const score = scoreTextQuality(text);
+    if (score > bestScore) {
+      bestScore = score;
+      bestText = text;
+    }
+  });
+
+  return bestText;
 }
 
 function parseCsvLine(line) {
@@ -92,11 +137,11 @@ function applyCsvMatch() {
 
   const csvMap = new Map();
   csvRows.forEach((row) => {
-    csvMap.set(row.name, row);
+    csvMap.set(normalizeName(row.name), row);
   });
 
   profileData = profileData.map((member) => {
-    const key = String(member.gc_name || "").trim();
+    const key = normalizeName(member.gc_name);
     const hit = csvMap.get(key);
 
     if (!hit) {
@@ -178,14 +223,15 @@ function handleFile(file) {
   const reader = new FileReader();
   reader.onload = () => {
     try {
-      const parsed = JSON.parse(String(reader.result || "[]"));
+      const text = decodeBestTextFromBuffer(reader.result);
+      const parsed = JSON.parse(String(text || "[]"));
       profileData = Array.isArray(parsed) ? parsed.map(mapFromBaseRow) : [];
       renderMemberList();
     } catch (err) {
       alert("JSON 파싱 실패: " + String(err));
     }
   };
-  reader.readAsText(file, "utf-8");
+  reader.readAsArrayBuffer(file);
 }
 
 function handleCsvFile(file) {
@@ -194,13 +240,14 @@ function handleCsvFile(file) {
   const reader = new FileReader();
   reader.onload = () => {
     try {
-      csvRows = parseCsv(String(reader.result || ""));
+      const text = decodeBestTextFromBuffer(reader.result);
+      csvRows = parseCsv(String(text || ""));
       alert(`CSV 로드 완료: ${csvRows.length}명`);
     } catch (err) {
       alert("CSV 파싱 실패: " + String(err));
     }
   };
-  reader.readAsText(file, "utf-8");
+  reader.readAsArrayBuffer(file);
 }
 
 function bindEvents() {

@@ -89,9 +89,7 @@ function renderProfiles() {
                   <span>${escapeHtml(formatLevel(p.gc_level))}</span>
                   <span>${escapeHtml(formatGrade(p.grade))}</span>
                 </div>
-                <div class="front-rule"></div>
                 <div class="front-name">${escapeHtml(p.gc_name)}</div>
-                <div class="front-rule"></div>
               </div>
             </div>
           </section>
