@@ -82,7 +82,7 @@ function renderProfiles() {
     return `
       <article class="profile-card" data-index="${idx}">
         <div class="profile-card-inner">
-          <section class="profile-face profile-front" style="--gold-image:url('${goldImage}'); background-image:url('${grayImage}')">
+          <section class="profile-face profile-front" data-gray="${grayImage}" data-gold="${goldImage}" style="background-image:url('${grayImage}')">
             <div class="front-overlay">
               <div class="front-bottom">
                 <div class="front-stats">
@@ -120,6 +120,19 @@ function renderProfiles() {
   grid.querySelectorAll(".profile-card").forEach((card) => {
     card.addEventListener("click", () => {
       card.classList.toggle("flipped");
+    });
+  });
+
+  grid.querySelectorAll(".profile-front").forEach((front) => {
+    const gray = front.getAttribute("data-gray") || "";
+    const gold = front.getAttribute("data-gold") || "";
+
+    front.addEventListener("mouseenter", () => {
+      if (gold) front.style.backgroundImage = `url('${gold}')`;
+    });
+
+    front.addEventListener("mouseleave", () => {
+      if (gray) front.style.backgroundImage = `url('${gray}')`;
     });
   });
 

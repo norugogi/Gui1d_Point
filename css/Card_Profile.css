@@ -81,10 +81,6 @@ body {
   background-position: center;
 }
 
-.profile-card:hover .profile-front:not(.locked) {
-  background-image: var(--gold-image) !important;
-}
-
 .front-overlay {
   position: absolute;
   inset: 0;
@@ -99,6 +95,7 @@ body {
   padding: 4px 10px 8px;
   color: #f2f2f2;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.75);
+  transform: translateY(-10px);
 }
 
 .front-stats {

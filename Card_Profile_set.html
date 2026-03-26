@@ -15,6 +15,8 @@
       <div class="set-row">
         <button id="loadDefaultBtn" type="button">data/catdog_all_in_one.json 불러오기</button>
         <input id="sourceJsonInput" type="file" accept=".json,application/json">
+        <input id="sourceCsvInput" type="file" accept=".csv,text/csv">
+        <button id="applyCsvBtn" type="button">CSV 자동 매칭 적용</button>
       </div>
 
       <div class="set-grid">
@@ -51,7 +53,7 @@
         </div>
       </div>
 
-      <p class="set-help">입력값은 멤버 이동 시 자동 반영됩니다. 모든 멤버 입력을 마친 뒤 다운로드하면 됩니다.</p>
+      <p class="set-help">JSON과 CSV를 불러온 뒤 <code>CSV 자동 매칭 적용</code>을 누르면 닉네임 기준으로 전투력/결사등급/특징이 자동 반영됩니다. CSV에 없는 닉네임은 <code>-</code>로 저장됩니다.</p>
     </section>
   </main>
 

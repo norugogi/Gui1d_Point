@@ -1,5 +1,6 @@
-﻿let profileData = [];
+let profileData = [];
 let selectedIndex = -1;
+let csvRows = [];
 
 async function fetchJson(path) {
   const res = await fetch(path, { cache: "no-store" });
@@ -18,6 +19,105 @@ function mapFromBaseRow(row) {
     guild_rank: row.guild_rank || "",
     feature: row.feature || ""
   };
+}
+
+function parseCsvLine(line) {
+  const out = [];
+  let cur = "";
+  let inQuotes = false;
+
+  for (let i = 0; i < line.length; i += 1) {
+    const ch = line[i];
+
+    if (ch === "\"") {
+      const next = line[i + 1];
+      if (inQuotes && next === "\"") {
+        cur += "\"";
+        i += 1;
+      } else {
+        inQuotes = !inQuotes;
+      }
+      continue;
+    }
+
+    if (ch === "," && !inQuotes) {
+      out.push(cur.trim());
+      cur = "";
+      continue;
+    }
+
+    cur += ch;
+  }
+
+  out.push(cur.trim());
+  return out;
+}
+
+function parseCsv(text) {
+  const lines = String(text || "")
+    .replace(/\r\n/g, "\n")
+    .replace(/\r/g, "\n")
+    .split("\n")
+    .filter((line) => line.trim().length > 0);
+
+  if (!lines.length) return [];
+
+  const parsed = lines.map(parseCsvLine);
+  const first = parsed[0] || [];
+  const firstA = String(first[0] || "").replace(/\s/g, "");
+  const firstB = String(first[1] || "").replace(/\s/g, "");
+  const hasHeader = firstA.includes("닉네임") && firstB.includes("전투력");
+
+  const rows = hasHeader ? parsed.slice(1) : parsed;
+  return rows.map((cols) => ({
+    name: String(cols[0] || "").trim(),
+    power: String(cols[1] || "").trim(),
+    guild_rank: String(cols[2] || "").trim(),
+    feature: String(cols[3] || "").trim()
+  })).filter((row) => row.name);
+}
+
+function applyCsvMatch() {
+  if (!profileData.length) {
+    alert("먼저 JSON 데이터를 불러와주세요.");
+    return;
+  }
+
+  if (!csvRows.length) {
+    alert("먼저 CSV 파일을 불러와주세요.");
+    return;
+  }
+
+  syncEditorToCurrentMember();
+
+  const csvMap = new Map();
+  csvRows.forEach((row) => {
+    csvMap.set(row.name, row);
+  });
+
+  profileData = profileData.map((member) => {
+    const key = String(member.gc_name || "").trim();
+    const hit = csvMap.get(key);
+
+    if (!hit) {
+      return {
+        ...member,
+        power: "-",
+        guild_rank: "-",
+        feature: "-"
+      };
+    }
+
+    return {
+      ...member,
+      power: hit.power || "-",
+      guild_rank: hit.guild_rank || "-",
+      feature: hit.feature || "-"
+    };
+  });
+
+  renderMemberList();
+  alert("CSV 자동 매칭이 완료되었습니다.");
 }
 
 function renderMemberList() {
@@ -88,6 +188,21 @@ function handleFile(file) {
   reader.readAsText(file, "utf-8");
 }
 
+function handleCsvFile(file) {
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      csvRows = parseCsv(String(reader.result || ""));
+      alert(`CSV 로드 완료: ${csvRows.length}명`);
+    } catch (err) {
+      alert("CSV 파싱 실패: " + String(err));
+    }
+  };
+  reader.readAsText(file, "utf-8");
+}
+
 function bindEvents() {
   document.getElementById("loadDefaultBtn")?.addEventListener("click", async () => {
     try {
@@ -101,6 +216,13 @@ function bindEvents() {
     const file = e.target.files?.[0];
     handleFile(file);
   });
+
+  document.getElementById("sourceCsvInput")?.addEventListener("change", (e) => {
+    const file = e.target.files?.[0];
+    handleCsvFile(file);
+  });
+
+  document.getElementById("applyCsvBtn")?.addEventListener("click", applyCsvMatch);
 
   document.getElementById("memberSelect")?.addEventListener("change", (e) => {
     syncEditorToCurrentMember();
