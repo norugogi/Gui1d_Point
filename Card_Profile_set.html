@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card Profile Set</title>
+  <link rel="stylesheet" href="css/Card_Profile_set.css">
+  <script src="js/access-gate.js"></script>
+</head>
+<body class="no-sidebar">
+  <main class="set-main">
+    <h1>Card_Profile.json 가공 도구</h1>
+
+    <section class="set-panel">
+      <div class="set-row">
+        <button id="loadDefaultBtn" type="button">data/catdog_all_in_one.json 불러오기</button>
+        <input id="sourceJsonInput" type="file" accept=".json,application/json">
+      </div>
+
+      <div class="set-grid">
+        <div>
+          <label for="memberSelect">결사원 선택</label>
+          <select id="memberSelect" size="16" class="member-select"></select>
+        </div>
+
+        <div>
+          <label>닉네임</label>
+          <input id="nameInput" type="text" readonly>
+
+          <label>레벨</label>
+          <input id="levelInput" type="text" readonly>
+
+          <label>토벌</label>
+          <input id="gradeInput" type="text" readonly>
+
+          <label>직업</label>
+          <input id="classInput" type="text" readonly>
+
+          <label>전투력</label>
+          <input id="powerInput" type="text" placeholder="예) 1,234,567">
+
+          <label>결사등급</label>
+          <input id="guildRankInput" type="text" placeholder="예) 결사원">
+
+          <label>특징</label>
+          <textarea id="featureInput" rows="4" placeholder="예) 레이드 콜 담당"></textarea>
+
+          <div class="set-actions">
+            <button id="saveOneBtn" type="button">현재 멤버 저장</button>
+            <button id="downloadBtn" type="button">Card_Profile.json 다운로드</button>
+          </div>
+        </div>
+      </div>
+
+      <p class="set-help">저장 버튼으로 멤버별 정보를 반영한 뒤 다운로드하면, 생성된 파일명을 <code>Card_Profile.json</code>으로 업로드하면 됩니다.</p>
+    </section>
+  </main>
+
+  <script src="js/Card_Profile_set.js"></script>
+</body>
+</html>

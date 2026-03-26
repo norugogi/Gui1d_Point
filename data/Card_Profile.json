@@ -1,0 +1,972 @@
+[
+  {
+    "gc_name": "유튜브맛나는꼬꼬",
+    "gc_level": 92,
+    "grade": "25",
+    "class": "AbyssRevenant",
+    "guild_name": "DOG",
+    "power": "50405",
+    "guild_rank": "결사간부",
+    "feature": "프전 공무원 / 오더담당"
+  },
+  {
+    "gc_name": "샬롯",
+    "gc_level": 87,
+    "grade": "21",
+    "class": "AbyssRevenant",
+    "guild_name": "DOG",
+    "power": "39211",
+    "guild_rank": "결사원",
+    "feature": ""
+  },
+  {
+    "gc_name": "어피치",
+    "gc_level": 87,
+    "grade": "21",
+    "class": "AbyssRevenant",
+    "guild_name": "CATT",
+    "power": "36354",
+    "guild_rank": "결사원",
+    "feature": ""
+  },
+  {
+    "gc_name": "아스타로드",
+    "gc_level": 86,
+    "grade": "22",
+    "class": "AbyssRevenant",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "결사원",
+    "feature": ""
+  },
+  {
+    "gc_name": "아톰",
+    "gc_level": 92,
+    "grade": "25",
+    "class": "SolarSentinel",
+    "guild_name": "DOG",
+    "power": "50119",
+    "guild_rank": "결사원",
+    "feature": "황금 깐트롤"
+  },
+  {
+    "gc_name": "은빈",
+    "gc_level": 91,
+    "grade": "24",
+    "class": "SolarSentinel",
+    "guild_name": "DOG",
+    "power": "49007",
+    "guild_rank": "결사원",
+    "feature": "강력한 한방!"
+  },
+  {
+    "gc_name": "쉼텨",
+    "gc_level": 90,
+    "grade": "24",
+    "class": "SolarSentinel",
+    "guild_name": "DOG",
+    "power": "47778",
+    "guild_rank": "결사원",
+    "feature": "아군이라 다행"
+  },
+  {
+    "gc_name": "룽지",
+    "gc_level": 90,
+    "grade": "24",
+    "class": "SolarSentinel",
+    "guild_name": "DOG",
+    "power": "46370",
+    "guild_rank": "결사원",
+    "feature": ""
+  },
+  {
+    "gc_name": "마운틴",
+    "gc_level": 90,
+    "grade": "24",
+    "class": "SolarSentinel",
+    "guild_name": "DOG",
+    "power": "45476",
+    "guild_rank": "결사원",
+    "feature": ""
+  },
+  {
+    "gc_name": "고녜이",
+    "gc_level": 89,
+    "grade": "24",
+    "class": "SolarSentinel",
+    "guild_name": "CATT",
+    "power": "44733",
+    "guild_rank": "결사원",
+    "feature": ""
+  },
+  {
+    "gc_name": "학연",
+    "gc_level": 89,
+    "grade": "25",
+    "class": "SolarSentinel",
+    "guild_name": "DOG",
+    "power": "44990",
+    "guild_rank": "결사원",
+    "feature": ""
+  },
+  {
+    "gc_name": "가오",
+    "gc_level": 88,
+    "grade": "24",
+    "class": "SolarSentinel",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "윙티",
+    "gc_level": 85,
+    "grade": "20",
+    "class": "SolarSentinel",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "키키키",
+    "gc_level": 91,
+    "grade": "25",
+    "class": "MirageBlade",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "더춘식",
+    "gc_level": 89,
+    "grade": "24",
+    "class": "MirageBlade",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "덥뿡",
+    "gc_level": 88,
+    "grade": "23",
+    "class": "MirageBlade",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "히이잉",
+    "gc_level": 87,
+    "grade": "23",
+    "class": "MirageBlade",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "시바샤아꼬",
+    "gc_level": 87,
+    "grade": "21",
+    "class": "MirageBlade",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "류마",
+    "gc_level": 87,
+    "grade": "22",
+    "class": "MirageBlade",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "슈란",
+    "gc_level": 86,
+    "grade": "22",
+    "class": "MirageBlade",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "캣캣",
+    "gc_level": 73,
+    "grade": "9",
+    "class": "MirageBlade",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "루비꼬",
+    "gc_level": 91,
+    "grade": "24",
+    "class": "IncenseArcher",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "로빈후드",
+    "gc_level": 90,
+    "grade": "25",
+    "class": "IncenseArcher",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "베찌",
+    "gc_level": 90,
+    "grade": "24",
+    "class": "IncenseArcher",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "강새이",
+    "gc_level": 89,
+    "grade": "25",
+    "class": "IncenseArcher",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "마위",
+    "gc_level": 89,
+    "grade": "24",
+    "class": "IncenseArcher",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "자미꼬",
+    "gc_level": 89,
+    "grade": "25",
+    "class": "IncenseArcher",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "NORU",
+    "gc_level": 89,
+    "grade": "24",
+    "class": "IncenseArcher",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "세월의나그네",
+    "gc_level": 88,
+    "grade": "23",
+    "class": "IncenseArcher",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "커먼",
+    "gc_level": 88,
+    "grade": "24",
+    "class": "IncenseArcher",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "백화",
+    "gc_level": 87,
+    "grade": "21",
+    "class": "IncenseArcher",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "혈압",
+    "gc_level": 87,
+    "grade": "22",
+    "class": "IncenseArcher",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "율하이",
+    "gc_level": 85,
+    "grade": "20",
+    "class": "IncenseArcher",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "더춘심",
+    "gc_level": 85,
+    "grade": "20",
+    "class": "IncenseArcher",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "강알리",
+    "gc_level": 84,
+    "grade": "20",
+    "class": "IncenseArcher",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "reina",
+    "gc_level": 84,
+    "grade": "20",
+    "class": "IncenseArcher",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "거리",
+    "gc_level": 83,
+    "grade": "20",
+    "class": "IncenseArcher",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "수꼬",
+    "gc_level": 91,
+    "grade": "25",
+    "class": "RuneScribe",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "Aewol",
+    "gc_level": 91,
+    "grade": "25",
+    "class": "RuneScribe",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "다야꼬",
+    "gc_level": 90,
+    "grade": "24",
+    "class": "RuneScribe",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "마루꼬",
+    "gc_level": 90,
+    "grade": "25",
+    "class": "RuneScribe",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "소운",
+    "gc_level": 90,
+    "grade": "25",
+    "class": "RuneScribe",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "카린",
+    "gc_level": 89,
+    "grade": "24",
+    "class": "RuneScribe",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "보축",
+    "gc_level": 89,
+    "grade": "24",
+    "class": "RuneScribe",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "갈색",
+    "gc_level": 89,
+    "grade": "24",
+    "class": "RuneScribe",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "좀비",
+    "gc_level": 89,
+    "grade": "24",
+    "class": "RuneScribe",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "바벨",
+    "gc_level": 89,
+    "grade": "24",
+    "class": "RuneScribe",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "랄랄",
+    "gc_level": 88,
+    "grade": "23",
+    "class": "RuneScribe",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "강모",
+    "gc_level": 88,
+    "grade": "24",
+    "class": "RuneScribe",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "유성낙하",
+    "gc_level": 88,
+    "grade": "23",
+    "class": "RuneScribe",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "시바키지",
+    "gc_level": 88,
+    "grade": "23",
+    "class": "RuneScribe",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "야추",
+    "gc_level": 88,
+    "grade": "23",
+    "class": "RuneScribe",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "김부각",
+    "gc_level": 87,
+    "grade": "23",
+    "class": "RuneScribe",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "일보",
+    "gc_level": 87,
+    "grade": "23",
+    "class": "RuneScribe",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "히잉",
+    "gc_level": 87,
+    "grade": "22",
+    "class": "RuneScribe",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "사탄의한",
+    "gc_level": 86,
+    "grade": "22",
+    "class": "RuneScribe",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "델라꼬",
+    "gc_level": 86,
+    "grade": "24",
+    "class": "RuneScribe",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "오월의우니",
+    "gc_level": 86,
+    "grade": "22",
+    "class": "RuneScribe",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "시바화아타",
+    "gc_level": 86,
+    "grade": "21",
+    "class": "RuneScribe",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "소마",
+    "gc_level": 86,
+    "grade": "21",
+    "class": "RuneScribe",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "로카",
+    "gc_level": 86,
+    "grade": "22",
+    "class": "RuneScribe",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "범꼬",
+    "gc_level": 86,
+    "grade": "22",
+    "class": "RuneScribe",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "Day",
+    "gc_level": 86,
+    "grade": "22",
+    "class": "RuneScribe",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "와치",
+    "gc_level": 86,
+    "grade": "22",
+    "class": "RuneScribe",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "물약",
+    "gc_level": 85,
+    "grade": "21",
+    "class": "RuneScribe",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "시바멍멍",
+    "gc_level": 85,
+    "grade": "20",
+    "class": "RuneScribe",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "유원지",
+    "gc_level": 84,
+    "grade": "19",
+    "class": "RuneScribe",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "모모쨩",
+    "gc_level": 84,
+    "grade": "20",
+    "class": "RuneScribe",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "냥꼬",
+    "gc_level": 82,
+    "grade": "19",
+    "class": "RuneScribe",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "바라문",
+    "gc_level": 80,
+    "grade": "19",
+    "class": "RuneScribe",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "김쓰",
+    "gc_level": 89,
+    "grade": "24",
+    "class": "WildWarrior",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "프로도",
+    "gc_level": 89,
+    "grade": "25",
+    "class": "WildWarrior",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "미스릴",
+    "gc_level": 88,
+    "grade": "22",
+    "class": "WildWarrior",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "로저",
+    "gc_level": 88,
+    "grade": "24",
+    "class": "WildWarrior",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "준태",
+    "gc_level": 87,
+    "grade": "23",
+    "class": "WildWarrior",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "검방",
+    "gc_level": 87,
+    "grade": "22",
+    "class": "WildWarrior",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "롬멜",
+    "gc_level": 92,
+    "grade": "25",
+    "class": "Enforcer",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "시로",
+    "gc_level": 91,
+    "grade": "25",
+    "class": "Enforcer",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "도랏",
+    "gc_level": 91,
+    "grade": "25",
+    "class": "Enforcer",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "바비",
+    "gc_level": 91,
+    "grade": "24",
+    "class": "Enforcer",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "난동",
+    "gc_level": 91,
+    "grade": "24",
+    "class": "Enforcer",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "작두",
+    "gc_level": 90,
+    "grade": "25",
+    "class": "Enforcer",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "훌꼬",
+    "gc_level": 89,
+    "grade": "24",
+    "class": "Enforcer",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "캣해일",
+    "gc_level": 89,
+    "grade": "23",
+    "class": "Enforcer",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "리챔",
+    "gc_level": 89,
+    "grade": "24",
+    "class": "Enforcer",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "진빼이꼬",
+    "gc_level": 89,
+    "grade": "24",
+    "class": "Enforcer",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "녹색영약",
+    "gc_level": 88,
+    "grade": "24",
+    "class": "Enforcer",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "도라",
+    "gc_level": 88,
+    "grade": "23",
+    "class": "Enforcer",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "서슬활",
+    "gc_level": 88,
+    "grade": "24",
+    "class": "Enforcer",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "호쓰",
+    "gc_level": 87,
+    "grade": "24",
+    "class": "Enforcer",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "준꼬",
+    "gc_level": 87,
+    "grade": "24",
+    "class": "Enforcer",
+    "guild_name": "DOG",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "탄지꼬",
+    "gc_level": 86,
+    "grade": "23",
+    "class": "Enforcer",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "필레노우체",
+    "gc_level": 85,
+    "grade": "20",
+    "class": "Enforcer",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "죠르디",
+    "gc_level": 84,
+    "grade": "19",
+    "class": "Enforcer",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "시바주야",
+    "gc_level": 84,
+    "grade": "19",
+    "class": "Enforcer",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "짜배이꼬",
+    "gc_level": 83,
+    "grade": "17",
+    "class": "Enforcer",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  },
+  {
+    "gc_name": "봄이오나봄",
+    "gc_level": 83,
+    "grade": "17",
+    "class": "Enforcer",
+    "guild_name": "CATT",
+    "power": "",
+    "guild_rank": "",
+    "feature": ""
+  }
+]
