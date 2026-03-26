@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>너 누구야</title>
+<link rel="stylesheet" href="css/who.css">
+</head>
+
+<body>
+
+<div class="main">
+
+  <h1 class="title">너 누구야</h1>
+
+  <!-- 필터 -->
+  <div class="filters">
+    <input id="f_rank" placeholder="필터1: 순위">
+    <input id="f_level" placeholder="필터2: 레벨">
+    <input id="f_grade" placeholder="필터3: 토벌">
+
+    <select id="f_class">
+      <option value="">필터4: 직업</option>
+      <option value="AbyssRevenant">심연추방자</option>
+      <option value="Enforcer">집행관</option>
+      <option value="SolarSentinel">태양감시자</option>
+      <option value="RuneScribe">주문각인사</option>
+      <option value="MirageBlade">환영검사</option>
+      <option value="IncenseArcher">향사수</option>
+      <option value="WildWarrior">야만투사</option>
+    </select>
+
+    <input id="f_name" placeholder="필터5: 닉네임">
+
+    <button onclick="searchPlayer()">찾기</button>
+  </div>
+
+  <!-- 테이블 -->
+  <table class="who-table">
+    <thead>
+      <tr>
+        <th>서버</th>
+        <th>순위</th>
+        <th>결사</th>
+        <th>닉네임</th>
+        <th>토벌</th>
+        <th>직업</th>
+        <th>퍼센트</th>
+      </tr>
+    </thead>
+    <tbody id="whoBody"></tbody>
+  </table>
+
+</div>
+
+<!-- 🔥 JS는 반드시 아래 -->
+<script src="js/who.js"></script>
+
+
+<!-- 🔥 서버 팝업 -->
+<div id="serverModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">×</span>
+    <h2 id="modalTitle"></h2>
+
+    <table class="who-table">
+      <thead>
+        <tr>
+          <th>순위</th>
+          <th>닉네임</th>
+          <th>레벨</th>
+          <th>직업</th>
+        </tr>
+      </thead>
+      <tbody id="modalBody"></tbody>
+    </table>
+  </div>
+</div>
+  
+</body>
+</html>
