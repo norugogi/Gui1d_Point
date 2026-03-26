@@ -572,15 +572,3 @@ tbody tr:nth-child(3) {
   width: 600px;
   margin: 20px auto;
 }
-
-/*===혹시몰라서 카드디자인 변경=====*/
-.card {
-  background: linear-gradient(
-    145deg,
-    #1a1d24,
-    #111318
-  );
-  border: 1px solid rgba(255,255,255,0.05);
-  border-radius: 14px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-}
