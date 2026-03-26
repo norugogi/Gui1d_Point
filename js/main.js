@@ -215,8 +215,6 @@ function add(map,key){
 /* =====================
    그래프
 ===================== */
-Chart.plugins.register(ChartDataLabels);
-
 function renderChart(id,data){
 
   const box = document.getElementById(id);
@@ -230,7 +228,7 @@ function renderChart(id,data){
   let values = entries.map(e=>e[1]);
 
   box.innerHTML = `<canvas id="${id}Chart"></canvas>`;
-  
+
   new Chart(document.getElementById(id+"Chart"),{
     type:'bar',
     data:{
@@ -243,19 +241,7 @@ function renderChart(id,data){
     },
     options:{
       indexAxis:'y',
-      
-      plugins:{
-        legend:{display:false},
-        datalabels:{
-          display:true,
-          anchor:'end',
-          align:'right',
-          color:'#fff',
-          formatter:function(value){
-            return value + "명";
-          }
-        }
-      },
+      plugins:{legend:{display:false}},
 
       onClick: (e, elements) => {
 
