@@ -276,8 +276,6 @@ function renderChart(id,data){
       openModal(label, list);
     }
   },
-
-  plugins:[window.ChartDataLabels]
 });
 
 /* =====================
