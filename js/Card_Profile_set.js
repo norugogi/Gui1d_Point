@@ -48,17 +48,16 @@ function loadSelectedMember() {
   document.getElementById("featureInput").value = m.feature || "";
 }
 
-function saveCurrentMember() {
+function syncEditorToCurrentMember() {
   if (selectedIndex < 0 || selectedIndex >= profileData.length) return;
 
   profileData[selectedIndex].power = document.getElementById("powerInput").value.trim();
   profileData[selectedIndex].guild_rank = document.getElementById("guildRankInput").value.trim();
   profileData[selectedIndex].feature = document.getElementById("featureInput").value.trim();
-
-  alert("현재 멤버 정보가 반영되었습니다.");
 }
 
 function downloadJson() {
+  syncEditorToCurrentMember();
   const blob = new Blob([JSON.stringify(profileData, null, 2)], { type: "application/json" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
@@ -104,11 +103,14 @@ function bindEvents() {
   });
 
   document.getElementById("memberSelect")?.addEventListener("change", (e) => {
+    syncEditorToCurrentMember();
     selectedIndex = Number(e.target.value);
     loadSelectedMember();
   });
 
-  document.getElementById("saveOneBtn")?.addEventListener("click", saveCurrentMember);
+  document.getElementById("powerInput")?.addEventListener("input", syncEditorToCurrentMember);
+  document.getElementById("guildRankInput")?.addEventListener("input", syncEditorToCurrentMember);
+  document.getElementById("featureInput")?.addEventListener("input", syncEditorToCurrentMember);
   document.getElementById("downloadBtn")?.addEventListener("click", downloadJson);
 }
 

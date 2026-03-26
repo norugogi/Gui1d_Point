@@ -7,7 +7,7 @@
     "guild_name": "DOG",
     "power": "50405",
     "guild_rank": "결사간부",
-    "feature": "프전 공무원 / 오더담당"
+    "feature": "프전공무원/오더담당"
   },
   {
     "gc_name": "샬롯",
@@ -35,7 +35,7 @@
     "grade": "22",
     "class": "AbyssRevenant",
     "guild_name": "CATT",
-    "power": "",
+    "power": "-",
     "guild_rank": "결사원",
     "feature": ""
   },
@@ -47,7 +47,7 @@
     "guild_name": "DOG",
     "power": "50119",
     "guild_rank": "결사원",
-    "feature": "황금 깐트롤"
+    "feature": "황금깐트롤"
   },
   {
     "gc_name": "은빈",
@@ -57,7 +57,7 @@
     "guild_name": "DOG",
     "power": "49007",
     "guild_rank": "결사원",
-    "feature": "강력한 한방!"
+    "feature": ""
   },
   {
     "gc_name": "쉼텨",
@@ -115,8 +115,8 @@
     "grade": "24",
     "class": "SolarSentinel",
     "guild_name": "DOG",
-    "power": "",
-    "guild_rank": "",
+    "power": "42003",
+    "guild_rank": "결사원",
     "feature": ""
   },
   {
@@ -125,8 +125,8 @@
     "grade": "20",
     "class": "SolarSentinel",
     "guild_name": "CATT",
-    "power": "",
-    "guild_rank": "",
+    "power": "34326",
+    "guild_rank": "결사원",
     "feature": ""
   },
   {
@@ -135,8 +135,8 @@
     "grade": "25",
     "class": "MirageBlade",
     "guild_name": "DOG",
-    "power": "",
-    "guild_rank": "",
+    "power": "48544",
+    "guild_rank": "결사원",
     "feature": ""
   },
   {
@@ -145,8 +145,8 @@
     "grade": "24",
     "class": "MirageBlade",
     "guild_name": "DOG",
-    "power": "",
-    "guild_rank": "",
+    "power": "45582",
+    "guild_rank": "결사원",
     "feature": ""
   },
   {
@@ -155,8 +155,8 @@
     "grade": "23",
     "class": "MirageBlade",
     "guild_name": "DOG",
-    "power": "",
-    "guild_rank": "",
+    "power": "44058",
+    "guild_rank": "결사원",
     "feature": ""
   },
   {
@@ -165,8 +165,8 @@
     "grade": "23",
     "class": "MirageBlade",
     "guild_name": "CATT",
-    "power": "",
-    "guild_rank": "",
+    "power": "39490",
+    "guild_rank": "결사원",
     "feature": ""
   },
   {
@@ -175,8 +175,8 @@
     "grade": "21",
     "class": "MirageBlade",
     "guild_name": "CATT",
-    "power": "",
-    "guild_rank": "",
+    "power": "35195",
+    "guild_rank": "결사원",
     "feature": ""
   },
   {
@@ -195,8 +195,8 @@
     "grade": "22",
     "class": "MirageBlade",
     "guild_name": "CATT",
-    "power": "",
-    "guild_rank": "",
+    "power": "40029",
+    "guild_rank": "결사원",
     "feature": ""
   },
   {
@@ -205,8 +205,8 @@
     "grade": "9",
     "class": "MirageBlade",
     "guild_name": "CATT",
-    "power": "",
-    "guild_rank": "",
+    "power": "-",
+    "guild_rank": "CAT 결사장",
     "feature": ""
   },
   {
@@ -215,8 +215,8 @@
     "grade": "24",
     "class": "IncenseArcher",
     "guild_name": "DOG",
-    "power": "",
-    "guild_rank": "",
+    "power": "48059",
+    "guild_rank": "결사원",
     "feature": ""
   },
   {
@@ -225,8 +225,8 @@
     "grade": "25",
     "class": "IncenseArcher",
     "guild_name": "DOG",
-    "power": "",
-    "guild_rank": "",
+    "power": "46131",
+    "guild_rank": "결사원",
     "feature": ""
   },
   {
@@ -235,8 +235,8 @@
     "grade": "24",
     "class": "IncenseArcher",
     "guild_name": "DOG",
-    "power": "",
-    "guild_rank": "",
+    "power": "46502",
+    "guild_rank": "결사원",
     "feature": ""
   },
   {
@@ -245,8 +245,8 @@
     "grade": "25",
     "class": "IncenseArcher",
     "guild_name": "CATT",
-    "power": "",
-    "guild_rank": "",
+    "power": "45048",
+    "guild_rank": "결사원",
     "feature": ""
   },
   {
@@ -255,8 +255,8 @@
     "grade": "24",
     "class": "IncenseArcher",
     "guild_name": "DOG",
-    "power": "",
-    "guild_rank": "",
+    "power": "44607",
+    "guild_rank": "결사원",
     "feature": ""
   },
   {
@@ -265,8 +265,8 @@
     "grade": "25",
     "class": "IncenseArcher",
     "guild_name": "DOG",
-    "power": "",
-    "guild_rank": "",
+    "power": "46620",
+    "guild_rank": "결사원",
     "feature": ""
   },
   {

@@ -45,6 +45,18 @@ function normalizeProfile(raw) {
   };
 }
 
+function formatLevel(value) {
+  const v = String(value ?? "").trim();
+  if (!v || v === "-") return "Lv.-";
+  return v.toLowerCase().startsWith("lv.") ? v : `Lv.${v}`;
+}
+
+function formatGrade(value) {
+  const v = String(value ?? "").trim();
+  if (!v || v === "-") return "토벌 -";
+  return v.includes("토벌") ? v : `토벌 ${v}`;
+}
+
 function getClassImage(cls, tone) {
   const key = classImageMap[cls] || "RuneScribe";
   return `assets/classes/${key}_${tone}.png`;
@@ -72,9 +84,15 @@ function renderProfiles() {
         <div class="profile-card-inner">
           <section class="profile-face profile-front" style="--gold-image:url('${goldImage}'); background-image:url('${grayImage}')">
             <div class="front-overlay">
-              <div class="front-row"><span>레벨</span><span>${escapeHtml(p.gc_level)}</span></div>
-              <div class="front-row"><span>토벌</span><span>${escapeHtml(p.grade)}</span></div>
-              <div class="front-name">${escapeHtml(p.gc_name)}</div>
+              <div class="front-bottom">
+                <div class="front-stats">
+                  <span>${escapeHtml(formatLevel(p.gc_level))}</span>
+                  <span>${escapeHtml(formatGrade(p.grade))}</span>
+                </div>
+                <div class="front-rule"></div>
+                <div class="front-name">${escapeHtml(p.gc_name)}</div>
+                <div class="front-rule"></div>
+              </div>
             </div>
           </section>
 
