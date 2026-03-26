@@ -126,17 +126,17 @@
     "guild_name": "CATT"
   },
   {
-    "gc_name": "류마",
-    "gc_level": 87,
-    "class": "MirageBlade",
-    "grade": "22",
-    "guild_name": "CATT"
-  },
-  {
     "gc_name": "시바샤아꼬",
     "gc_level": 87,
     "class": "MirageBlade",
     "grade": "21",
+    "guild_name": "CATT"
+  },
+  {
+    "gc_name": "류마",
+    "gc_level": 87,
+    "class": "MirageBlade",
+    "grade": "22",
     "guild_name": "CATT"
   },
   {
@@ -207,13 +207,6 @@
     "gc_level": 88,
     "class": "IncenseArcher",
     "grade": "23",
-    "guild_name": "CATT"
-  },
-  {
-    "gc_name": "녹색영약",
-    "gc_level": 88,
-    "class": "IncenseArcher",
-    "grade": "24",
     "guild_name": "CATT"
   },
   {
@@ -434,18 +427,18 @@
     "guild_name": "DOG"
   },
   {
-    "gc_name": "Day",
-    "gc_level": 86,
-    "class": "RuneScribe",
-    "grade": "22",
-    "guild_name": "DOG"
-  },
-  {
     "gc_name": "범꼬",
     "gc_level": 86,
     "class": "RuneScribe",
     "grade": "22",
     "guild_name": "CATT"
+  },
+  {
+    "gc_name": "Day",
+    "gc_level": 86,
+    "class": "RuneScribe",
+    "grade": "22",
+    "guild_name": "DOG"
   },
   {
     "gc_name": "와치",
@@ -576,6 +569,13 @@
   {
     "gc_name": "진빼이꼬",
     "gc_level": 89,
+    "class": "Enforcer",
+    "grade": "24",
+    "guild_name": "CATT"
+  },
+  {
+    "gc_name": "녹색영약",
+    "gc_level": 88,
     "class": "Enforcer",
     "grade": "24",
     "guild_name": "CATT"
