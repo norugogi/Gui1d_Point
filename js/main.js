@@ -484,5 +484,5 @@ plugins: {
   }
 }
 
-plugins: [ChartDataLabels]
+plugins: [window.ChartDataLabels]
 
