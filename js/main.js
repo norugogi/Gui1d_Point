@@ -227,69 +227,21 @@ function renderChart(id,data){
   let labels = entries.map(e=>e[0]);
   let values = entries.map(e=>e[1]);
 
-  const max = Math.max(...values);
-
   box.innerHTML = `<canvas id="${id}Chart"></canvas>`;
-
-  // 🔥 모던 컬러 세트
-  const colors = [
-    "#60a5fa",
-    "#34d399",
-    "#fbbf24",
-    "#a78bfa",
-    "#f472b6",
-    "#38bdf8",
-    "#fb923c"
-  ];
 
   new Chart(document.getElementById(id+"Chart"),{
     type:'bar',
     data:{
       labels,
-      datasets:[
-        {
-          // 🔥 실제 데이터
-          data:values,
-          backgroundColor: colors.slice(0, values.length),
-          borderRadius:10,
-          barPercentage:0.6,
-          categoryPercentage:0.7
-        },
-        {
-          // 🔥 배경 바 (대시보드 느낌 핵심)
-          data:values.map(()=>max),
-          backgroundColor:"rgba(255,255,255,0.05)",
-          borderRadius:10,
-          barPercentage:0.6,
-          categoryPercentage:0.7
-        }
-      ]
+      datasets:[{
+        data:values,
+        backgroundColor:["#4da6ff","#ffaa00","#33cc99","#9966ff","#ff6699","#ff9933","#66ccff"],
+        borderRadius:8
+      }]
     },
     options:{
       indexAxis:'y',
-      responsive:true,
-
-      plugins:{
-        legend:{display:false}
-      },
-
-      animation:{
-        duration:800,
-        easing:'easeOutQuart'
-      },
-
-      scales:{
-        x:{
-          beginAtZero:true,
-          grace:'15%',
-          grid:{color:"rgba(255,255,255,0.05)"},
-          ticks:{color:"#888"}
-        },
-        y:{
-          grid:{display:false},
-          ticks:{color:"#ddd"}
-        }
-      },
+      plugins:{legend:{display:false}},
 
       onClick: (e, elements) => {
 
@@ -499,37 +451,3 @@ window.addEventListener("keydown", e=>{
     closeSheet();
   }
 });
-
-
-// 차트 디자인 변경
-Chart.register({
-  id: 'valueLabel',
-  afterDatasetsDraw(chart) {
-
-    const { ctx, chartArea } = chart;
-
-    chart.data.datasets.forEach((dataset, i) => {
-
-      // 👉 실제 데이터 바만 표시 (배경바 제외)
-      if(i !== 0) return;
-
-      const meta = chart.getDatasetMeta(i);
-
-      meta.data.forEach((bar, index) => {
-
-        const value = dataset.data[index];
-
-        ctx.fillStyle = "#e5d3a3";
-        ctx.font = "12px Pretendard";
-        ctx.textAlign = "right";
-        ctx.textBaseline = "middle";
-
-        const x = chartArea.right - 8;
-        const y = bar.y;
-
-        ctx.fillText(value + "명", x, y);
-      });
-    });
-  }
-});
-
