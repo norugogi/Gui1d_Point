@@ -1,178 +1,149 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>Gui1d Point</title>
-<link rel="stylesheet" href="css/style.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gui1d Point</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
 <body>
+  <div class="sidebar">
+    <div class="menu-title">메인</div>
+    <div class="menu-item active" onclick="showPage('mainPage', this)">메인화면</div>
+    <div class="menu-item" onclick="showPage('rulesPage', this)">규정지침</div>
 
-<!-- 좌측 메뉴 -->
-<div class="sidebar">
+    <div class="menu-title">공지</div>
+    <div class="menu-item" onclick="showPage('noticePage', this)">시즌 주요 공지</div>
+    <div class="menu-item" onclick="showPage('eventPage', this)">시즌 이벤트 공지</div>
 
-  <div class="menu-title">메인</div>
-  <div class="menu-item active" onclick="showPage('mainPage', this)">메인화면</div>
-  <div class="menu-item onclick" onclick="showPage('rulesPage', this)">규정집</div>
-  
-  <div class="menu-title">공지</div>
-  <div class="menu-item" onclick="showPage('noticePage',this)">시즌 주요 공지</div>
-  <div class="menu-item" onclick="showPage('eventPage', this)">시즌 이벤트 공지</div>
-  
-  <div class="menu-title">결사</div>
-  <div class="menu-item" onclick="showPage('guildListPage',this)">결사원 리스트</div>
-  <div class="menu-item" onclick="showPage('guildStatPage',this)">결사 통계</div>
+    <div class="menu-title">결사</div>
+    <div class="menu-item" onclick="showPage('guildListPage', this)">결사원 리스트</div>
+    <div class="menu-item" onclick="showPage('guildStatPage', this)">결사 통계</div>
 
-  <div class="menu-title">캐릭터추적</div>
-  <div class="menu-item" onclick="showPage('whoPage',this)">너 누구야</div>
+    <div class="menu-title">캐릭터 검색</div>
+    <div class="menu-item" onclick="showPage('whoPage', this)">너 누구야</div>
 
-  <div class="menu-title">공헌도</div>
-  <div class="menu-item" onclick="showPage('rubyPage',this)">루비 공헌도</div>
-  <div class="menu-item" onclick="showPage('ratePage',this)">참여율</div>
+    <div class="menu-title">공헌도</div>
+    <div class="menu-item" onclick="showPage('rubyPage', this)">루비 공헌도</div>
 
-  <div class="menu-title">관리자</div>
-  <div class="menu-item" onclick="showPage('adminPage',this)">관리자</div>
+    <div class="menu-title">관리자</div>
+    <div class="menu-item" onclick="showPage('adminPage', this)">관리자</div>
+  </div>
 
-</div>
-
-<!-- 메인 -->
-<div class="main">
-
-  <div id="mainPage" class="page">
-
-    <div class="top-menu">
-      <div class="top-btn" onclick="openNewTab()">결사시트</div>
-      <div class="top-btn" onclick="openSheet('https://docs.google.com/spreadsheets/d/13W8sK_u_MIgDGGutfKIXViYHfK3E4DTjQBL4YPt4SSI/preview#gid=1561969997')">참여현황</div>
-      <div class="top-btn" onclick="openSheet('https://docs.google.com/spreadsheets/d/13W8sK_u_MIgDGGutfKIXViYHfK3E4DTjQBL4YPt4SSI/preview#gid=1357449012')">참여율</div>
-      <div class="top-btn" onclick="openSheet('https://docs.google.com/spreadsheets/d/13W8sK_u_MIgDGGutfKIXViYHfK3E4DTjQBL4YPt4SSI/preview#gid=1015983288')">스펙정보</div>
-      <div class="top-btn" onclick="openSheet('https://docs.google.com/spreadsheets/d/13W8sK_u_MIgDGGutfKIXViYHfK3E4DTjQBL4YPt4SSI/preview#gid=9825312')">입찰아이템</div>
-      <div class="top-btn" onclick="openSheet('https://docs.google.com/spreadsheets/d/13W8sK_u_MIgDGGutfKIXViYHfK3E4DTjQBL4YPt4SSI/preview#gid=225412470')">공금정보</div>
-      <div class="top-btn">기타</div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div id="mainContent">
-
-      <div class="summary">
-        <div class="card"><span>DOG </span><b id="dog">-</b></div>
-        <div class="card"><span>CAT </span><b id="cat">-</b></div>
-        <div class="card"><span>총합 </span><b id="total">-</b></div>
-        <div class="card"><span>시즌상태 </span><b>농사</b></div>
+  <div class="main">
+    <div id="mainPage" class="page">
+      <div class="top-menu">
+        <div class="top-btn" onclick="openNewTab()">결사 시트</div>
+        <div class="top-btn" onclick="openSheet('https://docs.google.com/spreadsheets/d/13W8sK_u_MIgDGGutfKIXViYHfK3E4DTjQBL4YPt4SSI/preview#gid=1561969997')">참여 현황</div>
+        <div class="top-btn" onclick="openSheet('https://docs.google.com/spreadsheets/d/13W8sK_u_MIgDGGutfKIXViYHfK3E4DTjQBL4YPt4SSI/preview#gid=1357449012')">참여표</div>
+        <div class="top-btn" onclick="openSheet('https://docs.google.com/spreadsheets/d/13W8sK_u_MIgDGGutfKIXViYHfK3E4DTjQBL4YPt4SSI/preview#gid=1015983288')">스펙정보</div>
+        <div class="top-btn" onclick="openSheet('https://docs.google.com/spreadsheets/d/13W8sK_u_MIgDGGutfKIXViYHfK3E4DTjQBL4YPt4SSI/preview#gid=9825312')">업데이트</div>
+        <div class="top-btn" onclick="openSheet('https://docs.google.com/spreadsheets/d/13W8sK_u_MIgDGGutfKIXViYHfK3E4DTjQBL4YPt4SSI/preview#gid=225412470')">공략정보</div>
       </div>
 
-      <div class="stats-header">
-        <div class="stats-title">통계</div>
+      <div class="divider"></div>
 
-        <div class="filter-box">
-          <label><input type="radio" name="guildFilter" value="ALL" checked> 전체</label>
-          <label><input type="radio" name="guildFilter" value="DOG"> DOG</label>
-          <label><input type="radio" name="guildFilter" value="CAT"> CAT</label>
+      <div id="mainContent">
+        <div class="summary">
+          <div class="card"><span>DOG</span><b id="dog">-</b></div>
+          <div class="card"><span>CAT</span><b id="cat">-</b></div>
+          <div class="card"><span>총합</span><b id="total">-</b></div>
+          <div class="card"><span>시즌 상태</span><b>진행중</b></div>
+        </div>
+
+        <div class="stats-header">
+          <div class="stats-title">통계</div>
+          <div class="filter-box">
+            <label><input type="radio" name="guildFilter" value="ALL" checked> 전체</label>
+            <label><input type="radio" name="guildFilter" value="DOG"> DOG</label>
+            <label><input type="radio" name="guildFilter" value="CAT"> CAT</label>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="box"><div class="title">직업 통계</div><div id="classStats"></div></div>
+          <div class="box"><div class="title">등급 통계</div><div id="gradeStats"></div></div>
+          <div class="box"><div class="title">레벨 통계</div><div id="levelStats"></div></div>
         </div>
       </div>
+    </div>
 
-      <div class="stats">
-        <div class="box"><div class="title">직업 통계</div><div id="classStats"></div></div>
-        <div class="box"><div class="title">토벌 통계</div><div id="gradeStats"></div></div>
-        <div class="box"><div class="title">레벨 통계</div><div id="levelStats"></div></div>
+    <div id="guildListPage" class="page" style="display:none;">
+      <h2>결사원 리스트</h2>
+      <div class="list-filter">
+        <select id="guildFilterSelect">
+          <option value="ALL">전체</option>
+          <option value="DOG">DOG</option>
+          <option value="CAT">CAT</option>
+        </select>
+        <select id="classFilterSelect">
+          <option value="ALL">직업 전체</option>
+        </select>
       </div>
 
+      <table>
+        <thead>
+          <tr>
+            <th>결사</th>
+            <th>레벨</th>
+            <th>닉네임</th>
+            <th>등급</th>
+            <th>직업</th>
+          </tr>
+        </thead>
+        <tbody id="guildList"></tbody>
+      </table>
     </div>
 
-  </div>
-
-  <div id="guildListPage" class="page" style="display:none;">
-    <h2>결사원 리스트</h2>
-
-    <div class="list-filter">
-      <select id="guildFilterSelect">
-        <option value="ALL">전체</option>
-        <option value="DOG">DOG</option>
-        <option value="CAT">CAT</option>
-      </select>
-
-      <select id="classFilterSelect">
-        <option value="ALL">직업 전체</option>
-      </select>
+    <div id="guildStatPage" class="page" style="display:none;">
+      <h2>결사 통계</h2>
+      <div id="guildStatBox"></div>
     </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>결사</th>
-          <th>레벨</th>
-          <th>닉네임</th>
-          <th>토벌</th>
-          <th>직업</th>
-        </tr>
-      </thead>
-      <tbody id="guildList"></tbody>
-    </table>
-  </div>
-
-  <div id="guildStatPage" class="page" style="display:none;">
-    <h2>결사 통계</h2>
-    <div id="guildStatBox"></div>
-  </div>
-
-  <div id="noticePage" class="page" style="display:none;">
-    <div class="notice-wrap">
-      <img src="assets/images/notice.png" class="notice-img">
+    <div id="noticePage" class="page" style="display:none;">
+      <div class="notice-wrap"><img src="assets/images/notice.png" class="notice-img" alt="notice"></div>
     </div>
-  </div>
 
-  <div id="eventPage" class="page" style="display:none;">
-    <div class="notice-wrap">
-      <img src="assets/images/event3.png" class="notice-img">
+    <div id="eventPage" class="page" style="display:none;">
+      <div class="notice-wrap"><img src="assets/images/event3.png" class="notice-img" alt="event"></div>
     </div>
+
+    <div id="rulesPage" class="page" style="display:none;">
+      <div class="notice-wrap"><img src="assets/images/rules2603.png" class="notice-img" alt="rules"></div>
+    </div>
+
+    <div id="whoPage" class="page" style="display:none;">
+      <iframe src="who.html" style="width:100%; height:calc(100vh - 80px); border:none;" title="who"></iframe>
+    </div>
+
+    <div id="rubyPage" class="page" style="display:none;">
+      <iframe src="ruby.html" style="width:100%; height:calc(100vh - 80px); border:none;" title="ruby"></iframe>
+    </div>
+
+    <div id="adminPage" class="page" style="display:none;"></div>
   </div>
 
-  <div id="rulesPage" class="page" style="display:none;">
-    <div class="notice-wrap">
-      <img src="assets/images/rules2603.png" class="notice-img">
+  <div id="modal" class="modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span id="modalTitle"></span>
+        <span class="modal-close" onclick="closeModal()">X</span>
+      </div>
+      <div id="modalList" class="modal-body"></div>
     </div>
   </div>
 
-  <div id="whoPage" class="page" style="display:none;">
-    <iframe src="who.html" style="width:100%; height:calc(100vh - 80px); border:none;"></iframe>
-  </div>
-
-  <div id="rubyPage" class="page" style="display:none;">
-    <iframe src="ruby.html" style="width:100%; height:calc(100vh - 80px); border:none;"></iframe>
-  </div>
-
-  <div id="adminPage" class="page" style="display:none;"></div>
-
-</div>
-
-<div id="modal" class="modal">
-  <div class="modal-box">
-    <div class="modal-header">
-      <span id="modalTitle"></span>
-      <span class="modal-close" onclick="closeModal()">✕</span>
+  <div id="sheetModal" class="modal" onclick="closeSheet()">
+    <div class="modal-box sheet-box" onclick="event.stopPropagation()">
+      <div class="sheet-header">
+        <span>구글 시트 보기</span>
+        <div class="close-btn" onclick="closeSheet()">X</div>
+      </div>
+      <iframe id="sheetFrame" title="sheet"></iframe>
     </div>
-    <div id="modalList" class="modal-body"></div>
   </div>
-</div>
 
-<script src="js/main.js"></script>
-
-<div id="sheetModal" class="modal" onclick="closeSheet()">
-  <div class="modal-box sheet-box" onclick="event.stopPropagation()">
-
-    <div class="sheet-header">
-      <span>📊 시트 보기</span>
-      <div class="close-btn" onclick="closeSheet()">✕</div>
-    </div>
-
-    <iframe id="sheetFrame"></iframe>
-
-  </div>
-</div>
-
-  
+  <script src="js/main.js"></script>
 </body>
 </html>
-
-<!-- 정상동작버전 -->

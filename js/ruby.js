@@ -1,143 +1,141 @@
-(function(){
+﻿(function () {
+  let rubyData = [];
 
-/***************************************
- * 🔥 루비 전용 데이터
- ***************************************/
-let rubyData = [];
+  async function fetchJsonWithFallback(paths) {
+    for (const path of paths) {
+      try {
+        const res = await fetch(path, { cache: "no-store" });
+        if (!res.ok) continue;
+        return await res.json();
+      } catch (_err) {
+        // Try next path.
+      }
+    }
+    throw new Error(`JSON load failed: ${paths.join(", ")}`);
+  }
 
-/***************************************
- * 🔥 루비 JSON fetch
- ***************************************/
-fetch("data/ruby_ranking.json")
-.then(res => res.json())
-.then(data => {
-  rubyData = data.data;
-  console.log("루비 데이터 로드 완료", rubyData);
+  function normalizeGroup(group) {
+    if (String(group).startsWith("CAT")) return "CAT";
+    if (String(group).startsWith("DOG")) return "DOG";
+    return String(group || "-");
+  }
 
-  initRubyFilters();
-  renderRuby();
-});
+  function getRubyFilters() {
+    return {
+      group: document.getElementById("groupFilter")?.value || "all",
+      season: document.getElementById("seasonFilter")?.value || "all",
+      week: document.getElementById("weekFilter")?.value || "all"
+    };
+  }
 
+  function initRubyFilters() {
+    const seasonSelect = document.getElementById("seasonFilter");
+    const weekSelect = document.getElementById("weekFilter");
+    const groupFilter = document.getElementById("groupFilter");
 
-/***************************************
- * 🔥 필터 값 가져오기
- ***************************************/
-function getRubyFilters(){
-  return {
-    group: document.getElementById("groupFilter")?.value || "all",
-    season: document.getElementById("seasonFilter")?.value || "all",
-    week: document.getElementById("weekFilter")?.value || "all"
-  };
-}
+    if (!seasonSelect || !weekSelect || !groupFilter) return;
 
+    const seasons = [...new Set(rubyData.map((r) => r.season).filter(Boolean))];
+    const weeks = [...new Set(rubyData.map((r) => String(r.week)).filter(Boolean))]
+      .sort((a, b) => Number(a) - Number(b));
 
-/***************************************
- * 🔥 필터 옵션 생성
- ***************************************/
-function initRubyFilters(){
+    seasonSelect.innerHTML = '<option value="all">전체 시즌</option>';
+    weekSelect.innerHTML = '<option value="all">전체 주차</option>';
 
-  const seasonSelect = document.getElementById("seasonFilter");
-  const weekSelect = document.getElementById("weekFilter");
-  const groupFilter = document.getElementById("groupFilter");
+    seasons.forEach((s) => {
+      seasonSelect.innerHTML += `<option value="${s}">${s}</option>`;
+    });
 
-  if(!seasonSelect || !weekSelect || !groupFilter) return;
+    weeks.forEach((w) => {
+      weekSelect.innerHTML += `<option value="${w}">${w}주차</option>`;
+    });
 
-  const seasons = [...new Set(rubyData.map(r => r.season))];
-  const weeks = [...new Set(rubyData.map(r => r.week))];
+    groupFilter.addEventListener("change", renderRuby);
+    seasonSelect.addEventListener("change", renderRuby);
+    weekSelect.addEventListener("change", renderRuby);
+  }
 
-  seasonSelect.innerHTML = `<option value="all">전체 시즌</option>`;
-  weekSelect.innerHTML = `<option value="all">전체 주차</option>`;
+  function renderRuby() {
+    if (!rubyData.length) return;
 
-  seasons.forEach(s => {
-    seasonSelect.innerHTML += `<option value="${s}">${s}</option>`;
-  });
+    const filters = getRubyFilters();
 
-  weeks.forEach(w => {
-    weekSelect.innerHTML += `<option value="${w}">${w}주차</option>`;
-  });
+    const filtered = rubyData.filter((r) => {
+      if (!r || !r.uid || !r.name) return false;
+      if (filters.group !== "all" && normalizeGroup(r.group) !== filters.group) return false;
+      if (filters.season !== "all" && String(r.season) !== filters.season) return false;
+      if (filters.week !== "all" && String(r.week) !== filters.week) return false;
+      return true;
+    });
 
-  groupFilter.addEventListener("change", renderRuby);
-  seasonSelect.addEventListener("change", renderRuby);
-  weekSelect.addEventListener("change", renderRuby);
-}
+    const map = {};
+    filtered.forEach((r) => {
+      const key = r.uid;
+      if (!map[key]) {
+        map[key] = {
+          uid: r.uid,
+          name: r.name,
+          group: normalizeGroup(r.group),
+          season: r.season,
+          week: r.week,
+          total: 0,
+          weekValue: 0
+        };
+      }
+      map[key].total += Number(r.value || 0);
+      map[key].weekValue += Number(r.value || 0);
+    });
 
+    const list = Object.values(map).sort((a, b) => b.total - a.total);
 
-/***************************************
- * 🔥 루비 렌더 핵심
- ***************************************/
-function renderRuby(){
+    const totalSum = list.reduce((sum, p) => sum + p.total, 0);
+    const goal = 50000000;
+    const percent = Math.min((totalSum / goal) * 100, 100);
 
-  if(!rubyData.length) return;
+    const bar = document.getElementById("rubyBar");
+    const text = document.getElementById("rubyText");
+    const percentText = document.getElementById("rubyPercent");
 
-  const filters = getRubyFilters();
-
-  let filtered = rubyData.filter(r => {
-    if(filters.group !== "all" && r.group !== filters.group) return false;
-    if(filters.season !== "all" && r.season !== filters.season) return false;
-    if(filters.week !== "all" && String(r.week) !== filters.week) return false;
-    return true;
-  });
-
-  let map = {};
-
-  filtered.forEach(r => {
-    const key = r.uid;
-
-    if(!map[key]){
-      map[key] = {
-        uid: r.uid,
-        name: r.name,
-        group: r.group,
-        total: 0,
-        weekValue: 0,
-        season: r.season,
-        week: r.week
-      };
+    if (bar) {
+      bar.style.width = "0%";
+      setTimeout(() => {
+        bar.style.width = `${percent}%`;
+      }, 80);
     }
 
-    map[key].total += Number(r.value || 0);
-    map[key].weekValue += Number(r.value || 0);
-  });
+    if (text) text.innerText = `${totalSum.toLocaleString()} / ${goal.toLocaleString()}`;
+    if (percentText) percentText.innerText = `${percent.toFixed(1)}%`;
 
-  let list = Object.values(map);
+    const table = document.getElementById("rubyTable");
+    if (!table) return;
 
-  list.sort((a,b)=> b.total - a.total);
-
-  const totalSum = list.reduce((sum,v)=> sum + v.total, 0);
-  const goal = 50000000;
-  const percent = Math.min((totalSum / goal) * 100, 100);
-
-  const bar = document.getElementById("rubyBar");
-  const text = document.getElementById("rubyText");
-  const percentText = document.getElementById("rubyPercent");
-
-  if(bar){
-    bar.style.width = "0%";  // 초기화
-    setTimeout(()=>{
-      bar.style.width = percent + "%";
-    }, 100);
+    table.innerHTML = list.map((p, i) => `
+      <tr>
+        <td>${i + 1}</td>
+        <td>${p.season ?? "-"}</td>
+        <td>${p.week ?? "-"}</td>
+        <td>${p.group}</td>
+        <td>${p.name}</td>
+        <td>${p.total.toLocaleString()}</td>
+        <td>${p.weekValue.toLocaleString()}</td>
+      </tr>
+    `).join("");
   }
-  if(text) text.innerText = `${totalSum.toLocaleString()} / ${goal.toLocaleString()}`;
-  if(percentText) percentText.innerText = percent.toFixed(1) + "%";
 
-  let html = "";
+  async function init() {
+    try {
+      const payload = await fetchJsonWithFallback([
+        "data/ruby_ranking.json",
+        "ruby_ranking.json"
+      ]);
 
-  list.forEach((p, i) => {
-    html += `
-    <tr>
-      <td>${i+1}</td>
-      <td>${p.season}</td>
-      <td>${p.week}</td>
-      <td>${p.group}</td>
-      <td>${p.name}</td>
-      <td>${p.total.toLocaleString()}</td>
-      <td>${p.weekValue.toLocaleString()}</td>
-    </tr>
-    `;
-  });
+      rubyData = Array.isArray(payload) ? payload : (payload.data || []);
+      initRubyFilters();
+      renderRuby();
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
-  const table = document.getElementById("rubyTable");
-  if(table) table.innerHTML = html;
-}
-
+  init();
 })();
