@@ -228,7 +228,9 @@ function renderChart(id,data){
   let values = entries.map(e=>e[1]);
 
   box.innerHTML = `<canvas id="${id}Chart"></canvas>`;
-
+  
+  Chart.plugins.register(ChartDataLabels);
+  
   new Chart(document.getElementById(id+"Chart"),{
     type:'bar',
     data:{
