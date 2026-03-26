@@ -1,6 +1,11 @@
 ﻿let players = [];
 let rawData = [];
 let currentFilter = "ALL";
+const ADMIN_PASSWORD = "dog2026";
+const ADMIN_KEY = "guild_admin_logged_in";
+const SCHEDULE_KEY = "guild_schedule_json";
+const SCHEDULE_ROWS = 5;
+let scheduleData = [];
 
 const classNameMap = {
   AbyssRevenant: "심연추적자",
@@ -161,7 +166,7 @@ function initClassFilter() {
 
   const classes = [...new Set(rawData.map((p) => classNameMap[p.class] || p.class).filter(Boolean))].sort();
 
-  select.innerHTML = "<option value=\"ALL\">직업 전체</option>";
+  select.innerHTML = "<option value="ALL">직업 전체</option>";
   classes.forEach((c) => {
     const opt = document.createElement("option");
     opt.value = c;
@@ -241,20 +246,27 @@ function buildGuildStat(data) {
   if (!box) return;
 
   const levelMap = {};
-  const classMap = {};
   const gradeMap = {};
 
   data.forEach((p) => {
-    addCount(levelMap, p.gc_level);
-    addCount(classMap, classNameMap[p.class] || p.class);
-    addCount(gradeMap, p.grade);
+    addCount(levelMap, Number(p.gc_level));
+    addCount(gradeMap, Number(p.grade));
   });
+
+  const levelRangeMap = {};
+  for (let lv = 93; lv >= 80; lv -= 1) {
+    levelRangeMap[`Lv.${lv}`] = levelMap[lv] || 0;
+  }
+
+  const gradeRangeMap = {};
+  for (let grade = 25; grade >= 20; grade -= 1) {
+    gradeRangeMap[`${grade} 토벌`] = gradeMap[grade] || 0;
+  }
 
   box.innerHTML = `
     <div class="stat-wrap">
-      ${makeStatCard("레벨 통계", levelMap)}
-      ${makeStatCard("직업 통계", classMap)}
-      ${makeStatCard("등급 통계", gradeMap)}
+      ${makeStatCard("레벨 통계 (93 ~ 80)", levelRangeMap)}
+      ${makeStatCard("토벌 통계 (25 ~ 20)", gradeRangeMap)}
     </div>
   `;
 }
@@ -324,6 +336,7 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     closeModal();
     closeSheet();
+    closeScheduleEditor();
   }
 });
 
@@ -362,3 +375,131 @@ function closeSheet() {
   frame.src = "";
 }
 window.closeSheet = closeSheet;
+
+
+
+
+function getDefaultSchedule() {
+  return Array.from({ length: SCHEDULE_ROWS }, () => ({ day: "", content: "" }));
+}
+
+function loadSchedule() {
+  try {
+    const raw = localStorage.getItem(SCHEDULE_KEY);
+    const parsed = raw ? JSON.parse(raw) : getDefaultSchedule();
+    scheduleData = Array.isArray(parsed) ? parsed.slice(0, SCHEDULE_ROWS) : getDefaultSchedule();
+  } catch (_err) {
+    scheduleData = getDefaultSchedule();
+  }
+
+  while (scheduleData.length < SCHEDULE_ROWS) {
+    scheduleData.push({ day: "", content: "" });
+  }
+
+  renderSchedule();
+}
+
+function saveScheduleStorage() {
+  localStorage.setItem(SCHEDULE_KEY, JSON.stringify(scheduleData));
+}
+
+function renderSchedule() {
+  const body = document.getElementById("scheduleBody");
+  if (!body) return;
+
+  body.innerHTML = scheduleData.map((row) => `
+    <tr>
+      <td>${row.day || "-"}</td>
+      <td>${row.content || "-"}</td>
+    </tr>
+  `).join("");
+}
+
+function openScheduleEditor(mode) {
+  if (!isAdminMode()) return;
+
+  const modal = document.getElementById("scheduleModal");
+  const rows = document.getElementById("scheduleEditorRows");
+  const title = document.getElementById("scheduleModalTitle");
+  if (!modal || !rows || !title) return;
+
+  title.innerText = mode === "edit" ? "일정표 수정" : "일정표 작성";
+  rows.innerHTML = scheduleData.map((row, idx) => `
+    <div class="schedule-editor-row">
+      <input id="scheduleDay${idx}" type="text" placeholder="예) 03/26 (목)" value="${(row.day || "").replace(/"/g, "&quot;")}">
+      <input id="scheduleContent${idx}" type="text" placeholder="콘텐츠 입력" value="${(row.content || "").replace(/"/g, "&quot;")}">
+    </div>
+  `).join("");
+
+  modal.style.display = "flex";
+}
+window.openScheduleEditor = openScheduleEditor;
+
+function closeScheduleEditor() {
+  const modal = document.getElementById("scheduleModal");
+  if (modal) modal.style.display = "none";
+}
+window.closeScheduleEditor = closeScheduleEditor;
+
+function saveSchedule() {
+  if (!isAdminMode()) return;
+
+  const next = [];
+  for (let i = 0; i < SCHEDULE_ROWS; i += 1) {
+    const day = document.getElementById(`scheduleDay${i}`)?.value?.trim() || "";
+    const content = document.getElementById(`scheduleContent${i}`)?.value?.trim() || "";
+    next.push({ day, content });
+  }
+
+  scheduleData = next;
+  saveScheduleStorage();
+  renderSchedule();
+  closeScheduleEditor();
+}
+window.saveSchedule = saveSchedule;
+
+function isAdminMode() {
+  return localStorage.getItem(ADMIN_KEY) === "true";
+}
+
+function applyAdminUI() {
+  const status = document.getElementById("adminStatus");
+
+  if (isAdminMode()) {
+    document.body.classList.add("admin-mode");
+    if (status) status.innerText = "현재 상태: 로그인됨";
+  } else {
+    document.body.classList.remove("admin-mode");
+    if (status) status.innerText = "현재 상태: 비로그인";
+  }
+}
+
+function initAdminState() {
+  applyAdminUI();
+}
+
+function adminLogin() {
+  const input = document.getElementById("adminPassword");
+  if (!input) return;
+
+  if (input.value === ADMIN_PASSWORD) {
+    localStorage.setItem(ADMIN_KEY, "true");
+    input.value = "";
+    applyAdminUI();
+    return;
+  }
+
+  alert("비밀번호가 올바르지 않습니다.");
+}
+window.adminLogin = adminLogin;
+
+function adminLogout() {
+  localStorage.setItem(ADMIN_KEY, "false");
+  applyAdminUI();
+}
+window.adminLogout = adminLogout;
+
+
+
+
+
