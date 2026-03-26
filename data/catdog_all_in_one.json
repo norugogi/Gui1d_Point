@@ -497,6 +497,41 @@
     "guild_name": "CATT"
   },
   {
+    "gc_name": "프로도",
+    "gc_level": 89,
+    "class": "WildWarrior",
+    "grade": "24",
+    "guild_name": "CATT"
+  },
+  {
+    "gc_name": "미스릴",
+    "gc_level": 88,
+    "class": "WildWarrior",
+    "grade": "22",
+    "guild_name": "CATT"
+  },
+  {
+    "gc_name": "로저",
+    "gc_level": 88,
+    "class": "WildWarrior",
+    "grade": "24",
+    "guild_name": "CATT"
+  },
+  {
+    "gc_name": "준태",
+    "gc_level": 87,
+    "class": "WildWarrior",
+    "grade": "23",
+    "guild_name": "CATT"
+  },
+  {
+    "gc_name": "검방",
+    "gc_level": 87,
+    "class": "WildWarrior",
+    "grade": "22",
+    "guild_name": "CATT"
+  },
+  {
     "gc_name": "롬멜",
     "gc_level": 92,
     "class": "Enforcer",
