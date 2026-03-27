@@ -1,7 +1,7 @@
 [
   {
     "gc_name": "유튜브맛나는꼬꼬",
-    "gc_level": 92,
+    "gc_level": 93,
     "class": "AbyssRevenant",
     "grade": "25",
     "guild_name": "DOG"
@@ -37,13 +37,6 @@
   {
     "gc_name": "은빈",
     "gc_level": 91,
-    "class": "SolarSentinel",
-    "grade": "24",
-    "guild_name": "DOG"
-  },
-  {
-    "gc_name": "쉼텨",
-    "gc_level": 90,
     "class": "SolarSentinel",
     "grade": "24",
     "guild_name": "DOG"
@@ -150,7 +143,7 @@
     "gc_name": "루비꼬",
     "gc_level": 91,
     "class": "IncenseArcher",
-    "grade": "24",
+    "grade": "25",
     "guild_name": "DOG"
   },
   {
@@ -164,7 +157,7 @@
     "gc_name": "베찌",
     "gc_level": 90,
     "class": "IncenseArcher",
-    "grade": "24",
+    "grade": "25",
     "guild_name": "DOG"
   },
   {
@@ -276,7 +269,7 @@
     "gc_name": "다야꼬",
     "gc_level": 90,
     "class": "RuneScribe",
-    "grade": "24",
+    "grade": "25",
     "guild_name": "DOG"
   },
   {
@@ -427,18 +420,18 @@
     "guild_name": "DOG"
   },
   {
-    "gc_name": "범꼬",
-    "gc_level": 86,
-    "class": "RuneScribe",
-    "grade": "22",
-    "guild_name": "CATT"
-  },
-  {
     "gc_name": "Day",
     "gc_level": 86,
     "class": "RuneScribe",
     "grade": "22",
     "guild_name": "DOG"
+  },
+  {
+    "gc_name": "범꼬",
+    "gc_level": 86,
+    "class": "RuneScribe",
+    "grade": "22",
+    "guild_name": "CATT"
   },
   {
     "gc_name": "와치",
@@ -488,6 +481,13 @@
     "class": "RuneScribe",
     "grade": "19",
     "guild_name": "CATT"
+  },
+  {
+    "gc_name": "쉼텨",
+    "gc_level": 90,
+    "class": "WildWarrior",
+    "grade": "25",
+    "guild_name": "DOG"
   },
   {
     "gc_name": "김쓰",
@@ -652,7 +652,7 @@
   },
   {
     "gc_name": "죠르디",
-    "gc_level": 84,
+    "gc_level": 85,
     "class": "Enforcer",
     "grade": "19",
     "guild_name": "CATT"

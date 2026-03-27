@@ -1,13 +1,13 @@
 [
   {
     "gc_name": "유튜브맛나는꼬꼬",
-    "gc_level": 92,
+    "gc_level": 93,
     "grade": "25",
     "class": "AbyssRevenant",
     "guild_name": "DOG",
     "power": "50405",
     "guild_rank": "결사간부",
-    "feature": "-"
+    "feature": "프전 공무원 / 오더담당"
   },
   {
     "gc_name": "샬롯",
@@ -56,16 +56,6 @@
     "class": "SolarSentinel",
     "guild_name": "DOG",
     "power": "49007",
-    "guild_rank": "결사원",
-    "feature": "-"
-  },
-  {
-    "gc_name": "쉼텨",
-    "gc_level": 90,
-    "grade": "24",
-    "class": "SolarSentinel",
-    "guild_name": "DOG",
-    "power": "47778",
     "guild_rank": "결사원",
     "feature": "-"
   },
@@ -212,7 +202,7 @@
   {
     "gc_name": "루비꼬",
     "gc_level": 91,
-    "grade": "24",
+    "grade": "25",
     "class": "IncenseArcher",
     "guild_name": "DOG",
     "power": "48059",
@@ -232,7 +222,7 @@
   {
     "gc_name": "베찌",
     "gc_level": 90,
-    "grade": "24",
+    "grade": "25",
     "class": "IncenseArcher",
     "guild_name": "DOG",
     "power": "46502",
@@ -392,7 +382,7 @@
   {
     "gc_name": "다야꼬",
     "gc_level": 90,
-    "grade": "24",
+    "grade": "25",
     "class": "RuneScribe",
     "guild_name": "DOG",
     "power": "47750",
@@ -610,22 +600,22 @@
     "feature": "-"
   },
   {
-    "gc_name": "범꼬",
-    "gc_level": 86,
-    "grade": "22",
-    "class": "RuneScribe",
-    "guild_name": "CATT",
-    "power": "36258",
-    "guild_rank": "결사원",
-    "feature": "-"
-  },
-  {
     "gc_name": "Day",
     "gc_level": 86,
     "grade": "22",
     "class": "RuneScribe",
     "guild_name": "DOG",
     "power": "38115",
+    "guild_rank": "결사원",
+    "feature": "-"
+  },
+  {
+    "gc_name": "범꼬",
+    "gc_level": 86,
+    "grade": "22",
+    "class": "RuneScribe",
+    "guild_name": "CATT",
+    "power": "36258",
     "guild_rank": "결사원",
     "feature": "-"
   },
@@ -696,6 +686,16 @@
     "class": "RuneScribe",
     "guild_name": "CATT",
     "power": "25474",
+    "guild_rank": "결사원",
+    "feature": "-"
+  },
+  {
+    "gc_name": "쉼텨",
+    "gc_level": 90,
+    "grade": "25",
+    "class": "WildWarrior",
+    "guild_name": "DOG",
+    "power": "47778",
     "guild_rank": "결사원",
     "feature": "-"
   },
@@ -931,7 +931,7 @@
   },
   {
     "gc_name": "죠르디",
-    "gc_level": 84,
+    "gc_level": 85,
     "grade": "19",
     "class": "Enforcer",
     "guild_name": "CATT",
