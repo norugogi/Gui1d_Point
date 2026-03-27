@@ -124,6 +124,7 @@ body {
   line-height: 1;
   font-weight: 850;
   letter-spacing: -0.2px;
+  transform: translateY(-4px);
 }
 
 .front-name {

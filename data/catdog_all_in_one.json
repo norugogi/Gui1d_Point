@@ -518,13 +518,6 @@
     "guild_name": "CATT"
   },
   {
-    "gc_name": "준태",
-    "gc_level": 87,
-    "class": "WildWarrior",
-    "grade": "23",
-    "guild_name": "CATT"
-  },
-  {
     "gc_name": "검방",
     "gc_level": 87,
     "class": "WildWarrior",
@@ -627,6 +620,13 @@
     "gc_level": 87,
     "class": "Enforcer",
     "grade": "24",
+    "guild_name": "CATT"
+  },
+  {
+    "gc_name": "준태",
+    "gc_level": 87,
+    "class": "Enforcer",
+    "grade": "23",
     "guild_name": "CATT"
   },
   {
