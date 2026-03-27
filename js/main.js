@@ -28,8 +28,8 @@ const barValueLabelPlugin = {
     if (!meta?.data?.length) return;
 
     ctx.save();
-    ctx.fillStyle = "#f3f3f3";
-    ctx.font = "bold 12px Arial";
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "700 13px Arial";
     ctx.textBaseline = "middle";
 
     meta.data.forEach((bar, i) => {
@@ -233,12 +233,12 @@ function buildStats(data) {
     gradeRangeMap[`${grade}`] = gradeMap[grade] || 0;
   }
 
-  renderChart("levelStats", levelRangeMap, (a, b) => Number(String(b).replace("Lv.", "")) - Number(String(a).replace("Lv.", "")));
-  renderChart("classStats", classMap, (a, b) => String(a).localeCompare(String(b), "ko"));
-  renderChart("gradeStats", gradeRangeMap, (a, b) => Number(b) - Number(a));
+  renderChart("levelStats", levelRangeMap, (a, b) => Number(String(b).replace("Lv.", "")) - Number(String(a).replace("Lv.", "")), data);
+  renderChart("classStats", classMap, (a, b) => String(a).localeCompare(String(b), "ko"), data);
+  renderChart("gradeStats", gradeRangeMap, (a, b) => Number(b) - Number(a), data);
 }
 
-function renderChart(id, dataMap, sorter) {
+function renderChart(id, dataMap, sorter, sourceData) {
   const box = document.getElementById(id);
   if (!box) return;
 
@@ -267,16 +267,34 @@ function renderChart(id, dataMap, sorter) {
     options: {
       indexAxis: "y",
       plugins: { legend: { display: false } },
+      scales: {
+        x: {
+          ticks: {
+            color: "#ecf2ff",
+            font: { size: 12, weight: "600" }
+          },
+          grid: { color: "rgba(236,242,255,0.08)" }
+        },
+        y: {
+          ticks: {
+            color: "#f4f7ff",
+            font: { size: 13, weight: "700" }
+          },
+          grid: { color: "rgba(236,242,255,0.06)" }
+        }
+      },
       onClick: (_evt, elements) => {
         if (!elements.length) return;
 
         const index = elements[0].index;
         const label = labels[index];
+        const levelValue = String(label).replace(/^Lv\./i, "");
 
         let list = [];
-        if (id === "classStats") list = rawData.filter((p) => (classNameMap[p.class] || p.class) === label);
-        if (id === "gradeStats") list = rawData.filter((p) => String(p.grade) === String(label));
-        if (id === "levelStats") list = rawData.filter((p) => String(p.gc_level) === String(label));
+        const base = Array.isArray(sourceData) ? sourceData : rawData;
+        if (id === "classStats") list = base.filter((p) => (classNameMap[p.class] || p.class) === label);
+        if (id === "gradeStats") list = base.filter((p) => String(p.grade) === String(label));
+        if (id === "levelStats") list = base.filter((p) => String(p.gc_level) === levelValue);
 
         openModal(label, list);
       }

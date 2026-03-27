@@ -22,6 +22,22 @@ h1 {
   padding: 16px;
 }
 
+.tool-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.tab-btn {
+  background: #343b4a;
+  color: #e8ebf3;
+}
+
+.tab-btn.active {
+  background: #d4af37;
+  color: #111;
+}
+
 .set-row {
   display: flex;
   gap: 8px;
@@ -85,6 +101,36 @@ button {
 .set-help {
   margin-top: 12px;
   color: #c3c7d2;
+}
+
+.schedule-grid-wrap {
+  overflow-x: auto;
+}
+
+.schedule-edit-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.schedule-edit-table th,
+.schedule-edit-table td {
+  border-bottom: 1px solid #353b4a;
+  padding: 8px;
+  text-align: center;
+}
+
+.schedule-edit-table th {
+  background: #2e3442;
+}
+
+.schedule-cell-input {
+  width: 100%;
+  min-width: 180px;
+}
+
+.row-del-btn {
+  background: #d45d5d;
+  color: #fff;
 }
 
 @media (max-width: 900px) {

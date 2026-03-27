@@ -3,57 +3,91 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Card Profile Set</title>
+  <title>통합 JSON 관리 도구</title>
   <link rel="stylesheet" href="css/Card_Profile_set.css">
   <script src="js/access-gate.js"></script>
 </head>
 <body class="no-sidebar">
   <main class="set-main">
-    <h1>Card_Profile.json 가공 도구</h1>
+    <h1>통합 JSON 관리 도구</h1>
 
     <section class="set-panel">
-      <div class="set-row">
-        <button id="loadDefaultBtn" type="button">data/catdog_all_in_one.json 불러오기</button>
-        <input id="sourceJsonInput" type="file" accept=".json,application/json">
-        <input id="sourceCsvInput" type="file" accept=".csv,text/csv">
-        <button id="applyCsvBtn" type="button">CSV 자동 매칭 적용</button>
+      <div class="tool-tabs">
+        <button id="tabCardBtn" type="button" class="tab-btn active">카드프로필</button>
+        <button id="tabScheduleBtn" type="button" class="tab-btn">스케쥴</button>
       </div>
 
-      <div class="set-grid">
-        <div>
-          <label for="memberSelect">결사원 선택</label>
-          <select id="memberSelect" size="16" class="member-select"></select>
+      <section id="cardToolSection">
+        <div class="set-row">
+          <button id="loadDefaultBtn" type="button">data/catdog_all_in_one.json 불러오기</button>
+          <input id="sourceJsonInput" type="file" accept=".json,application/json">
+          <input id="sourceCsvInput" type="file" accept=".csv,text/csv">
+          <button id="applyCsvBtn" type="button">CSV 자동 매칭 적용</button>
         </div>
 
-        <div>
-          <label>닉네임</label>
-          <input id="nameInput" type="text" readonly>
+        <div class="set-grid">
+          <div>
+            <label for="memberSelect">결사원 선택</label>
+            <select id="memberSelect" size="16" class="member-select"></select>
+          </div>
 
-          <label>레벨</label>
-          <input id="levelInput" type="text" readonly>
+          <div>
+            <label>닉네임</label>
+            <input id="nameInput" type="text" readonly>
 
-          <label>토벌</label>
-          <input id="gradeInput" type="text" readonly>
+            <label>레벨</label>
+            <input id="levelInput" type="text" readonly>
 
-          <label>직업</label>
-          <input id="classInput" type="text" readonly>
+            <label>토벌</label>
+            <input id="gradeInput" type="text" readonly>
 
-          <label>전투력</label>
-          <input id="powerInput" type="text" placeholder="예) 1,234,567">
+            <label>직업</label>
+            <input id="classInput" type="text" readonly>
 
-          <label>결사등급</label>
-          <input id="guildRankInput" type="text" placeholder="예) 결사원">
+            <label>전투력</label>
+            <input id="powerInput" type="text" placeholder="예) 1,234,567">
 
-          <label>특징</label>
-          <textarea id="featureInput" rows="4" placeholder="예) 레이드 콜 담당"></textarea>
+            <label>결사등급</label>
+            <input id="guildRankInput" type="text" placeholder="예) 결사원">
 
-          <div class="set-actions">
-            <button id="downloadBtn" type="button">Card_Profile.json 다운로드</button>
+            <label>특징</label>
+            <textarea id="featureInput" rows="4" placeholder="예) 레이드 콜 담당"></textarea>
+
+            <div class="set-actions">
+              <button id="downloadBtn" type="button">Card_Profile.json 다운로드</button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <p class="set-help">JSON과 CSV를 불러온 뒤 <code>CSV 자동 매칭 적용</code>을 누르면 닉네임 기준으로 전투력/결사등급/특징이 자동 반영됩니다. CSV에 없는 닉네임은 <code>-</code>로 저장됩니다.</p>
+        <p class="set-help">JSON과 CSV를 불러온 뒤 <code>CSV 자동 매칭 적용</code>을 누르면 닉네임 기준으로 전투력/결사등급/특징이 자동 반영됩니다. CSV에 없는 닉네임은 <code>-</code>로 저장됩니다.</p>
+      </section>
+
+      <section id="scheduleToolSection" style="display:none;">
+        <div class="set-row">
+          <button id="loadScheduleDefaultBtn" type="button">data/schedule.json 불러오기</button>
+          <input id="scheduleJsonInput" type="file" accept=".json,application/json">
+          <button id="addScheduleRowBtn" type="button">행 추가</button>
+        </div>
+
+        <div class="schedule-grid-wrap">
+          <table class="schedule-edit-table">
+            <thead>
+              <tr>
+                <th>날짜/요일</th>
+                <th>콘텐츠</th>
+                <th>삭제</th>
+              </tr>
+            </thead>
+            <tbody id="scheduleEditorBody"></tbody>
+          </table>
+        </div>
+
+        <div class="set-actions">
+          <button id="downloadScheduleBtn" type="button">schedule.json 다운로드</button>
+        </div>
+
+        <p class="set-help">스케쥴 수정 후 <code>schedule.json 다운로드</code>를 눌러 저장하고, 해당 파일을 레포의 <code>data/schedule.json</code>으로 반영하면 메인 일정표에 적용됩니다.</p>
+      </section>
     </section>
   </main>
 

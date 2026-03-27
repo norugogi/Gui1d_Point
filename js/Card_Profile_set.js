@@ -1,6 +1,7 @@
-let profileData = [];
+﻿let profileData = [];
 let selectedIndex = -1;
 let csvRows = [];
+let scheduleData = [];
 
 async function fetchJson(path) {
   const res = await fetch(path, { cache: "no-store" });
@@ -74,10 +75,10 @@ function parseCsvLine(line) {
   for (let i = 0; i < line.length; i += 1) {
     const ch = line[i];
 
-    if (ch === "\"") {
+    if (ch === '"') {
       const next = line[i + 1];
-      if (inQuotes && next === "\"") {
-        cur += "\"";
+      if (inQuotes && next === '"') {
+        cur += '"';
         i += 1;
       } else {
         inQuotes = !inQuotes;
@@ -120,6 +121,42 @@ function parseCsv(text) {
     guild_rank: String(cols[2] || "").trim(),
     feature: String(cols[3] || "").trim()
   })).filter((row) => row.name);
+}
+
+function renderMemberList() {
+  const select = document.getElementById("memberSelect");
+  if (!select) return;
+
+  select.innerHTML = profileData
+    .map((m, i) => `<option value="${i}">${m.gc_name || "(이름없음)"} / Lv.${m.gc_level || "-"} / ${m.class || "-"}</option>`)
+    .join("");
+
+  if (profileData.length > 0) {
+    select.value = "0";
+    selectedIndex = 0;
+    loadSelectedMember();
+  }
+}
+
+function loadSelectedMember() {
+  if (selectedIndex < 0 || selectedIndex >= profileData.length) return;
+  const m = profileData[selectedIndex];
+
+  document.getElementById("nameInput").value = m.gc_name || "";
+  document.getElementById("levelInput").value = m.gc_level || "";
+  document.getElementById("gradeInput").value = m.grade || "";
+  document.getElementById("classInput").value = m.class || "";
+  document.getElementById("powerInput").value = m.power || "";
+  document.getElementById("guildRankInput").value = m.guild_rank || "";
+  document.getElementById("featureInput").value = m.feature || "";
+}
+
+function syncEditorToCurrentMember() {
+  if (selectedIndex < 0 || selectedIndex >= profileData.length) return;
+
+  profileData[selectedIndex].power = document.getElementById("powerInput").value.trim();
+  profileData[selectedIndex].guild_rank = document.getElementById("guildRankInput").value.trim();
+  profileData[selectedIndex].feature = document.getElementById("featureInput").value.trim();
 }
 
 function applyCsvMatch() {
@@ -165,43 +202,7 @@ function applyCsvMatch() {
   alert("CSV 자동 매칭이 완료되었습니다.");
 }
 
-function renderMemberList() {
-  const select = document.getElementById("memberSelect");
-  if (!select) return;
-
-  select.innerHTML = profileData
-    .map((m, i) => `<option value="${i}">${m.gc_name || "(이름없음)"} / Lv.${m.gc_level || "-"} / ${m.class || "-"}</option>`)
-    .join("");
-
-  if (profileData.length > 0) {
-    select.value = "0";
-    selectedIndex = 0;
-    loadSelectedMember();
-  }
-}
-
-function loadSelectedMember() {
-  if (selectedIndex < 0 || selectedIndex >= profileData.length) return;
-  const m = profileData[selectedIndex];
-
-  document.getElementById("nameInput").value = m.gc_name || "";
-  document.getElementById("levelInput").value = m.gc_level || "";
-  document.getElementById("gradeInput").value = m.grade || "";
-  document.getElementById("classInput").value = m.class || "";
-  document.getElementById("powerInput").value = m.power || "";
-  document.getElementById("guildRankInput").value = m.guild_rank || "";
-  document.getElementById("featureInput").value = m.feature || "";
-}
-
-function syncEditorToCurrentMember() {
-  if (selectedIndex < 0 || selectedIndex >= profileData.length) return;
-
-  profileData[selectedIndex].power = document.getElementById("powerInput").value.trim();
-  profileData[selectedIndex].guild_rank = document.getElementById("guildRankInput").value.trim();
-  profileData[selectedIndex].feature = document.getElementById("featureInput").value.trim();
-}
-
-function downloadJson() {
+function downloadCardJson() {
   syncEditorToCurrentMember();
   const blob = new Blob([JSON.stringify(profileData, null, 2)], { type: "application/json" });
   const a = document.createElement("a");
@@ -211,13 +212,13 @@ function downloadJson() {
   URL.revokeObjectURL(a.href);
 }
 
-async function loadDefault() {
+async function loadCardDefault() {
   const base = await fetchJson("data/catdog_all_in_one.json");
   profileData = Array.isArray(base) ? base.map(mapFromBaseRow) : [];
   renderMemberList();
 }
 
-function handleFile(file) {
+function handleCardJsonFile(file) {
   if (!file) return;
 
   const reader = new FileReader();
@@ -250,10 +251,135 @@ function handleCsvFile(file) {
   reader.readAsArrayBuffer(file);
 }
 
+function normalizeScheduleRow(row) {
+  return {
+    day: String(row?.day || "").trim(),
+    content: String(row?.content || "").trim()
+  };
+}
+
+function renderScheduleEditor() {
+  const body = document.getElementById("scheduleEditorBody");
+  if (!body) return;
+
+  if (!scheduleData.length) {
+    scheduleData = [{ day: "", content: "" }];
+  }
+
+  body.innerHTML = scheduleData.map((row, idx) => `
+    <tr data-index="${idx}">
+      <td><input type="text" class="schedule-cell-input schedule-day" value="${escapeHtml(row.day)}" placeholder="예) 3/27(금) 21:00"></td>
+      <td><input type="text" class="schedule-cell-input schedule-content" value="${escapeHtml(row.content)}" placeholder="예) 별빛 해방전"></td>
+      <td><button type="button" class="row-del-btn" data-del="${idx}">삭제</button></td>
+    </tr>
+  `).join("");
+
+  body.querySelectorAll(".schedule-day").forEach((input) => {
+    input.addEventListener("input", syncScheduleFromEditor);
+  });
+  body.querySelectorAll(".schedule-content").forEach((input) => {
+    input.addEventListener("input", syncScheduleFromEditor);
+  });
+  body.querySelectorAll(".row-del-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const idx = Number(btn.getAttribute("data-del"));
+      if (Number.isNaN(idx)) return;
+      scheduleData.splice(idx, 1);
+      renderScheduleEditor();
+    });
+  });
+}
+
+function syncScheduleFromEditor() {
+  const body = document.getElementById("scheduleEditorBody");
+  if (!body) return;
+
+  const rows = [...body.querySelectorAll("tr")];
+  scheduleData = rows.map((tr) => {
+    const day = tr.querySelector(".schedule-day")?.value || "";
+    const content = tr.querySelector(".schedule-content")?.value || "";
+    return normalizeScheduleRow({ day, content });
+  });
+}
+
+function addScheduleRow() {
+  syncScheduleFromEditor();
+  scheduleData.push({ day: "", content: "" });
+  renderScheduleEditor();
+}
+
+async function loadScheduleDefault() {
+  const base = await fetchJson("data/schedule.json");
+  scheduleData = Array.isArray(base) ? base.map(normalizeScheduleRow) : [];
+  renderScheduleEditor();
+}
+
+function handleScheduleJsonFile(file) {
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const text = decodeBestTextFromBuffer(reader.result);
+      const parsed = JSON.parse(String(text || "[]"));
+      scheduleData = Array.isArray(parsed) ? parsed.map(normalizeScheduleRow) : [];
+      renderScheduleEditor();
+    } catch (err) {
+      alert("스케쥴 JSON 파싱 실패: " + String(err));
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function downloadScheduleJson() {
+  syncScheduleFromEditor();
+  const cleaned = scheduleData.filter((row) => row.day || row.content);
+  const blob = new Blob([JSON.stringify(cleaned, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "schedule.json";
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function switchTab(tab) {
+  const cardBtn = document.getElementById("tabCardBtn");
+  const scheduleBtn = document.getElementById("tabScheduleBtn");
+  const cardSection = document.getElementById("cardToolSection");
+  const scheduleSection = document.getElementById("scheduleToolSection");
+
+  if (!cardBtn || !scheduleBtn || !cardSection || !scheduleSection) return;
+
+  if (tab === "schedule") {
+    cardBtn.classList.remove("active");
+    scheduleBtn.classList.add("active");
+    cardSection.style.display = "none";
+    scheduleSection.style.display = "block";
+    return;
+  }
+
+  scheduleBtn.classList.remove("active");
+  cardBtn.classList.add("active");
+  scheduleSection.style.display = "none";
+  cardSection.style.display = "block";
+}
+
 function bindEvents() {
+  document.getElementById("tabCardBtn")?.addEventListener("click", () => switchTab("card"));
+  document.getElementById("tabScheduleBtn")?.addEventListener("click", () => switchTab("schedule"));
+
   document.getElementById("loadDefaultBtn")?.addEventListener("click", async () => {
     try {
-      await loadDefault();
+      await loadCardDefault();
     } catch (err) {
       alert("기본 JSON 로드 실패: " + String(err));
     }
@@ -261,7 +387,7 @@ function bindEvents() {
 
   document.getElementById("sourceJsonInput")?.addEventListener("change", (e) => {
     const file = e.target.files?.[0];
-    handleFile(file);
+    handleCardJsonFile(file);
   });
 
   document.getElementById("sourceCsvInput")?.addEventListener("change", (e) => {
@@ -280,7 +406,30 @@ function bindEvents() {
   document.getElementById("powerInput")?.addEventListener("input", syncEditorToCurrentMember);
   document.getElementById("guildRankInput")?.addEventListener("input", syncEditorToCurrentMember);
   document.getElementById("featureInput")?.addEventListener("input", syncEditorToCurrentMember);
-  document.getElementById("downloadBtn")?.addEventListener("click", downloadJson);
+
+  document.getElementById("downloadBtn")?.addEventListener("click", downloadCardJson);
+
+  document.getElementById("loadScheduleDefaultBtn")?.addEventListener("click", async () => {
+    try {
+      await loadScheduleDefault();
+    } catch (err) {
+      alert("기본 schedule.json 로드 실패: " + String(err));
+    }
+  });
+
+  document.getElementById("scheduleJsonInput")?.addEventListener("change", (e) => {
+    const file = e.target.files?.[0];
+    handleScheduleJsonFile(file);
+  });
+
+  document.getElementById("addScheduleRowBtn")?.addEventListener("click", addScheduleRow);
+  document.getElementById("downloadScheduleBtn")?.addEventListener("click", downloadScheduleJson);
 }
 
-bindEvents();
+function init() {
+  bindEvents();
+  scheduleData = [{ day: "", content: "" }];
+  renderScheduleEditor();
+}
+
+init();
