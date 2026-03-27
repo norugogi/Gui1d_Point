@@ -71,6 +71,8 @@ body {
   perspective: 1200px;
   cursor: pointer;
   flex: 0 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .profile-card-inner {
@@ -88,14 +90,15 @@ body {
 .profile-face {
   position: absolute;
   inset: 0;
-  border-radius: 12px;
+  border-radius: 0;
   backface-visibility: hidden;
   overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.12);
+  border: none;
 }
 
 .profile-front {
-  background-size: cover;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
   background-position: center;
 }
 
@@ -124,7 +127,15 @@ body {
   line-height: 1;
   font-weight: 850;
   letter-spacing: -0.2px;
-  transform: translateY(-4px);
+  transform: translateY(-6px);
+}
+
+.front-level {
+  transform: translateX(4px);
+}
+
+.front-grade {
+  transform: translateX(-4px);
 }
 
 .front-name {
@@ -141,7 +152,8 @@ body {
 .profile-back {
   transform: rotateY(180deg);
   background-image: linear-gradient(140deg, rgba(26,31,44,0.9), rgba(17,20,30,0.95)), url("../assets/classes/bin_card.png");
-  background-size: cover;
+  background-size: 100% 100%, 100% 100%;
+  background-repeat: no-repeat, no-repeat;
   background-position: center;
 }
 

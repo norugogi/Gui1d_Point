@@ -116,8 +116,8 @@ function renderProfiles() {
             <div class="front-overlay">
               <div class="front-bottom">
                 <div class="front-stats">
-                  <span>${escapeHtml(formatLevel(p.gc_level))}</span>
-                  <span>${escapeHtml(formatGrade(p.grade))}</span>
+                  <span class="front-level">${escapeHtml(formatLevel(p.gc_level))}</span>
+                  <span class="front-grade">${escapeHtml(formatGrade(p.grade))}</span>
                 </div>
                 <div class="front-name">${escapeHtml(p.gc_name)}</div>
               </div>
