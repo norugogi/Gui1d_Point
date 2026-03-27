@@ -7,7 +7,7 @@
     "guild_name": "DOG",
     "power": "50405",
     "guild_rank": "결사간부",
-    "feature": "프전 공무원 / 오더담당"
+    "feature": "프전공무원"
   },
   {
     "gc_name": "샬롯",
@@ -47,7 +47,7 @@
     "guild_name": "DOG",
     "power": "50119",
     "guild_rank": "결사원",
-    "feature": "-"
+    "feature": "황금깐트롤"
   },
   {
     "gc_name": "은빈",
@@ -57,7 +57,7 @@
     "guild_name": "DOG",
     "power": "49007",
     "guild_rank": "결사원",
-    "feature": "-"
+    "feature": "아재개그 달인"
   },
   {
     "gc_name": "룽지",
@@ -137,7 +137,7 @@
     "guild_name": "DOG",
     "power": "45582",
     "guild_rank": "결사원",
-    "feature": "-"
+    "feature": ""
   },
   {
     "gc_name": "덥뿡",
@@ -217,7 +217,7 @@
     "guild_name": "DOG",
     "power": "46131",
     "guild_rank": "결사원",
-    "feature": "-"
+    "feature": "전략가"
   },
   {
     "gc_name": "베찌",
@@ -267,7 +267,7 @@
     "guild_name": "DOG",
     "power": "44067",
     "guild_rank": "결사간부",
-    "feature": "-"
+    "feature": "뻘짓담당"
   },
   {
     "gc_name": "세월의나그네",
@@ -367,7 +367,7 @@
     "guild_name": "DOG",
     "power": "49412",
     "guild_rank": "결사장",
-    "feature": "-"
+    "feature": "강력한 AI라는 소문이 있음...."
   },
   {
     "gc_name": "Aewol",
@@ -577,7 +577,7 @@
     "guild_name": "CATT",
     "power": "36735",
     "guild_rank": "결사원",
-    "feature": "-"
+    "feature": "루비귀신"
   },
   {
     "gc_name": "소마",
@@ -740,16 +740,6 @@
     "feature": "-"
   },
   {
-    "gc_name": "준태",
-    "gc_level": 87,
-    "grade": "23",
-    "class": "WildWarrior",
-    "guild_name": "CATT",
-    "power": "40793",
-    "guild_rank": "결사원",
-    "feature": "-"
-  },
-  {
     "gc_name": "검방",
     "gc_level": 87,
     "grade": "22",
@@ -767,7 +757,7 @@
     "guild_name": "DOG",
     "power": "49913",
     "guild_rank": "결사원",
-    "feature": "-"
+    "feature": "힐 좀 주세요"
   },
   {
     "gc_name": "시로",
@@ -827,7 +817,7 @@
     "guild_name": "DOG",
     "power": "45852",
     "guild_rank": "결사원",
-    "feature": "-"
+    "feature": "밧줄로 훌꽁"
   },
   {
     "gc_name": "캣해일",
@@ -867,7 +857,7 @@
     "guild_name": "CATT",
     "power": "43263",
     "guild_rank": "결사간부",
-    "feature": "-"
+    "feature": "금손"
   },
   {
     "gc_name": "도라",
@@ -896,6 +886,16 @@
     "class": "Enforcer",
     "guild_name": "CATT",
     "power": "40443",
+    "guild_rank": "결사원",
+    "feature": "-"
+  },
+  {
+    "gc_name": "준태",
+    "gc_level": 87,
+    "grade": "23",
+    "class": "Enforcer",
+    "guild_name": "CATT",
+    "power": "40793",
     "guild_rank": "결사원",
     "feature": "-"
   },
