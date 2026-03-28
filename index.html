@@ -20,6 +20,7 @@
     <div class="menu-title">공지</div>
     <div class="menu-item" onclick="showPage('noticePage', this)">시즌 주요 공지</div>
     <div class="menu-item" onclick="showPage('eventPage', this)">시즌 이벤트 공지</div>
+    <div class="menu-item" onclick="showPage('catdogNoticePage', this)">캣독 공지사항</div>
 
     <div class="menu-title">결사</div>
     <div class="menu-item" onclick="showPage('guildListPage', this)">결사원 리스트</div>
@@ -180,6 +181,10 @@
 
     <div id="eventPage" class="page" style="display:none;">
       <div class="notice-wrap"><img src="assets/images/event3.png" class="notice-img" alt="event"></div>
+    </div>
+
+    <div id="catdogNoticePage" class="page" style="display:none;">
+      <iframe src="catdog_notice.html" style="width:100%; height:calc(100vh - 80px); border:none;" title="catdog-notice"></iframe>
     </div>
 
     <div id="rulesPage" class="page" style="display:none;">

@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>캣독 공지사항</title>
+  <link rel="stylesheet" href="css/catdog_notice.css">
+  <script src="js/access-gate.js"></script>
+</head>
+<body class="no-sidebar">
+  <main class="notice-main">
+    <section class="notice-panel">
+      <div class="notice-head">
+        <h2>📢 상시 공지</h2>
+        <button id="noticeCreateBtn" class="notice-btn" type="button" style="display:none;">등록</button>
+      </div>
+
+      <div class="notice-divider"></div>
+
+      <div id="noticeFeed" class="notice-feed">
+        <div class="notice-loading">불러오는 중...</div>
+      </div>
+    </section>
+  </main>
+
+  <div id="noticeEditorModal" class="notice-modal">
+    <div class="notice-modal-box" onclick="event.stopPropagation()">
+      <div class="notice-modal-head">
+        <h3 id="noticeEditorTitle">공지 등록</h3>
+        <button id="noticeEditorCloseBtn" class="notice-btn soft" type="button">닫기</button>
+      </div>
+
+      <label for="noticeTitleInput">제목</label>
+      <input id="noticeTitleInput" type="text" placeholder="제목 입력">
+
+      <label for="noticeContentInput">내용</label>
+      <textarea id="noticeContentInput" rows="8" placeholder="공지 내용을 입력하세요"></textarea>
+
+      <label class="notice-check-row">
+        <input id="noticePinnedInput" type="checkbox">
+        <span>상단 고정(📌)</span>
+      </label>
+
+      <div class="notice-modal-actions">
+        <button id="noticeSaveBtn" class="notice-btn" type="button">저장</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/catdog_notice.js"></script>
+</body>
+</html>
