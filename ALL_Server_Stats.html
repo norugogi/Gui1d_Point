@@ -65,6 +65,7 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: 12px;
+      justify-items: center;
     }
 
     .box {
@@ -72,6 +73,7 @@
       border: 1px solid var(--line);
       border-radius: 10px;
       overflow: hidden;
+      width: min(1240px, 94%);
     }
 
     .box-title {
@@ -106,6 +108,22 @@
     #statsBody tr.active { background: rgba(212,175,55,0.16); }
 
     .right { text-align: right; }
+
+    /* 통계표 헤더 컬럼별 색상 구분 */
+    .stats-table thead th {
+      text-align: center;
+      color: #f8fbff;
+      font-weight: 800;
+    }
+    .stats-table thead th:nth-child(1) { background: #243047; }
+    .stats-table thead th:nth-child(2) { background: #2f3344; }
+    .stats-table thead th:nth-child(3) { background: #2b3c33; }
+
+    .stats-table tbody td {
+      text-align: center;
+      font-size: 15px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
 
     .list-head {
       display: flex;
@@ -164,7 +182,7 @@
     <div class="layout">
       <div class="box">
         <h3 class="box-title" id="statsTitle">레벨 통계</h3>
-        <table>
+        <table class="stats-table">
           <thead>
             <tr>
               <th id="statsColName">구분</th>
@@ -182,7 +200,7 @@
           <span id="playersCount" class="count">0명</span>
         </div>
 
-        <table>
+        <table class="players-table">
           <thead>
             <tr>
               <th>닉네임</th>
