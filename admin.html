@@ -97,7 +97,7 @@
       projectId: "gui1d-point-db"
     };
 
-    const ROLE_OPTIONS = ["admin", "manager", "approved", "pending", "rejected"];
+    const ROLE_OPTIONS = ["manager", "approved", "pending", "rejected"];
 
     const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
     const auth = getAuth(app);
@@ -123,14 +123,18 @@
         .replace(/'/g, "&#039;");
     }
 
-    function roleOptionsHtml(selected, blockAdminOption) {
-      return ROLE_OPTIONS
+    function roleOptionsHtml(selected) {
+      const options = [];
+      if (selected === "admin") {
+        options.push('<option value="admin" selected disabled>admin</option>');
+      }
+
+      return options.concat(ROLE_OPTIONS
         .map((role) => {
           const selectedAttr = role === selected ? "selected" : "";
-          const disabledAttr = blockAdminOption && role === "admin" ? "disabled" : "";
-          return `<option value="${role}" ${selectedAttr} ${disabledAttr}>${role}</option>`;
+          return `<option value="${role}" ${selectedAttr}>${role}</option>`;
         })
-        .join("");
+      ).join("");
     }
 
     function renderRows(rows) {
@@ -145,9 +149,9 @@
         const managerMode = myRole === "manager";
         const targetIsAdmin = role === "admin";
 
-        // manager는 admin 계정 편집 금지, admin 승격 금지
-        const disableSelect = managerMode && (targetIsAdmin || isMe);
-        const disableSave = managerMode && (targetIsAdmin || isMe);
+        // admin 계정은 유일 계정으로 고정(목록에서 선택/변경 불가)
+        const disableSelect = targetIsAdmin || (managerMode && isMe);
+        const disableSave = targetIsAdmin || (managerMode && isMe);
 
         return `
           <div class="item">
@@ -159,7 +163,7 @@
             </div>
             <div class="actions">
               <select data-role-select="${r.id}" ${disableSelect ? "disabled" : ""}>
-                ${roleOptionsHtml(role, managerMode)}
+                ${roleOptionsHtml(role)}
               </select>
               <button class="save" data-save="${r.id}" ${disableSave ? "disabled" : ""} type="button">권한 변경</button>
             </div>
@@ -176,8 +180,8 @@
           const nextRole = String(select.value || "approved");
           const currentUserId = auth.currentUser?.uid || "";
 
-          if (myRole === "manager" && nextRole === "admin") {
-            window.alert("매니저 권한으로는 admin 지정이 불가합니다.");
+          if (nextRole === "admin") {
+            window.alert("admin 권한은 목록에서 지정할 수 없습니다.");
             return;
           }
           if (myRole === "manager" && id === currentUserId) {

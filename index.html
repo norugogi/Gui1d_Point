@@ -29,6 +29,7 @@
 
     <div class="menu-title">캐릭터 검색</div>
     <div class="menu-item" onclick="showPage('whoPage', this)">너 누구야</div>
+    <div class="menu-item" onclick="showPage('allServerStatsPage', this)">전체서버 통계</div>
 
     <div class="menu-title">공헌도</div>
     <div class="menu-item" onclick="showPage('rubyPage', this)">루비 공헌도</div>
@@ -194,6 +195,10 @@
 
     <div id="whoPage" class="page" style="display:none;">
       <iframe src="who.html" style="width:100%; height:calc(100vh - 80px); border:none;" title="who"></iframe>
+    </div>
+
+    <div id="allServerStatsPage" class="page" style="display:none;">
+      <iframe src="ALL_Server_Stats.html" style="width:100%; height:calc(100vh - 80px); border:none;" title="all-server-stats"></iframe>
     </div>
 
     <div id="rubyPage" class="page" style="display:none;">
