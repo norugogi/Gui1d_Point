@@ -28,20 +28,6 @@
     "guild_name": "CATT"
   },
   {
-    "gc_name": "아톰",
-    "gc_level": 92,
-    "class": "SolarSentinel",
-    "grade": "25",
-    "guild_name": "DOG"
-  },
-  {
-    "gc_name": "은빈",
-    "gc_level": 91,
-    "class": "SolarSentinel",
-    "grade": "24",
-    "guild_name": "DOG"
-  },
-  {
     "gc_name": "룽지",
     "gc_level": 90,
     "class": "SolarSentinel",
@@ -59,7 +45,7 @@
     "gc_name": "고녜이",
     "gc_level": 89,
     "class": "SolarSentinel",
-    "grade": "24",
+    "grade": "25",
     "guild_name": "CATT"
   },
   {
@@ -106,7 +92,7 @@
   },
   {
     "gc_name": "히이잉",
-    "gc_level": 87,
+    "gc_level": 88,
     "class": "MirageBlade",
     "grade": "23",
     "guild_name": "CATT"
@@ -185,7 +171,7 @@
     "gc_name": "NORU",
     "gc_level": 89,
     "class": "IncenseArcher",
-    "grade": "24",
+    "grade": "25",
     "guild_name": "DOG"
   },
   {
@@ -252,6 +238,13 @@
     "guild_name": "CATT"
   },
   {
+    "gc_name": "아톰",
+    "gc_level": 92,
+    "class": "RuneScribe",
+    "grade": "25",
+    "guild_name": "DOG"
+  },
+  {
     "gc_name": "수꼬",
     "gc_level": 91,
     "class": "RuneScribe",
@@ -260,6 +253,13 @@
   },
   {
     "gc_name": "Aewol",
+    "gc_level": 91,
+    "class": "RuneScribe",
+    "grade": "25",
+    "guild_name": "DOG"
+  },
+  {
+    "gc_name": "은빈",
     "gc_level": 91,
     "class": "RuneScribe",
     "grade": "25",
@@ -311,14 +311,14 @@
     "gc_name": "좀비",
     "gc_level": 89,
     "class": "RuneScribe",
-    "grade": "24",
+    "grade": "25",
     "guild_name": "DOG"
   },
   {
     "gc_name": "바벨",
     "gc_level": 89,
     "class": "RuneScribe",
-    "grade": "24",
+    "grade": "25",
     "guild_name": "DOG"
   },
   {
@@ -379,7 +379,7 @@
   },
   {
     "gc_name": "사탄의한",
-    "gc_level": 86,
+    "gc_level": 87,
     "class": "RuneScribe",
     "grade": "22",
     "guild_name": "CATT"
@@ -476,6 +476,13 @@
     "guild_name": "CATT"
   },
   {
+    "gc_name": "화수아",
+    "gc_level": 81,
+    "class": "RuneScribe",
+    "grade": "19",
+    "guild_name": "CATT"
+  },
+  {
     "gc_name": "바라문",
     "gc_level": 80,
     "class": "RuneScribe",
@@ -549,14 +556,14 @@
     "gc_name": "바비",
     "gc_level": 91,
     "class": "Enforcer",
-    "grade": "24",
+    "grade": "25",
     "guild_name": "DOG"
   },
   {
     "gc_name": "난동",
     "gc_level": 91,
     "class": "Enforcer",
-    "grade": "24",
+    "grade": "25",
     "guild_name": "DOG"
   },
   {
