@@ -26,8 +26,7 @@ let currentPercent = 0;
 let currentValueAnimated = 0;
 let latestData = {
   current: 0,
-  max: 1,
-  state: "-"
+  max: 1
 };
 
 function isAdmin() {
@@ -44,6 +43,12 @@ function getStateColor(state) {
   if (state === KOR_NORMAL) return "#ffd54f";
   if (state === KOR_ENOUGH) return "#4caf50";
   return "#ffffff";
+}
+
+function getStateByPercent(percent) {
+  if (percent < 0.5) return KOR_POOR;
+  if (percent < 0.8) return KOR_NORMAL;
+  return KOR_ENOUGH;
 }
 
 function formatRuby(value) {
@@ -137,8 +142,8 @@ function animateCount(from, to, duration = 900) {
 function renderRuby(data) {
   const current = Number(data.current || 0);
   const max = Math.max(1, Number(data.max || 1));
-  const state = String(data.state || "-");
   const percent = current / max;
+  const state = getStateByPercent(percent);
 
   animatePercent(currentPercent, percent);
   animateCount(currentValueAnimated, current);
@@ -184,15 +189,14 @@ function bindEvents() {
 function bindRealtime() {
   onSnapshot(rubyDocRef, (snap) => {
     if (!snap.exists()) {
-      latestData = { current: 0, max: 1, state: "-" };
+      latestData = { current: 0, max: 1 };
       renderRuby(latestData);
       return;
     }
 
     latestData = {
       current: Number(snap.data()?.current || 0),
-      max: Number(snap.data()?.max || 1),
-      state: String(snap.data()?.state || "-")
+      max: Number(snap.data()?.max || 1)
     };
     renderRuby(latestData);
   });
