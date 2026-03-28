@@ -198,7 +198,7 @@
         </div>
       </div>
 
-      <p>일반 사용자는 건의 작성만 가능하며, 관리자 메뉴에서 로그인하면 건의 목록/삭제 기능이 표시됩니다.</p>
+      <p>결사 운영에 대한 의견, 건의하실 내용이 있다면 양식에 맞게 작성해주세요.</p>
 
       <label for="title">제목</label>
       <input id="title" type="text" placeholder="제목을 입력하세요">
@@ -411,8 +411,12 @@
         .replace(/'/g, "&#039;");
     }
 
-    // 새로고침해도 관리자 상태 유지
+    // 새로고침/탭 전환/다른 페이지 로그인 상태 변경 시에도 관리자 버튼 상태 동기화
     applyAdminUI();
+    window.addEventListener("storage", applyAdminUI);
+    window.addEventListener("focus", applyAdminUI);
+    document.addEventListener("visibilitychange", applyAdminUI);
+    setInterval(applyAdminUI, 1000);
   </script>
 </body>
 </html>

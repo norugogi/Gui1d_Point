@@ -59,6 +59,21 @@
           <div class="card"><span>시즌 상태</span><b>농사</b></div>
         </div>
 
+        <div class="rolling-notice-wrap">
+          <div class="rolling-notice-outer">
+            <div class="rolling-notice-inner">
+              <div class="rolling-notice-head">
+                <span>롤링 공지</span>
+                <div class="rolling-notice-admin">
+                  <button id="rollingAddBtn" class="rolling-btn" type="button" style="display:none;">추가</button>
+                  <button id="rollingEditBtn" class="rolling-btn" type="button" style="display:none;">수정</button>
+                </div>
+              </div>
+              <div id="rollingNoticeText" class="rolling-notice-text">불러오는 중...</div>
+            </div>
+          </div>
+        </div>
+
         <div class="stats-header">
           <div class="stats-title">통계</div>
           <div class="filter-box">
@@ -195,7 +210,27 @@
     </div>
   </div>
 
+  <div id="rollingNoticeModal" class="modal">
+    <div class="modal-box rolling-modal-box" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <span id="rollingModalTitle">롤링 공지</span>
+        <span id="rollingModalClose" class="modal-close">X</span>
+      </div>
+      <div id="rollingAddSection">
+        <label for="rollingNoticeInput" class="rolling-label">공지 내용</label>
+        <textarea id="rollingNoticeInput" class="rolling-textarea" placeholder="공지 내용을 입력하세요"></textarea>
+        <div class="rolling-modal-actions">
+          <button id="rollingSaveBtn" type="button">저장</button>
+        </div>
+      </div>
+      <div id="rollingEditSection" style="display:none;">
+        <div id="rollingEditList" class="rolling-edit-list"></div>
+      </div>
+    </div>
+  </div>
+
   <script src="js/main.js"></script>
   <script src="js/schedule-admin.js"></script>
+  <script type="module" src="js/rolling-notice.js"></script>
 </body>
 </html>

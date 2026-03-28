@@ -50,10 +50,10 @@
   async function loadScheduleFromFirestore() {
     if (!db) return;
     try {
-      const snap = await db.collection("schedule").get();
+      // timestamp 오름차순(asc)으로 조회: 이른 시간/먼저 저장된 일정이 위로 오도록 정렬
+      const snap = await db.collection("schedule").orderBy("timestamp", "asc").get();
       const rows = snap.docs
         .map((d) => d.data() || {})
-        .sort((a, b) => Number(b.timestamp || 0) - Number(a.timestamp || 0))
         .map((r) => ({ day: String(r.day || ""), content: String(r.content || "") }));
 
       if (!rows.length) return;

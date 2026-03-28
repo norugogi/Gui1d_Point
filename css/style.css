@@ -106,6 +106,60 @@ body {
   font-size: 21px;
 }
 
+.rolling-notice-wrap {
+  margin: 10px 0 12px;
+}
+
+.rolling-notice-outer {
+  background: #2a2b30;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.rolling-notice-inner {
+  background: #1f2227;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.rolling-notice-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.rolling-notice-admin {
+  display: flex;
+  gap: 6px;
+}
+
+.rolling-btn {
+  border: none;
+  border-radius: 8px;
+  background: #d4af37;
+  color: #111;
+  font-weight: 700;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.rolling-notice-text {
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.5;
+  min-height: 24px;
+  opacity: 1;
+  transition: opacity 220ms ease;
+}
+
+.rolling-notice-text.fade-out {
+  opacity: 0;
+}
+
 .card {
   flex: 1;
   background: #2a2b30;
@@ -753,4 +807,68 @@ body.no-sidebar .main.ruby-page > * {
 
 .guild-stat-row:hover {
   background: #353841;
+}
+
+.rolling-modal-box {
+  width: min(760px, 94vw);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.rolling-label {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.rolling-textarea {
+  width: 100%;
+  min-height: 120px;
+  box-sizing: border-box;
+  border: 1px solid #454b5a;
+  background: #1d212a;
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  resize: vertical;
+}
+
+.rolling-modal-actions {
+  margin-top: 10px;
+}
+
+.rolling-modal-actions button {
+  border: none;
+  border-radius: 8px;
+  background: #d4af37;
+  color: #111;
+  font-weight: 700;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.rolling-edit-item {
+  background: #252a34;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.rolling-edit-content {
+  white-space: pre-wrap;
+  color: #fff;
+  font-size: 14px;
+}
+
+.rolling-del-btn {
+  border: none;
+  border-radius: 8px;
+  background: #d45d5d;
+  color: #fff;
+  padding: 7px 10px;
+  cursor: pointer;
 }
