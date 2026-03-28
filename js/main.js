@@ -517,3 +517,22 @@ function closeSheet() {
   frame.src = "";
 }
 window.closeSheet = closeSheet;
+
+async function logoutUser() {
+  try {
+    if (typeof window.__guildSignOut === "function") {
+      await window.__guildSignOut();
+    }
+  } catch (_err) {
+    // ignore and continue clearing local state
+  }
+
+  try {
+    localStorage.setItem("gui1d_admin_logged_in", "0");
+  } catch (_err) {
+    // ignore
+  }
+
+  location.reload();
+}
+window.logoutUser = logoutUser;

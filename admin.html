@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>관리자</title>
+  <title>회원 관리</title>
   <script src="js/access-gate.js"></script>
   <style>
     body {
@@ -12,103 +12,161 @@
       color: #f2f4f8;
       font-family: "Noto Sans KR", "Segoe UI", "Malgun Gothic", sans-serif;
     }
-
     .wrap {
-      max-width: 760px;
+      max-width: 900px;
       margin: 0 auto;
       padding: 24px;
     }
-
     .card {
       background: #252934;
-      border: 1px solid rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255,255,255,0.14);
       border-radius: 12px;
       padding: 18px;
     }
-
-    h2 {
-      margin: 0 0 8px;
-    }
-
-    p {
-      margin: 0 0 14px;
-      color: #c3c7d2;
-    }
-
-    .actions {
+    .head {
       display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
       align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
     }
-
+    h2 { margin: 0; }
+    p { margin: 0 0 12px; color: #c3c7d2; }
+    .list { display: grid; gap: 10px; }
+    .item {
+      background: #1d212a;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .name { font-weight: 700; }
+    .email { color: #c3c7d2; font-size: 13px; }
+    .actions { display: flex; gap: 8px; }
     button {
       border: none;
       border-radius: 8px;
-      background: #d4af37;
-      color: #111;
-      padding: 10px 14px;
+      padding: 8px 12px;
       font-weight: 700;
       cursor: pointer;
       font-family: inherit;
     }
-
-    .danger {
-      background: #d45d5d;
-      color: #fff;
-    }
-
-    #status {
-      min-height: 22px;
-      font-weight: 700;
-    }
+    .ok { background: #d4af37; color: #111; }
+    .reject { background: #d45d5d; color: #fff; }
+    .logout { background: #3b4252; color: #fff; }
+    .muted { color: #c3c7d2; }
   </style>
 </head>
 <body>
   <main class="wrap">
     <section class="card">
-      <h2>관리자</h2>
-      <p>여기서 관리자 로그인/로그아웃을 설정하면 건의함의 관리자 기능(건의 목록/삭제)이 활성화됩니다.</p>
-      <div class="actions">
-        <button id="loginBtn" type="button">로그인</button>
-        <button id="logoutBtn" type="button" class="danger">로그아웃</button>
-        <span id="status"></span>
+      <div class="head">
+        <h2>회원 관리</h2>
+        <button id="logoutBtn" class="logout" type="button">로그아웃</button>
+      </div>
+      <p id="desc" class="muted">승인 대기 회원을 관리합니다.</p>
+      <div id="pendingList" class="list">
+        <div class="muted">불러오는 중...</div>
       </div>
     </section>
   </main>
 
-  <script>
-    const ADMIN_KEY = "gui1d_admin_logged_in";
-    const ADMIN_PASSWORD = "Admin!@345";
+  <script type="module">
+    import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+    import { getFirestore, doc, getDoc, collection, query, where, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
-    const loginBtn = document.getElementById("loginBtn");
+    const firebaseConfig = {
+      apiKey: "AIzaSyCN1SqXwZWf7Z9r2oMrJGKF0pxfl4zBeTc",
+      authDomain: "gui1d-point-db.firebaseapp.com",
+      projectId: "gui1d-point-db"
+    };
+
+    const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const listEl = document.getElementById("pendingList");
+    const descEl = document.getElementById("desc");
     const logoutBtn = document.getElementById("logoutBtn");
-    const statusEl = document.getElementById("status");
 
-    function renderStatus() {
-      const isAdmin = localStorage.getItem(ADMIN_KEY) === "1";
-      statusEl.textContent = isAdmin ? "현재 상태: 로그인됨" : "현재 상태: 로그아웃됨";
-      statusEl.style.color = isAdmin ? "#8be28b" : "#ff8b8b";
+    function renderNoAccess() {
+      descEl.textContent = "관리자 계정만 접근 가능합니다.";
+      listEl.innerHTML = '<div class="muted">접근 권한이 없습니다.</div>';
     }
 
-    loginBtn.addEventListener("click", () => {
-      const input = window.prompt("관리자 비밀번호를 입력하세요", "");
-      if (input === null) return;
-      if (input === ADMIN_PASSWORD) {
-        localStorage.setItem(ADMIN_KEY, "1");
-        renderStatus();
+    function renderRows(rows) {
+      if (!rows.length) {
+        listEl.innerHTML = '<div class="muted">승인 대기 회원이 없습니다.</div>';
         return;
       }
-      statusEl.textContent = "비밀번호가 올바르지 않습니다.";
-      statusEl.style.color = "#ff8b8b";
+
+      listEl.innerHTML = rows.map((r) => `
+        <div class="item">
+          <div>
+            <div class="name">${escapeHtml(r.nickname || "-")}</div>
+            <div class="email">${escapeHtml(r.email || "-")}</div>
+          </div>
+          <div class="actions">
+            <button class="ok" data-approve="${r.id}" type="button">승인</button>
+            <button class="reject" data-reject="${r.id}" type="button">거절</button>
+          </div>
+        </div>
+      `).join("");
+
+      listEl.querySelectorAll("[data-approve]").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const id = btn.getAttribute("data-approve");
+          await updateDoc(doc(db, "users", id), { role: "approved" });
+        });
+      });
+
+      listEl.querySelectorAll("[data-reject]").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const id = btn.getAttribute("data-reject");
+          await updateDoc(doc(db, "users", id), { role: "rejected" });
+        });
+      });
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        renderNoAccess();
+        return;
+      }
+
+      const meSnap = await getDoc(doc(db, "users", user.uid));
+      const myRole = String(meSnap.data()?.role || "pending");
+      if (myRole !== "admin") {
+        renderNoAccess();
+        return;
+      }
+
+      descEl.textContent = "승인 대기 회원 목록입니다. 승인 또는 거절을 선택하세요.";
+
+      const q = query(collection(db, "users"), where("role", "==", "pending"));
+      onSnapshot(q, (snap) => {
+        const rows = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+        renderRows(rows);
+      });
     });
 
-    logoutBtn.addEventListener("click", () => {
-      localStorage.removeItem(ADMIN_KEY);
-      renderStatus();
+    logoutBtn.addEventListener("click", async () => {
+      await signOut(auth);
+      location.reload();
     });
-
-    renderStatus();
   </script>
 </body>
 </html>
