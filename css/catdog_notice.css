@@ -103,6 +103,29 @@
   line-height: 1.5;
 }
 
+.notice-content.collapsed {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.notice-content.expanded {
+  display: block;
+}
+
+.notice-more-btn {
+  border: none;
+  border-radius: 8px;
+  background: #404654;
+  color: #f2f4f8;
+  padding: 5px 9px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: -2px;
+}
+
 .notice-meta {
   color: #b8bfce;
   font-size: 13px;

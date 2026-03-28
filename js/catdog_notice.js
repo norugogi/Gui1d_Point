@@ -27,6 +27,7 @@ const elContentInput = document.getElementById("noticeContentInput");
 const elPinnedInput = document.getElementById("noticePinnedInput");
 
 let editDocId = null;
+let fallbackSubscribed = false;
 
 function isAdmin() {
   return localStorage.getItem(ADMIN_KEY) === "1";
@@ -56,6 +57,11 @@ function toDate(value) {
   if (value.seconds) return new Date(value.seconds * 1000);
   const d = new Date(value);
   return Number.isNaN(d.getTime()) ? null : d;
+}
+
+function dateToMs(value) {
+  const d = toDate(value);
+  return d ? d.getTime() : 0;
 }
 
 function formatRelative(dateObj) {
@@ -153,7 +159,8 @@ function renderFeed(rows) {
       <article class="notice-card ${row.pinned ? "pinned" : ""}">
         ${row.pinned ? '<div class="notice-pin">📌 고정</div>' : ""}
         <h3 class="notice-title">${escapeHtml(row.title || "-")}</h3>
-        <div class="notice-content">${escapeHtml(row.content || "-")}</div>
+        <div class="notice-content collapsed" data-content-id="${row.id}">${escapeHtml(row.content || "-")}</div>
+        <button type="button" class="notice-more-btn" data-more="${row.id}" style="display:none;">더보기</button>
         <div class="notice-meta">
           <span>${escapeHtml(relative)}</span>
           ${isNew ? '<span class="notice-new">NEW</span>' : ""}
@@ -187,30 +194,75 @@ function renderFeed(rows) {
       }
     });
   });
+
+  elFeed.querySelectorAll(".notice-more-btn").forEach((btn) => {
+    const id = btn.getAttribute("data-more");
+    const contentEl = elFeed.querySelector(`.notice-content[data-content-id="${id}"]`);
+    if (!contentEl) return;
+
+    // 내용이 실제로 잘리는 경우에만 더보기 버튼 노출
+    if (contentEl.scrollHeight > contentEl.clientHeight + 2) {
+      btn.style.display = "inline-block";
+    }
+
+    btn.addEventListener("click", () => {
+      const expanded = contentEl.classList.contains("expanded");
+      if (expanded) {
+        contentEl.classList.remove("expanded");
+        contentEl.classList.add("collapsed");
+        btn.textContent = "더보기";
+      } else {
+        contentEl.classList.remove("collapsed");
+        contentEl.classList.add("expanded");
+        btn.textContent = "접기";
+      }
+    });
+  });
+}
+
+function normalizeRowsFromSnap(snap) {
+  const rows = snap.docs.map((d) => ({
+    id: d.id,
+    title: d.data()?.title || "",
+    content: d.data()?.content || "",
+    pinned: Boolean(d.data()?.pinned),
+    created_at: d.data()?.created_at || null,
+    updated_at: d.data()?.updated_at || null
+  }));
+
+  // pinned desc -> created_at desc 정렬 보장
+  rows.sort((a, b) => {
+    const pinDiff = Number(b.pinned) - Number(a.pinned);
+    if (pinDiff !== 0) return pinDiff;
+    return dateToMs(b.created_at) - dateToMs(a.created_at);
+  });
+  return rows;
 }
 
 function subscribeNotices() {
   elFeed.innerHTML = '<div class="notice-loading">불러오는 중...</div>';
 
   const q = query(noticesRef, orderBy("pinned", "desc"), orderBy("created_at", "desc"));
-  onSnapshot(q, (snap) => {
-    const rows = snap.docs.map((d) => ({
-      id: d.id,
-      title: d.data()?.title || "",
-      content: d.data()?.content || "",
-      pinned: Boolean(d.data()?.pinned),
-      created_at: d.data()?.created_at || null,
-      updated_at: d.data()?.updated_at || null
-    }));
 
+  onSnapshot(q, (snap) => {
+    const rows = normalizeRowsFromSnap(snap);
     renderFeed(rows);
     applyAdminUI();
   }, (err) => {
-    console.error(err);
-    elFeed.innerHTML = '<div class="notice-loading">불러오는 중...</div>';
-    window.setTimeout(() => {
+    console.error("Primary notice query failed, fallback to collection snapshot:", err);
+
+    // 복합 인덱스 이슈 등으로 실패해도 사용자에게는 피드가 보이도록 폴백 구독
+    if (fallbackSubscribed) return;
+    fallbackSubscribed = true;
+
+    onSnapshot(noticesRef, (fallbackSnap) => {
+      const rows = normalizeRowsFromSnap(fallbackSnap);
+      renderFeed(rows);
+      applyAdminUI();
+    }, (fallbackErr) => {
+      console.error(fallbackErr);
       elFeed.innerHTML = '<div class="notice-loading">등록된 공지가 없습니다</div>';
-    }, 700);
+    });
   });
 }
 
