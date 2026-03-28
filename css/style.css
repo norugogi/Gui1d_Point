@@ -660,6 +660,79 @@ body.no-sidebar .main.ruby-page > * {
   gap: 10px;
 }
 
+.schedule-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.schedule-add-btn {
+  border: none;
+  border-radius: 8px;
+  background: #d4af37;
+  color: #111;
+  font-weight: 700;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.schedule-admin-box {
+  width: min(760px, 94vw);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.schedule-form-list {
+  display: grid;
+  gap: 10px;
+}
+
+.schedule-form-item {
+  background: #252a34;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.schedule-form-item input {
+  background: #1d212a;
+  border: 1px solid #454b5a;
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px;
+  width: 100%;
+}
+
+.schedule-row-del-btn {
+  border: none;
+  border-radius: 8px;
+  background: #d45d5d;
+  color: #fff;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.schedule-admin-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+}
+
+.schedule-admin-actions button {
+  border: none;
+  border-radius: 8px;
+  background: #d4af37;
+  color: #111;
+  font-weight: 700;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
 .admin-box {
   max-width: 760px;
 }

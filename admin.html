@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>관리자</title>
+  <script src="js/access-gate.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background: #1e1e1e;
+      color: #f2f4f8;
+      font-family: "Noto Sans KR", "Segoe UI", "Malgun Gothic", sans-serif;
+    }
+
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .card {
+      background: #252934;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 12px;
+      padding: 18px;
+    }
+
+    h2 {
+      margin: 0 0 8px;
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: #c3c7d2;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    button {
+      border: none;
+      border-radius: 8px;
+      background: #d4af37;
+      color: #111;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .danger {
+      background: #d45d5d;
+      color: #fff;
+    }
+
+    #status {
+      min-height: 22px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <h2>관리자</h2>
+      <p>여기서 관리자 로그인/로그아웃을 설정하면 건의함의 관리자 기능(건의 목록/삭제)이 활성화됩니다.</p>
+      <div class="actions">
+        <button id="loginBtn" type="button">로그인</button>
+        <button id="logoutBtn" type="button" class="danger">로그아웃</button>
+        <span id="status"></span>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const ADMIN_KEY = "gui1d_admin_logged_in";
+    const ADMIN_PASSWORD = "Admin!@345";
+
+    const loginBtn = document.getElementById("loginBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const statusEl = document.getElementById("status");
+
+    function renderStatus() {
+      const isAdmin = localStorage.getItem(ADMIN_KEY) === "1";
+      statusEl.textContent = isAdmin ? "현재 상태: 로그인됨" : "현재 상태: 로그아웃됨";
+      statusEl.style.color = isAdmin ? "#8be28b" : "#ff8b8b";
+    }
+
+    loginBtn.addEventListener("click", () => {
+      const input = window.prompt("관리자 비밀번호를 입력하세요", "");
+      if (input === null) return;
+      if (input === ADMIN_PASSWORD) {
+        localStorage.setItem(ADMIN_KEY, "1");
+        renderStatus();
+        return;
+      }
+      statusEl.textContent = "비밀번호가 올바르지 않습니다.";
+      statusEl.style.color = "#ff8b8b";
+    });
+
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem(ADMIN_KEY);
+      renderStatus();
+    });
+
+    renderStatus();
+  </script>
+</body>
+</html>
