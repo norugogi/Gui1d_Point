@@ -31,6 +31,9 @@
 
     <div class="menu-title">기타</div>
     <div class="menu-item" onclick="showPage('suggestPage', this)">건의함</div>
+
+    <div class="menu-title">관리자</div>
+    <div class="menu-item" onclick="showPage('adminPage', this)">관리자</div>
   </div>
 
   <div class="main">
@@ -146,6 +149,10 @@
 
     <div id="suggestPage" class="page" style="display:none;">
       <iframe src="suggestions.html" style="width:100%; height:calc(100vh - 80px); border:none;" title="suggestions"></iframe>
+    </div>
+
+    <div id="adminPage" class="page" style="display:none;">
+      <iframe src="suggestions.html" style="width:100%; height:calc(100vh - 80px); border:none;" title="admin-suggestions"></iframe>
     </div>
   </div>
 
