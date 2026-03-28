@@ -119,17 +119,14 @@ body {
 .rolling-notice-inner {
   background: #1f2227;
   border-radius: 10px;
-  padding: 12px;
+  padding: 10px 12px;
 }
 
-.rolling-notice-head {
+.rolling-notice-line {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  margin-bottom: 8px;
-  color: #fff;
-  font-weight: 700;
 }
 
 .rolling-notice-admin {
@@ -149,11 +146,15 @@ body {
 
 .rolling-notice-text {
   color: #fff;
-  font-size: 15px;
-  line-height: 1.5;
-  min-height: 24px;
+  font-size: 16px;
+  line-height: 1.2;
+  min-height: 18px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   opacity: 1;
   transition: opacity 220ms ease;
+  flex: 1;
 }
 
 .rolling-notice-text.fade-out {
@@ -699,6 +700,23 @@ body.no-sidebar .main.ruby-page > * {
 .schedule-table tbody tr:nth-child(even) td {
   background: #252a34;
   font-weight: 500;
+}
+
+.schedule-content-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.schedule-inline-del {
+  border: none;
+  border-radius: 6px;
+  background: #d45d5d;
+  color: #fff;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
 }
 
 @media (max-width: 980px) {
