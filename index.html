@@ -90,21 +90,51 @@
         </div>
 
         <div class="schedule-wrap">
-          <div class="box schedule-box">
-            <div class="schedule-title-row">
-              <div class="title">콘텐츠 일정표</div>
-              <button id="scheduleAddBtn" class="schedule-add-btn" type="button" style="display:none;">일정 추가</button>
+          <div class="schedule-content-row-main">
+            <div class="box schedule-box">
+              <div class="schedule-title-row">
+                <div class="title">콘텐츠 일정표</div>
+                <button id="scheduleAddBtn" class="schedule-add-btn" type="button" style="display:none;">일정 추가</button>
+              </div>
+              <div class="schedule-inner">
+                <table class="schedule-table">
+                  <thead>
+                    <tr>
+                      <th>날짜/요일</th>
+                      <th>콘텐츠</th>
+                    </tr>
+                  </thead>
+                  <tbody id="scheduleBody"></tbody>
+                </table>
+              </div>
             </div>
-            <div class="schedule-inner">
-              <table class="schedule-table">
-                <thead>
-                  <tr>
-                    <th>날짜/요일</th>
-                    <th>콘텐츠</th>
-                  </tr>
-                </thead>
-                <tbody id="scheduleBody"></tbody>
-              </table>
+
+            <div class="box ruby-status-card" id="rubyStatusCard">
+              <div class="ruby-status-head">
+                <span>루비 현황</span>
+                <button id="rubyEditBtn" class="ruby-edit-btn" type="button" style="display:none;">수정</button>
+              </div>
+
+              <div class="ruby-gauge-wrap">
+                <svg class="ruby-gauge-svg" viewBox="0 0 340 220" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="rubyGaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#ff4d4d"></stop>
+                      <stop offset="100%" stop-color="#8b0000"></stop>
+                    </linearGradient>
+                    <filter id="rubyGlow" x="-30%" y="-30%" width="160%" height="160%">
+                      <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#ff6b6b" flood-opacity="0.9"></feDropShadow>
+                    </filter>
+                  </defs>
+                  <path id="rubyGaugeTrack" class="ruby-gauge-track"></path>
+                  <path id="rubyGaugeProgress" class="ruby-gauge-progress"></path>
+                </svg>
+
+                <div class="ruby-center-info">
+                  <div class="ruby-line1" id="rubyCurrentText">보유 루비 : 불러오는 중...</div>
+                  <div class="ruby-line2">상태 : <span id="rubyStateText" class="ruby-state">-</span></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -232,5 +262,6 @@
   <script src="js/main.js"></script>
   <script src="js/schedule-admin.js"></script>
   <script type="module" src="js/rolling-notice.js"></script>
+  <script type="module" src="js/ruby-status.js"></script>
 </body>
 </html>
