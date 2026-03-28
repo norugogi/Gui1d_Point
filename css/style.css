@@ -791,8 +791,8 @@ body.no-sidebar .main.ruby-page > * {
 
 .ruby-gauge-progress {
   fill: none;
-  stroke: url(#rubyGaugeGrad);
-  stroke-width: 12;
+  stroke: #ff4f4f;
+  stroke-width: 13;
   stroke-linecap: round;
   filter: url(#rubyGlow);
   transition: stroke-dasharray 0.95s cubic-bezier(0.2, 0.7, 0.2, 1);
