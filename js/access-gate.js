@@ -127,6 +127,12 @@
   function releaseGate() {
     document.getElementById("site-gate-overlay")?.remove();
     document.getElementById("access-gate-style")?.remove();
+
+    // 게이트 해제 직후 차트/레이아웃이 숨김 상태에서 렌더된 경우를 대비해
+    // 메인 화면에 재렌더 이벤트를 전달한다.
+    requestAnimationFrame(() => {
+      window.dispatchEvent(new Event("guild:access-granted"));
+    });
   }
 
   function renderGate() {

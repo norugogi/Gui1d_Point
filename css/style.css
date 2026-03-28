@@ -73,11 +73,12 @@ body {
 .top-menu {
   display: flex;
   gap: 8px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  width: 100%;
 }
 
 .top-btn {
-  flex: 0 0 132px;
+  flex: 1 1 0;
   padding: 10px 8px;
   background: #2a2b30;
   text-align: center;

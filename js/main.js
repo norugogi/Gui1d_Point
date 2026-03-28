@@ -64,6 +64,11 @@ function normalizeGuildName(name) {
   return String(name);
 }
 
+function refreshMainDashboard(data) {
+  updateSummary(data);
+  buildStats(data);
+}
+
 function showPage(id, el) {
   document.querySelectorAll(".page").forEach((p) => {
     p.style.display = "none";
@@ -81,8 +86,7 @@ function showPage(id, el) {
   if (id === "guildListPage") applyListFilter();
   if (id === "guildStatPage") buildGuildStat(players);
   if (id === "mainPage") {
-    updateSummary(rawData);
-    buildStats(rawData);
+    refreshMainDashboard(rawData);
   }
 }
 window.showPage = showPage;
@@ -97,8 +101,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     players = Array.isArray(data) ? data : [];
     rawData = players;
 
-    updateSummary(rawData);
-    buildStats(rawData);
+    refreshMainDashboard(rawData);
     initClassFilter();
     applyListFilter();
   } catch (err) {
@@ -125,6 +128,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   document.getElementById("guildFilterSelect")?.addEventListener("change", applyListFilter);
   document.getElementById("classFilterSelect")?.addEventListener("change", applyListFilter);
+});
+
+// 로그인 게이트 해제 후 차트를 한 번 더 렌더링하여
+// 최초 진입/새로고침 시 그래프가 비어 보이는 문제를 방지한다.
+window.addEventListener("guild:access-granted", () => {
+  if (!rawData.length) return;
+  setTimeout(() => {
+    refreshMainDashboard(rawData);
+    applyListFilter();
+  }, 60);
 });
 
 function updateSummary(data) {
