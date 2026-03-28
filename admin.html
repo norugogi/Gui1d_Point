@@ -13,7 +13,7 @@
       font-family: "Noto Sans KR", "Segoe UI", "Malgun Gothic", sans-serif;
     }
     .wrap {
-      max-width: 900px;
+      max-width: 960px;
       margin: 0 auto;
       padding: 24px;
     }
@@ -45,19 +45,31 @@
     }
     .name { font-weight: 700; }
     .email { color: #c3c7d2; font-size: 13px; }
-    .actions { display: flex; gap: 8px; }
-    button {
+    .actions { display: flex; gap: 8px; align-items: center; }
+    button, select {
       border: none;
       border-radius: 8px;
       padding: 8px 12px;
       font-weight: 700;
-      cursor: pointer;
       font-family: inherit;
     }
-    .ok { background: #d4af37; color: #111; }
-    .reject { background: #d45d5d; color: #fff; }
+    select {
+      background: #303645;
+      color: #f2f4f8;
+      border: 1px solid rgba(255,255,255,0.16);
+      min-width: 132px;
+      font-weight: 600;
+    }
+    button { cursor: pointer; }
+    .save { background: #d4af37; color: #111; }
     .logout { background: #3b4252; color: #fff; }
     .muted { color: #c3c7d2; }
+    .role-badge {
+      display: inline-block;
+      margin-left: 8px;
+      font-size: 12px;
+      color: #c3c7d2;
+    }
   </style>
 </head>
 <body>
@@ -67,8 +79,8 @@
         <h2>회원 관리</h2>
         <button id="logoutBtn" class="logout" type="button">로그아웃</button>
       </div>
-      <p id="desc" class="muted">승인 대기 회원을 관리합니다.</p>
-      <div id="pendingList" class="list">
+      <p id="desc" class="muted">회원구분(role)을 선택하고 권한을 변경할 수 있습니다.</p>
+      <div id="memberList" class="list">
         <div class="muted">불러오는 중...</div>
       </div>
     </section>
@@ -77,7 +89,7 @@
   <script type="module">
     import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-    import { getFirestore, doc, getDoc, collection, query, where, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+    import { getFirestore, doc, getDoc, collection, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCN1SqXwZWf7Z9r2oMrJGKF0pxfl4zBeTc",
@@ -85,51 +97,21 @@
       projectId: "gui1d-point-db"
     };
 
+    const ROLE_OPTIONS = ["admin", "manager", "approved", "pending", "rejected"];
+
     const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    const listEl = document.getElementById("pendingList");
+    const listEl = document.getElementById("memberList");
     const descEl = document.getElementById("desc");
     const logoutBtn = document.getElementById("logoutBtn");
 
+    let myRole = "pending";
+
     function renderNoAccess() {
-      descEl.textContent = "관리자 계정만 접근 가능합니다.";
+      descEl.textContent = "관리자/매니저 계정만 접근 가능합니다.";
       listEl.innerHTML = '<div class="muted">접근 권한이 없습니다.</div>';
-    }
-
-    function renderRows(rows) {
-      if (!rows.length) {
-        listEl.innerHTML = '<div class="muted">승인 대기 회원이 없습니다.</div>';
-        return;
-      }
-
-      listEl.innerHTML = rows.map((r) => `
-        <div class="item">
-          <div>
-            <div class="name">${escapeHtml(r.nickname || "-")}</div>
-            <div class="email">${escapeHtml(r.email || "-")}</div>
-          </div>
-          <div class="actions">
-            <button class="ok" data-approve="${r.id}" type="button">승인</button>
-            <button class="reject" data-reject="${r.id}" type="button">거절</button>
-          </div>
-        </div>
-      `).join("");
-
-      listEl.querySelectorAll("[data-approve]").forEach((btn) => {
-        btn.addEventListener("click", async () => {
-          const id = btn.getAttribute("data-approve");
-          await updateDoc(doc(db, "users", id), { role: "approved" });
-        });
-      });
-
-      listEl.querySelectorAll("[data-reject]").forEach((btn) => {
-        btn.addEventListener("click", async () => {
-          const id = btn.getAttribute("data-reject");
-          await updateDoc(doc(db, "users", id), { role: "rejected" });
-        });
-      });
     }
 
     function escapeHtml(value) {
@@ -141,6 +123,77 @@
         .replace(/'/g, "&#039;");
     }
 
+    function roleOptionsHtml(selected, blockAdminOption) {
+      return ROLE_OPTIONS
+        .map((role) => {
+          const selectedAttr = role === selected ? "selected" : "";
+          const disabledAttr = blockAdminOption && role === "admin" ? "disabled" : "";
+          return `<option value="${role}" ${selectedAttr} ${disabledAttr}>${role}</option>`;
+        })
+        .join("");
+    }
+
+    function renderRows(rows) {
+      if (!rows.length) {
+        listEl.innerHTML = '<div class="muted">회원 데이터가 없습니다.</div>';
+        return;
+      }
+
+      listEl.innerHTML = rows.map((r) => {
+        const role = String(r.role || "approved");
+        const isMe = r.id === auth.currentUser?.uid;
+        const managerMode = myRole === "manager";
+        const targetIsAdmin = role === "admin";
+
+        // manager는 admin 계정 편집 금지, admin 승격 금지
+        const disableSelect = managerMode && (targetIsAdmin || isMe);
+        const disableSave = managerMode && (targetIsAdmin || isMe);
+
+        return `
+          <div class="item">
+            <div>
+              <div class="name">${escapeHtml(r.nickname || "-")}
+                <span class="role-badge">현재: ${escapeHtml(role)}</span>
+              </div>
+              <div class="email">${escapeHtml(r.email || "-")}</div>
+            </div>
+            <div class="actions">
+              <select data-role-select="${r.id}" ${disableSelect ? "disabled" : ""}>
+                ${roleOptionsHtml(role, managerMode)}
+              </select>
+              <button class="save" data-save="${r.id}" ${disableSave ? "disabled" : ""} type="button">권한 변경</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      listEl.querySelectorAll("[data-save]").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const id = btn.getAttribute("data-save");
+          const select = listEl.querySelector(`[data-role-select="${id}"]`);
+          if (!id || !select) return;
+
+          const nextRole = String(select.value || "approved");
+          const currentUserId = auth.currentUser?.uid || "";
+
+          if (myRole === "manager" && nextRole === "admin") {
+            window.alert("매니저 권한으로는 admin 지정이 불가합니다.");
+            return;
+          }
+          if (myRole === "manager" && id === currentUserId) {
+            window.alert("매니저 계정은 본인 권한을 변경할 수 없습니다.");
+            return;
+          }
+
+          try {
+            await updateDoc(doc(db, "users", id), { role: nextRole });
+          } catch (err) {
+            window.alert("권한 변경 실패: " + String(err));
+          }
+        });
+      });
+    }
+
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
         renderNoAccess();
@@ -148,17 +201,19 @@
       }
 
       const meSnap = await getDoc(doc(db, "users", user.uid));
-      const myRole = String(meSnap.data()?.role || "pending");
-      if (myRole !== "admin") {
+      myRole = String(meSnap.data()?.role || "pending");
+      if (myRole !== "admin" && myRole !== "manager") {
         renderNoAccess();
         return;
       }
 
-      descEl.textContent = "승인 대기 회원 목록입니다. 승인 또는 거절을 선택하세요.";
+      descEl.textContent = "회원구분을 선택한 뒤 [권한 변경] 버튼으로 즉시 반영됩니다.";
 
-      const q = query(collection(db, "users"), where("role", "==", "pending"));
-      onSnapshot(q, (snap) => {
-        const rows = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      onSnapshot(collection(db, "users"), (snap) => {
+        const rows = snap.docs
+          .map((d) => ({ id: d.id, ...d.data() }))
+          .sort((a, b) => String(a.nickname || "").localeCompare(String(b.nickname || ""), "ko"));
+
         renderRows(rows);
       });
     });

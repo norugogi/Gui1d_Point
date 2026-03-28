@@ -1,5 +1,6 @@
 ﻿(function scheduleAdminModule() {
   const ADMIN_KEY = "gui1d_admin_logged_in";
+  const ROLE_KEY = "gui1d_user_role";
   const firebaseConfig = {
     apiKey: "AIzaSyCN1SqXwZWf7Z9r2oMrJGKF0pxfl4zBeTc",
     authDomain: "gui1d-point-db.firebaseapp.com",
@@ -22,6 +23,12 @@
     return localStorage.getItem(ADMIN_KEY) === "1";
   }
 
+  function canManage() {
+    const role = String(localStorage.getItem(ROLE_KEY) || "");
+    if (role) return role === "admin" || role === "manager";
+    return isAdmin();
+  }
+
   function getEl(id) {
     return document.getElementById(id);
   }
@@ -38,7 +45,7 @@
   function setAdminButtonVisibility() {
     const addBtn = getEl("scheduleAddBtn");
     if (addBtn) {
-      addBtn.style.display = isAdmin() ? "inline-block" : "none";
+      addBtn.style.display = canManage() ? "inline-block" : "none";
     }
 
     // Firestore 데이터로 렌더된 상태라면 관리자 상태 변경 시 행 삭제 버튼도 즉시 반영
@@ -56,7 +63,7 @@
       safeRows.push({ day: "", content: "", id: "" });
     }
 
-    const admin = isAdmin() && fromFirestore;
+    const admin = canManage() && fromFirestore;
 
     body.innerHTML = safeRows.slice(0, 5).map((row) => {
       const day = escapeHtml(row.day || "-");

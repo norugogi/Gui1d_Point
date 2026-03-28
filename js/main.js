@@ -542,6 +542,7 @@ async function logoutUser() {
 
   try {
     localStorage.setItem("gui1d_admin_logged_in", "0");
+    localStorage.setItem("gui1d_user_role", "pending");
   } catch (_err) {
     // ignore
   }

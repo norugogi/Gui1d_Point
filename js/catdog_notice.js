@@ -8,6 +8,7 @@ const firebaseConfig = {
 };
 
 const ADMIN_KEY = "gui1d_admin_logged_in";
+const ROLE_KEY = "gui1d_user_role";
 
 const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -33,6 +34,12 @@ function isAdmin() {
   return localStorage.getItem(ADMIN_KEY) === "1";
 }
 
+function canManage() {
+  const role = String(localStorage.getItem(ROLE_KEY) || "");
+  if (role) return role === "admin" || role === "manager";
+  return isAdmin();
+}
+
 function escapeHtml(value) {
   return String(value ?? "")
     .replace(/&/g, "&amp;")
@@ -44,10 +51,10 @@ function escapeHtml(value) {
 
 function applyAdminUI() {
   if (!elCreateBtn) return;
-  elCreateBtn.style.display = isAdmin() ? "inline-block" : "none";
+  elCreateBtn.style.display = canManage() ? "inline-block" : "none";
 
   document.querySelectorAll(".notice-admin-actions").forEach((el) => {
-    el.style.display = isAdmin() ? "flex" : "none";
+    el.style.display = canManage() ? "flex" : "none";
   });
 }
 
@@ -165,7 +172,7 @@ function renderFeed(rows) {
           <span>${escapeHtml(relative)}</span>
           ${isNew ? '<span class="notice-new">NEW</span>' : ""}
         </div>
-        <div class="notice-admin-actions" style="display:${isAdmin() ? "flex" : "none"};">
+        <div class="notice-admin-actions" style="display:${canManage() ? "flex" : "none"};">
           <button type="button" class="notice-btn soft" data-edit="${row.id}">수정</button>
           <button type="button" class="notice-btn danger" data-del="${row.id}">삭제</button>
         </div>

@@ -9,6 +9,7 @@ const firebaseConfig = {
 };
 
 const ADMIN_KEY = "gui1d_admin_logged_in";
+const ROLE_KEY = "gui1d_user_role";
 const ROLL_INTERVAL = 30000;
 
 const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
@@ -34,8 +35,14 @@ function isAdmin() {
   return localStorage.getItem(ADMIN_KEY) === "1";
 }
 
+function canManage() {
+  const role = String(localStorage.getItem(ROLE_KEY) || "");
+  if (role) return role === "admin" || role === "manager";
+  return isAdmin();
+}
+
 function applyAdminUI() {
-  const show = isAdmin();
+  const show = canManage();
   if (elAddBtn) elAddBtn.style.display = show ? "inline-block" : "none";
   if (elEditBtn) elEditBtn.style.display = show ? "inline-block" : "none";
 }

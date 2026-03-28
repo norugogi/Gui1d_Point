@@ -246,6 +246,7 @@
     };
 
     const ADMIN_KEY = "gui1d_admin_logged_in";
+    const ROLE_KEY = "gui1d_user_role";
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
@@ -269,8 +270,9 @@
 
     // 관리자 상태 UI 반영 (localStorage 유지)
     function applyAdminUI() {
-      const isAdmin = localStorage.getItem(ADMIN_KEY) === "1";
-      listBtn.style.display = isAdmin ? "inline-block" : "none";
+      const role = String(localStorage.getItem(ROLE_KEY) || "");
+      const isManager = role === "admin" || role === "manager" || localStorage.getItem(ADMIN_KEY) === "1";
+      listBtn.style.display = isManager ? "inline-block" : "none";
     }
 
     // Timestamp/Date/string 모두 처리해서 화면 표시
@@ -334,7 +336,8 @@
 
     // 목록 모달 열기 + 로딩 표시
     listBtn.addEventListener("click", async () => {
-      if (localStorage.getItem(ADMIN_KEY) !== "1") {
+      const role = String(localStorage.getItem(ROLE_KEY) || "");
+      if (!(role === "admin" || role === "manager" || localStorage.getItem(ADMIN_KEY) === "1")) {
         showMessage("관리자 로그인 후 이용 가능합니다.", false);
         return;
       }

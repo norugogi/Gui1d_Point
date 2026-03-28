@@ -8,6 +8,7 @@ const firebaseConfig = {
 };
 
 const ADMIN_KEY = "gui1d_admin_logged_in";
+const ROLE_KEY = "gui1d_user_role";
 const KOR_POOR = "\uBD80\uC871";
 const KOR_NORMAL = "\uBCF4\uD1B5";
 const KOR_ENOUGH = "\uCDA9\uBD84";
@@ -30,6 +31,8 @@ let latestData = {
 };
 
 function isAdmin() {
+  const role = String(localStorage.getItem(ROLE_KEY) || "");
+  if (role) return role === "admin";
   return localStorage.getItem(ADMIN_KEY) === "1";
 }
 

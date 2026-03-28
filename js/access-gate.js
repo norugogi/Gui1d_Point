@@ -1,5 +1,6 @@
-﻿(function () {
+(function () {
   const ADMIN_KEY = "gui1d_admin_logged_in";
+  const ROLE_KEY = "gui1d_user_role";
   const NICK_REGEX = /^[a-zA-Z\uAC00-\uD7A3]{2,10}$/;
 
   const TXT = {
@@ -105,10 +106,6 @@
   `;
 
   function setAdminMenuVisible(visible) {
-    try {
-      localStorage.setItem(ADMIN_KEY, visible ? "1" : "0");
-    } catch (_err) {}
-
     const titles = [...document.querySelectorAll(".menu-title")];
     const items = [...document.querySelectorAll(".menu-item")];
 
@@ -124,12 +121,22 @@
     });
   }
 
+  function setUserRole(role) {
+    const safeRole = String(role || "pending");
+    try {
+      localStorage.setItem(ROLE_KEY, safeRole);
+      localStorage.setItem(ADMIN_KEY, safeRole === "admin" ? "1" : "0");
+    } catch (_err) {}
+
+    setAdminMenuVisible(safeRole === "admin" || safeRole === "manager");
+  }
+
   function releaseGate() {
     document.getElementById("site-gate-overlay")?.remove();
     document.getElementById("access-gate-style")?.remove();
 
-    // 게이트 해제 직후 차트/레이아웃이 숨김 상태에서 렌더된 경우를 대비해
-    // 메인 화면에 재렌더 이벤트를 전달한다.
+    // ����Ʈ ���� ���� ��Ʈ/���̾ƿ��� ���� ���¿��� ������ ��츦 �����
+    // ���� ȭ�鿡 �緻�� �̺�Ʈ�� �����Ѵ�.
     requestAnimationFrame(() => {
       window.dispatchEvent(new Event("guild:access-granted"));
     });
@@ -284,12 +291,13 @@
 
       if (!userSnap.exists()) {
         setError(TXT.noUserDoc);
+        setUserRole("pending");
         await authMod.signOut(auth);
         return;
       }
 
       const role = String(userSnap.data()?.role || "pending");
-      setAdminMenuVisible(role === "admin");
+      setUserRole(role);
 
       if (role === "pending") {
         showPendingView();
@@ -297,14 +305,14 @@
         return;
       }
 
-      if (role === "approved" || role === "admin") {
+      if (role === "approved" || role === "admin" || role === "manager") {
         releaseGate();
       }
     }
 
     authMod.onAuthStateChanged(auth, async (user) => {
       if (!user) {
-        setAdminMenuVisible(false);
+        setUserRole("pending");
         showLoginView();
         return;
       }
@@ -388,7 +396,7 @@
     signupSubmitBtn?.addEventListener("click", doSignup);
     signupCloseBtn?.addEventListener("click", closeSignup);
 
-    // 요구사항: 팝업은 X 버튼 혹은 ESC로만 닫힘 (바깥 클릭 닫힘 금지)
+    // �䱸����: �˾��� X ��ư Ȥ�� ESC�θ� ���� (�ٱ� Ŭ�� ���� ����)
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && signupModal.style.display === "flex") {
         closeSignup();
@@ -396,6 +404,7 @@
     });
 
     pendingLogoutBtn?.addEventListener("click", async () => {
+      setUserRole("pending");
       await authMod.signOut(auth);
       showLoginView();
     });
