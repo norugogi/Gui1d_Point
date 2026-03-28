@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>건의함</title>
+  <script src="js/access-gate.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background: #1e1e1e;
+      color: #fff;
+      font-family: "Noto Sans KR", "Segoe UI", "Malgun Gothic", sans-serif;
+    }
+
+    .wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .box {
+      background: #252934;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 12px;
+      padding: 18px;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+    }
+
+    p {
+      margin: 0 0 16px;
+      color: #c3c7d2;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 6px;
+      font-size: 14px;
+      color: #dfe3ee;
+    }
+
+    input, textarea, button {
+      font-family: inherit;
+    }
+
+    input, textarea {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #454b5a;
+      background: #1d212a;
+      color: #fff;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .actions {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    button {
+      border: none;
+      border-radius: 8px;
+      background: #d4af37;
+      color: #111;
+      padding: 10px 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    #message {
+      color: #8be28b;
+      font-weight: 700;
+      min-height: 22px;
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="box">
+      <h2>건의함</h2>
+      <p>건의사항을 작성하면 Firestore에 저장됩니다.</p>
+
+      <label for="title">제목</label>
+      <input id="title" type="text" placeholder="제목을 입력하세요">
+
+      <label for="content">내용</label>
+      <textarea id="content" placeholder="건의 내용을 입력하세요"></textarea>
+
+      <label for="name">작성자</label>
+      <input id="name" type="text" placeholder="이름 또는 닉네임">
+
+      <div class="actions">
+        <button id="saveBtn" type="button">저장</button>
+        <span id="message"></span>
+      </div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCN1SqXwZWf7Z9r2oMrJGKF0pxfl4zBeTc",
+      authDomain: "gui1d-point-db.firebaseapp.com",
+      projectId: "gui1d-point-db"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const titleEl = document.getElementById("title");
+    const contentEl = document.getElementById("content");
+    const nameEl = document.getElementById("name");
+    const saveBtn = document.getElementById("saveBtn");
+    const msgEl = document.getElementById("message");
+
+    function showMessage(text, ok = true) {
+      msgEl.textContent = text;
+      msgEl.style.color = ok ? "#8be28b" : "#ff8b8b";
+    }
+
+    saveBtn.addEventListener("click", async () => {
+      const title = titleEl.value.trim();
+      const content = contentEl.value.trim();
+      const name = nameEl.value.trim();
+
+      if (!title || !content || !name) {
+        showMessage("제목/내용/작성자를 모두 입력해주세요.", false);
+        return;
+      }
+
+      saveBtn.disabled = true;
+      showMessage("저장 중...", true);
+
+      try {
+        await addDoc(collection(db, "suggestions"), {
+          title,
+          content,
+          name,
+          date: serverTimestamp()
+        });
+
+        titleEl.value = "";
+        contentEl.value = "";
+        nameEl.value = "";
+        showMessage("저장 완료", true);
+      } catch (err) {
+        showMessage("저장 실패: " + String(err), false);
+      } finally {
+        saveBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

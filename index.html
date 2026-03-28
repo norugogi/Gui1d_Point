@@ -29,8 +29,8 @@
     <div class="menu-title">공헌도</div>
     <div class="menu-item" onclick="showPage('rubyPage', this)">루비 공헌도</div>
 
-    <div class="menu-title">관리자</div>
-    <div class="menu-item" onclick="showPage('adminPage', this)">관리자</div>
+    <div class="menu-title">기타</div>
+    <div class="menu-item" onclick="showPage('suggestPage', this)">건의함</div>
   </div>
 
   <div class="main">
@@ -144,12 +144,8 @@
       <iframe src="ruby.html" style="width:100%; height:calc(100vh - 80px); border:none;" title="ruby"></iframe>
     </div>
 
-    <div id="adminPage" class="page" style="display:none;">
-      <div class="box admin-box">
-        <div class="title">관리자 안내</div>
-        <p class="admin-desc">일정표는 <code>data/schedule.json</code> 파일 수정 후 커밋/푸시하면 반영됩니다.</p>
-        <p class="admin-desc">카드 프로필 데이터 가공은 <a href="Card_Profile_set.html" target="_blank" rel="noopener">Card_Profile_set.html</a>에서 진행할 수 있습니다.</p>
-      </div>
+    <div id="suggestPage" class="page" style="display:none;">
+      <iframe src="suggestions.html" style="width:100%; height:calc(100vh - 80px); border:none;" title="suggestions"></iframe>
     </div>
   </div>
 
