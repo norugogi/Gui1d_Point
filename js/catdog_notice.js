@@ -167,7 +167,7 @@ function renderFeed(rows) {
         ${row.pinned ? '<div class="notice-pin">📌 고정</div>' : ""}
         <h3 class="notice-title">${escapeHtml(row.title || "-")}</h3>
         <div class="notice-content collapsed" data-content-id="${row.id}">${escapeHtml(row.content || "-")}</div>
-        <button type="button" class="notice-more-btn" data-more="${row.id}" style="display:none;">더보기</button>
+        <button type="button" class="notice-more-btn" data-more="${row.id}" style="display:none;">펼치기</button>
         <div class="notice-meta">
           <span>${escapeHtml(relative)}</span>
           ${isNew ? '<span class="notice-new">NEW</span>' : ""}
@@ -207,8 +207,10 @@ function renderFeed(rows) {
     const contentEl = elFeed.querySelector(`.notice-content[data-content-id="${id}"]`);
     if (!contentEl) return;
 
-    // 내용이 실제로 잘리는 경우에만 더보기 버튼 노출
-    if (contentEl.scrollHeight > contentEl.clientHeight + 2) {
+    // clamp 계산 오차 대비: 높이 비교 + 글자수 기준으로 버튼 노출
+    const overflowed = contentEl.scrollHeight > contentEl.clientHeight + 2
+      || String(contentEl.textContent || "").trim().length > 120;
+    if (overflowed) {
       btn.style.display = "inline-block";
     }
 
@@ -217,7 +219,7 @@ function renderFeed(rows) {
       if (expanded) {
         contentEl.classList.remove("expanded");
         contentEl.classList.add("collapsed");
-        btn.textContent = "더보기";
+        btn.textContent = "펼치기";
       } else {
         contentEl.classList.remove("collapsed");
         contentEl.classList.add("expanded");
