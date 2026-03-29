@@ -148,7 +148,7 @@
   },
   {
     "gc_name": "강새이",
-    "gc_level": 89,
+    "gc_level": 90,
     "class": "IncenseArcher",
     "grade": "25",
     "guild_name": "CATT"
@@ -158,6 +158,13 @@
     "gc_level": 89,
     "class": "IncenseArcher",
     "grade": "24",
+    "guild_name": "DOG"
+  },
+  {
+    "gc_name": "자미꼬",
+    "gc_level": 89,
+    "class": "IncenseArcher",
+    "grade": "25",
     "guild_name": "DOG"
   },
   {
@@ -316,7 +323,7 @@
   },
   {
     "gc_name": "랄랄",
-    "gc_level": 88,
+    "gc_level": 89,
     "class": "RuneScribe",
     "grade": "23",
     "guild_name": "DOG"
@@ -402,7 +409,7 @@
     "gc_name": "소마",
     "gc_level": 86,
     "class": "RuneScribe",
-    "grade": "21",
+    "grade": "22",
     "guild_name": "CATT"
   },
   {
@@ -485,13 +492,6 @@
   {
     "gc_name": "쉼텨",
     "gc_level": 90,
-    "class": "WildWarrior",
-    "grade": "25",
-    "guild_name": "DOG"
-  },
-  {
-    "gc_name": "자미꼬",
-    "gc_level": 89,
     "class": "WildWarrior",
     "grade": "25",
     "guild_name": "DOG"

@@ -7,7 +7,7 @@
     "guild_name": "DOG",
     "power": "50405",
     "guild_rank": "결사간부",
-    "feature": "프전공무원"
+    "feature": "프전 공무원"
   },
   {
     "gc_name": "샬롯",
@@ -40,26 +40,6 @@
     "feature": "-"
   },
   {
-    "gc_name": "아톰",
-    "gc_level": 92,
-    "grade": "25",
-    "class": "SolarSentinel",
-    "guild_name": "DOG",
-    "power": "50119",
-    "guild_rank": "결사원",
-    "feature": "황금깐트롤"
-  },
-  {
-    "gc_name": "은빈",
-    "gc_level": 91,
-    "grade": "24",
-    "class": "SolarSentinel",
-    "guild_name": "DOG",
-    "power": "49007",
-    "guild_rank": "결사원",
-    "feature": "아재개그 달인"
-  },
-  {
     "gc_name": "룽지",
     "gc_level": 90,
     "grade": "24",
@@ -82,7 +62,7 @@
   {
     "gc_name": "고녜이",
     "gc_level": 89,
-    "grade": "24",
+    "grade": "25",
     "class": "SolarSentinel",
     "guild_name": "CATT",
     "power": "44733",
@@ -127,7 +107,7 @@
     "guild_name": "DOG",
     "power": "48544",
     "guild_rank": "결사원",
-    "feature": "-"
+    "feature": "이이잉"
   },
   {
     "gc_name": "더춘식",
@@ -137,7 +117,7 @@
     "guild_name": "DOG",
     "power": "45582",
     "guild_rank": "결사원",
-    "feature": ""
+    "feature": "참여율 끝판왕"
   },
   {
     "gc_name": "덥뿡",
@@ -147,11 +127,11 @@
     "guild_name": "DOG",
     "power": "44058",
     "guild_rank": "결사원",
-    "feature": "-"
+    "feature": "다음 닉네임은?"
   },
   {
     "gc_name": "히이잉",
-    "gc_level": 87,
+    "gc_level": 88,
     "grade": "23",
     "class": "MirageBlade",
     "guild_name": "CATT",
@@ -217,7 +197,7 @@
     "guild_name": "DOG",
     "power": "46131",
     "guild_rank": "결사원",
-    "feature": "전략가"
+    "feature": "조용한 전략가"
   },
   {
     "gc_name": "베찌",
@@ -231,7 +211,7 @@
   },
   {
     "gc_name": "강새이",
-    "gc_level": 89,
+    "gc_level": 90,
     "grade": "25",
     "class": "IncenseArcher",
     "guild_name": "CATT",
@@ -262,7 +242,7 @@
   {
     "gc_name": "NORU",
     "gc_level": 89,
-    "grade": "24",
+    "grade": "25",
     "class": "IncenseArcher",
     "guild_name": "DOG",
     "power": "44067",
@@ -360,6 +340,16 @@
     "feature": "-"
   },
   {
+    "gc_name": "아톰",
+    "gc_level": 92,
+    "grade": "25",
+    "class": "RuneScribe",
+    "guild_name": "DOG",
+    "power": "50119",
+    "guild_rank": "결사원",
+    "feature": "황금깐트롤"
+  },
+  {
     "gc_name": "수꼬",
     "gc_level": 91,
     "grade": "25",
@@ -367,7 +357,7 @@
     "guild_name": "DOG",
     "power": "49412",
     "guild_rank": "결사장",
-    "feature": "강력한 AI라는 소문이 있음...."
+    "feature": "강력한 AI라는 소문이 있음.."
   },
   {
     "gc_name": "Aewol",
@@ -378,6 +368,16 @@
     "power": "49177",
     "guild_rank": "결사원",
     "feature": "-"
+  },
+  {
+    "gc_name": "은빈",
+    "gc_level": 91,
+    "grade": "25",
+    "class": "RuneScribe",
+    "guild_name": "DOG",
+    "power": "49007",
+    "guild_rank": "결사원",
+    "feature": "아재개그 달인"
   },
   {
     "gc_name": "다야꼬",
@@ -407,7 +407,7 @@
     "guild_name": "DOG",
     "power": "45427",
     "guild_rank": "결사원",
-    "feature": "-"
+    "feature": "노루는 적이 아닙니다"
   },
   {
     "gc_name": "카린",
@@ -442,7 +442,7 @@
   {
     "gc_name": "좀비",
     "gc_level": 89,
-    "grade": "24",
+    "grade": "25",
     "class": "RuneScribe",
     "guild_name": "DOG",
     "power": "45562",
@@ -452,7 +452,7 @@
   {
     "gc_name": "바벨",
     "gc_level": 89,
-    "grade": "24",
+    "grade": "25",
     "class": "RuneScribe",
     "guild_name": "DOG",
     "power": "44217",
@@ -461,7 +461,7 @@
   },
   {
     "gc_name": "랄랄",
-    "gc_level": 88,
+    "gc_level": 89,
     "grade": "23",
     "class": "RuneScribe",
     "guild_name": "DOG",
@@ -537,11 +537,11 @@
     "guild_name": "DOG",
     "power": "40971",
     "guild_rank": "결사원",
-    "feature": "-"
+    "feature": "키키키"
   },
   {
     "gc_name": "사탄의한",
-    "gc_level": 86,
+    "gc_level": 87,
     "grade": "22",
     "class": "RuneScribe",
     "guild_name": "CATT",
@@ -557,7 +557,7 @@
     "guild_name": "DOG",
     "power": "43712",
     "guild_rank": "결사원",
-    "feature": "-"
+    "feature": "잠을 안자..."
   },
   {
     "gc_name": "오월의우니",
@@ -577,25 +577,15 @@
     "guild_name": "CATT",
     "power": "36735",
     "guild_rank": "결사원",
-    "feature": "루비귀신"
+    "feature": "-"
   },
   {
     "gc_name": "소마",
     "gc_level": 86,
-    "grade": "21",
+    "grade": "22",
     "class": "RuneScribe",
     "guild_name": "CATT",
     "power": "36188",
-    "guild_rank": "결사원",
-    "feature": "-"
-  },
-  {
-    "gc_name": "로카",
-    "gc_level": 86,
-    "grade": "22",
-    "class": "RuneScribe",
-    "guild_name": "DOG",
-    "power": "38033",
     "guild_rank": "결사원",
     "feature": "-"
   },
@@ -606,6 +596,16 @@
     "class": "RuneScribe",
     "guild_name": "DOG",
     "power": "38115",
+    "guild_rank": "결사원",
+    "feature": "-"
+  },
+  {
+    "gc_name": "로카",
+    "gc_level": 86,
+    "grade": "22",
+    "class": "RuneScribe",
+    "guild_name": "DOG",
+    "power": "38033",
     "guild_rank": "결사원",
     "feature": "-"
   },
@@ -680,6 +680,16 @@
     "feature": "-"
   },
   {
+    "gc_name": "화수아",
+    "gc_level": 81,
+    "grade": "19",
+    "class": "RuneScribe",
+    "guild_name": "CATT",
+    "power": "-",
+    "guild_rank": "-",
+    "feature": "-"
+  },
+  {
     "gc_name": "바라문",
     "gc_level": 80,
     "grade": "19",
@@ -697,7 +707,7 @@
     "guild_name": "DOG",
     "power": "47778",
     "guild_rank": "결사원",
-    "feature": "-"
+    "feature": "아군이라 다행"
   },
   {
     "gc_name": "김쓰",
@@ -757,7 +767,7 @@
     "guild_name": "DOG",
     "power": "49913",
     "guild_rank": "결사원",
-    "feature": "힐 좀 주세요"
+    "feature": "힐 좀 주세요."
   },
   {
     "gc_name": "시로",
@@ -782,7 +792,7 @@
   {
     "gc_name": "바비",
     "gc_level": 91,
-    "grade": "24",
+    "grade": "25",
     "class": "Enforcer",
     "guild_name": "DOG",
     "power": "49099",
@@ -792,7 +802,7 @@
   {
     "gc_name": "난동",
     "gc_level": 91,
-    "grade": "24",
+    "grade": "25",
     "class": "Enforcer",
     "guild_name": "DOG",
     "power": "47552",
@@ -807,7 +817,7 @@
     "guild_name": "DOG",
     "power": "47506",
     "guild_rank": "결사원",
-    "feature": "-"
+    "feature": "No.1 큰형님"
   },
   {
     "gc_name": "훌꼬",
@@ -857,7 +867,7 @@
     "guild_name": "CATT",
     "power": "43263",
     "guild_rank": "결사간부",
-    "feature": "금손"
+    "feature": "자칭 금손 / 외교담당"
   },
   {
     "gc_name": "도라",
