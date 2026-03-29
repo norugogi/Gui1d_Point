@@ -45,6 +45,11 @@ function normalizeProfile(raw) {
   };
 }
 
+function toNumber(value) {
+  const n = Number(value);
+  return Number.isFinite(n) ? n : 0;
+}
+
 function normalizeName(value) {
   return String(value ?? "")
     .replace(/^\uFEFF/, "")
@@ -224,6 +229,18 @@ async function init() {
       "Card_Profile.json"
     ]);
     cardProfiles = Array.isArray(json) ? json : (json.items || []);
+    cardProfiles.sort((a, b) => {
+      const pa = normalizeProfile(a);
+      const pb = normalizeProfile(b);
+
+      const lvDiff = toNumber(pb.gc_level) - toNumber(pa.gc_level);
+      if (lvDiff !== 0) return lvDiff;
+
+      const gradeDiff = toNumber(pb.grade) - toNumber(pa.grade);
+      if (gradeDiff !== 0) return gradeDiff;
+
+      return String(pa.gc_name || "").localeCompare(String(pb.gc_name || ""), "ko");
+    });
   } catch (_err) {
     cardProfiles = [];
   }

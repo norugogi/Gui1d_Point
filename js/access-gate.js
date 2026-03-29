@@ -4,7 +4,7 @@
   const NICK_REGEX = /^[a-zA-Z\uAC00-\uD7A3]{2,10}$/;
 
   const TXT = {
-    title: "\uB0B4\uBD80 \uC804\uC6A9 \uD398\uC774\uC9C0",
+    title: "DOG & CAT \uC804\uC6A9 \uD398\uC774\uC9C0",
     desc: "\uC811\uC18D\uC744 \uC704\uD574 \uB85C\uADF8\uC778\uD574\uC8FC\uC138\uC694.",
     emailPh: "\uC774\uBA54\uC77C\uC8FC\uC18C",
     pwPh: "\uC554\uD638",
