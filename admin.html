@@ -70,6 +70,37 @@
       font-size: 12px;
       color: #c3c7d2;
     }
+    .filter-row {
+      display: flex;
+      gap: 8px;
+      margin: 0 0 12px;
+    }
+    .filter-btn {
+      background: #3b4252;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .filter-btn.active {
+      background: #d4af37;
+      color: #111;
+    }
+    .filter-count {
+      display: inline-block;
+      min-width: 22px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      background: rgba(255,255,255,0.16);
+      color: #fff;
+      text-align: center;
+    }
+    .filter-btn.active .filter-count {
+      background: rgba(0,0,0,0.2);
+      color: #111;
+    }
   </style>
 </head>
 <body>
@@ -80,6 +111,10 @@
         <button id="logoutBtn" class="logout" type="button">로그아웃</button>
       </div>
       <p id="desc" class="muted">회원구분(role)을 선택하고 권한을 변경할 수 있습니다.</p>
+      <div class="filter-row">
+        <button id="approvedFilterBtn" class="filter-btn active" type="button">승인 회원 <span id="approvedFilterCount" class="filter-count">0</span></button>
+        <button id="pendingFilterBtn" class="filter-btn" type="button">승인 필요 <span id="pendingFilterCount" class="filter-count">0</span></button>
+      </div>
       <div id="memberList" class="list">
         <div class="muted">불러오는 중...</div>
       </div>
@@ -106,8 +141,14 @@
     const listEl = document.getElementById("memberList");
     const descEl = document.getElementById("desc");
     const logoutBtn = document.getElementById("logoutBtn");
+    const approvedFilterBtn = document.getElementById("approvedFilterBtn");
+    const pendingFilterBtn = document.getElementById("pendingFilterBtn");
+    const approvedFilterCount = document.getElementById("approvedFilterCount");
+    const pendingFilterCount = document.getElementById("pendingFilterCount");
 
     let myRole = "pending";
+    let currentFilter = "approved";
+    let allRows = [];
 
     function renderNoAccess() {
       descEl.textContent = "관리자/매니저 계정만 접근 가능합니다.";
@@ -137,13 +178,38 @@
       ).join("");
     }
 
+    function getFilteredRows(rows) {
+      if (currentFilter === "approved") {
+        return rows.filter((r) => ["admin", "manager", "approved"].includes(String(r.role || "pending")));
+      }
+      return rows.filter((r) => ["pending", "rejected"].includes(String(r.role || "pending")));
+    }
+
+    function updateFilterCounts(rows) {
+      const approvedCount = rows.filter((r) => ["admin", "manager", "approved"].includes(String(r.role || "pending"))).length;
+      const pendingCount = rows.filter((r) => ["pending", "rejected"].includes(String(r.role || "pending"))).length;
+      if (approvedFilterCount) approvedFilterCount.textContent = String(approvedCount);
+      if (pendingFilterCount) pendingFilterCount.textContent = String(pendingCount);
+    }
+
     function renderRows(rows) {
+      const filteredRows = getFilteredRows(rows);
+      updateFilterCounts(rows);
+
+      approvedFilterBtn.classList.toggle("active", currentFilter === "approved");
+      pendingFilterBtn.classList.toggle("active", currentFilter === "pending");
+
       if (!rows.length) {
         listEl.innerHTML = '<div class="muted">회원 데이터가 없습니다.</div>';
         return;
       }
 
-      listEl.innerHTML = rows.map((r) => {
+      if (!filteredRows.length) {
+        listEl.innerHTML = '<div class="muted">해당 조건의 회원이 없습니다.</div>';
+        return;
+      }
+
+      listEl.innerHTML = filteredRows.map((r) => {
         const role = String(r.role || "approved");
         const isMe = r.id === auth.currentUser?.uid;
         const managerMode = myRole === "manager";
@@ -214,12 +280,21 @@
       descEl.textContent = "회원구분을 선택한 뒤 [권한 변경] 버튼으로 즉시 반영됩니다.";
 
       onSnapshot(collection(db, "users"), (snap) => {
-        const rows = snap.docs
+        allRows = snap.docs
           .map((d) => ({ id: d.id, ...d.data() }))
           .sort((a, b) => String(a.nickname || "").localeCompare(String(b.nickname || ""), "ko"));
-
-        renderRows(rows);
+        renderRows(allRows);
       });
+    });
+
+    approvedFilterBtn.addEventListener("click", () => {
+      currentFilter = "approved";
+      renderRows(allRows);
+    });
+
+    pendingFilterBtn.addEventListener("click", () => {
+      currentFilter = "pending";
+      renderRows(allRows);
     });
 
     logoutBtn.addEventListener("click", async () => {
