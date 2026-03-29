@@ -10,7 +10,7 @@ const firebaseConfig = {
 
 const ADMIN_KEY = "gui1d_admin_logged_in";
 const ROLE_KEY = "gui1d_user_role";
-const ROLL_INTERVAL = 30000;
+const ROLL_INTERVAL = 20000;
 
 const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const db = getFirestore(app);
