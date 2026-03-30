@@ -73,7 +73,7 @@
     "gc_name": "더춘식",
     "gc_level": 89,
     "class": "MirageBlade",
-    "grade": "24",
+    "grade": "25",
     "guild_name": "DOG"
   },
   {
@@ -85,7 +85,7 @@
   },
   {
     "gc_name": "히이잉",
-    "gc_level": 87,
+    "gc_level": 88,
     "class": "MirageBlade",
     "grade": "23",
     "guild_name": "CATT"
@@ -668,7 +668,7 @@
     "gc_name": "시바주야",
     "gc_level": 84,
     "class": "Enforcer",
-    "grade": "19",
+    "grade": "20",
     "guild_name": "CATT"
   },
   {
