@@ -88,10 +88,35 @@ function showPage(id, el) {
   if (id === "mainPage") {
     refreshMainDashboard(rawData);
   }
+
+  closeMobileSidebar();
 }
 window.showPage = showPage;
 
+function closeMobileSidebar() {
+  document.body.classList.remove("mobile-nav-open");
+}
+
+function initMobileNav() {
+  const menuBtn = document.getElementById("mobileMenuBtn");
+  const backdrop = document.getElementById("mobileNavBackdrop");
+
+  menuBtn?.addEventListener("click", () => {
+    document.body.classList.toggle("mobile-nav-open");
+  });
+
+  backdrop?.addEventListener("click", closeMobileSidebar);
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 980) {
+      closeMobileSidebar();
+    }
+  });
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
+  initMobileNav();
+
   try {
     const data = await fetchJsonWithFallback([
       "data/catdog_all_in_one.json",

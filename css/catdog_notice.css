@@ -215,3 +215,30 @@ textarea {
 .notice-modal-actions {
   margin-top: 12px;
 }
+
+@media (max-width: 980px) {
+  .notice-main {
+    padding: 12px;
+  }
+
+  .notice-head {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .notice-head h2 {
+    font-size: 22px;
+  }
+
+  .notice-card {
+    padding: 12px;
+  }
+
+  .notice-title {
+    font-size: 18px;
+  }
+
+  .notice-admin-actions {
+    flex-wrap: wrap;
+  }
+}

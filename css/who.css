@@ -142,3 +142,50 @@ body {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+@media (max-width: 980px) {
+  .main {
+    padding: 12px;
+    overflow-x: auto;
+  }
+
+  .title {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  .filters {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .filters input,
+  .filters select {
+    width: calc(50% - 4px) !important;
+    min-width: 0;
+    height: 40px !important;
+  }
+
+  .filters button {
+    width: calc(50% - 4px);
+    height: 40px;
+  }
+
+  .who-table {
+    min-width: 760px;
+  }
+
+  .modal-content {
+    width: 94%;
+    margin: 8% auto;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  .filters input,
+  .filters select,
+  .filters button {
+    width: 100% !important;
+  }
+}
