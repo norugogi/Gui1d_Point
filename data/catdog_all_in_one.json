@@ -85,7 +85,7 @@
   },
   {
     "gc_name": "덥뿡",
-    "gc_level": 88,
+    "gc_level": 89,
     "class": "MirageBlade",
     "grade": "23",
     "guild_name": "DOG"
@@ -360,7 +360,7 @@
     "gc_name": "히잉",
     "gc_level": 87,
     "class": "RuneScribe",
-    "grade": "22",
+    "grade": "23",
     "guild_name": "DOG"
   },
   {
@@ -372,7 +372,7 @@
   },
   {
     "gc_name": "델라꼬",
-    "gc_level": 86,
+    "gc_level": 87,
     "class": "RuneScribe",
     "grade": "24",
     "guild_name": "DOG"
@@ -388,7 +388,7 @@
     "gc_name": "시바화아타",
     "gc_level": 86,
     "class": "RuneScribe",
-    "grade": "21",
+    "grade": "22",
     "guild_name": "CATT"
   },
   {
@@ -490,13 +490,6 @@
     "guild_name": "DOG"
   },
   {
-    "gc_name": "쉼텨",
-    "gc_level": 90,
-    "class": "WildWarrior",
-    "grade": "25",
-    "guild_name": "DOG"
-  },
-  {
     "gc_name": "김쓰",
     "gc_level": 89,
     "class": "WildWarrior",
@@ -548,6 +541,13 @@
   {
     "gc_name": "바비",
     "gc_level": 91,
+    "class": "Enforcer",
+    "grade": "25",
+    "guild_name": "DOG"
+  },
+  {
+    "gc_name": "쉼텨",
+    "gc_level": 90,
     "class": "Enforcer",
     "grade": "25",
     "guild_name": "DOG"
@@ -661,7 +661,7 @@
     "gc_name": "죠르디",
     "gc_level": 85,
     "class": "Enforcer",
-    "grade": "19",
+    "grade": "20",
     "guild_name": "CATT"
   },
   {
